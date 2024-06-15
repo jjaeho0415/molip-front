@@ -13,7 +13,6 @@
   <img src="https://img.shields.io/badge/Reactquery-FF4154?style=for-the-badge&logo=reactquery&logoColor=white"/>
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
   <img src="https://img.shields.io/badge/zustand-553830?style=for-the-badge&logo=zustand&logoColor=white">
-  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badgee&logo=html5&logoColor=white"/>
 </div>
 <br/>
 

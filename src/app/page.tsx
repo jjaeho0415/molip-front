@@ -1,6 +1,5 @@
-import Image from 'next/image';
-import styles from './page.module.css';
+import styles from './styles/page.module.css';
 
 export default function Home() {
-  return <></>;
+  return <div className={styles.Container}></div>;
 }

@@ -4,12 +4,14 @@ import Button from '@/components/buttons/Button';
 import MenuCardModal from '@/components/modals/MenuCardModal';
 import ShareButton from './components/buttons/ShareButton';
 import { useState } from 'react';
+import Splash from './components/Splash';
 
 export default function Home() {
   const [isMenuCardModalOpen, setIsMenuCardModalOpen] =
     useState<boolean>(false);
   return (
     <>
+      <Splash />
       <div>
         <Button>적용하기</Button>
         <br />

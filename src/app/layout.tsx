@@ -1,7 +1,7 @@
 // import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import './styles/globals.css';
-import RQProvider from './_component/RQProvider';
+import RQProvider from '@/components/RQProvider';
 
 // export const metadata: Metadata = {
 //   title: '',

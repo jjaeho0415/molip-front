@@ -52,17 +52,9 @@
   white-space: nowrap;
 }
 
-.closeButton {
-  background-color: var(--white);
-  color: var(--gray-30);
-  padding: 8px 16px;
-  border: 1px solid var(--gray-30);
-  border-radius: 30px;
-  width: 120px;
-  height: 36px;
-  cursor: pointer;
-  text-align: center;
+.modalButtonSection {
   position: absolute;
-  left: 90px;
-  top: 360px;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
 }

@@ -1,9 +1,11 @@
 import Button from './components/buttons/Button';
 import ShareButton from './components/buttons/ShareButton';
+import Splash from './components/Splash';
 
 export default function Home() {
   return (
     <div>
+      <Splash />
       <Button>적용하기</Button>
       <br />
       <br />
@@ -15,6 +17,8 @@ export default function Home() {
       <ShareButton></ShareButton>
 
       <ShareButton state='disabled'></ShareButton>
+      <br />
+      <br />
     </div>
   );
 }

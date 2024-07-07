@@ -1,6 +1,6 @@
 'use client';
 
-import Button from './Button';
+import Button from '../../app/components/buttons/Button';
 import Icon_download from '../../../../public/icons/buttons/download.svg';
 import Icon_disabled from '../../../../public/icons/buttons/download_disabled.svg';
 import styles from './share.module.css';

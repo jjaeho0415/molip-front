@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import styles from './topMenuButton.module.css';
 
 export default function TopMenuButton() {
-  const [active, setActive] = useState('image');
+  const [active, setActive] = useState('board');
 
   return (
     <div className={styles.Container}>
       <button
-        className={`${styles.Button} ${active === 'menu' ? styles.active : styles.inactive}`}
-        onClick={() => setActive('menu')}
+        className={`${styles.Button} ${active === 'board' ? styles.active : styles.inactive}`}
+        onClick={() => setActive('board')}
       >
         메뉴판 보기
       </button>

@@ -3,8 +3,8 @@
 import Image from 'next/image';
 import styles from './roundButton.module.css';
 import { useEffect, useState } from 'react';
-import Icon_option from '../../../../public/icons/buttons/option.svg';
-import Icon_check from '../../../../public/icons/buttons/check.svg';
+import Icon_option from '../../../public/icons/buttons/option.svg';
+import Icon_check from '../../../public/icons/buttons/check.svg';
 
 interface IRoundButtonProps {
   property: '새로' | '옵션' | '메뉴' | '메뉴추가완료';

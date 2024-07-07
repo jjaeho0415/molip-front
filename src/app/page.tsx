@@ -1,10 +1,8 @@
 'use client';
 
-import Button from '@/components/buttons/Button';
 import MenuCardModal from '@/components/modals/MenuCardModal';
-import ShareButton from './components/buttons/ShareButton';
 import { useState } from 'react';
-import Splash from './components/Splash';
+import Splash from '../components/Splash';
 
 export default function Home() {
   const [isMenuCardModalOpen, setIsMenuCardModalOpen] =
@@ -12,20 +10,6 @@ export default function Home() {
   return (
     <>
       <Splash />
-      <div>
-        <Button>적용하기</Button>
-        <br />
-        <br />
-        <Button state='disabled'>적용하기</Button>
-        <br />
-        <br />
-        <Button size='small'>적용하기</Button>
-      </div>
-      <div>
-        <ShareButton></ShareButton>
-
-        <ShareButton state='disabled'></ShareButton>
-      </div>
       <div>
         <button onClick={() => setIsMenuCardModalOpen(true)}>
           메뉴카드 모달

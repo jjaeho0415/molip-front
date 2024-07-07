@@ -1,5 +1,5 @@
 import styles from './spalsh.module.css';
-import Logo from '../../../public/logo/Logo_noBg_white.svg';
+import Logo from '../../public/logo/Logo_noBg_white.svg';
 import Image from 'next/image';
 
 export default function Splash() {

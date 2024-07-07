@@ -1,0 +1,23 @@
+.Container {
+  display: flex;
+  gap: 10px;
+}
+
+.BtnBox {
+  width: 60px;
+  height: 60px;
+  background-color: var(--white);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.default {
+  border: 1px solid var(--main-50);
+  cursor: pointer;
+}
+
+.disabled {
+  border: 1px solid var(--gray-20);
+}

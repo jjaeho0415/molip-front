@@ -1,4 +1,5 @@
-import Button from './_component/button/Button';
+import Button from './components/buttons/Button';
+import ShareButton from './components/buttons/ShareButton';
 
 export default function Home() {
   return (
@@ -10,6 +11,10 @@ export default function Home() {
       <br />
       <br />
       <Button size='small'>적용하기</Button>
+      <br />
+      <ShareButton></ShareButton>
+
+      <ShareButton state='disabled'></ShareButton>
     </div>
   );
 }

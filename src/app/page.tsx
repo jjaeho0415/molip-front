@@ -3,6 +3,7 @@
 import MenuCardModal from '@/components/modals/MenuCardModal';
 import { useState } from 'react';
 import Splash from '../components/Splash';
+import TopMenuButton from '@/components/buttons/TopMenuButton';
 
 export default function Home() {
   const [isMenuCardModalOpen, setIsMenuCardModalOpen] =
@@ -23,6 +24,7 @@ export default function Home() {
           />
         )}
       </div>
+      <TopMenuButton />
     </>
   );
 }

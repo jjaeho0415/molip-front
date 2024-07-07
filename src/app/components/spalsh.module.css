@@ -13,7 +13,6 @@
 
 .Icon {
   animation: bounce 2s infinite;
-  /* animation: wobble 2s infinite; */
 }
 
 .Overlay {
@@ -56,21 +55,3 @@
     transform: translateY(-15px);
   }
 }
-
-/* @keyframes wobble {
-  0% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(15deg);
-  }
-  50% {
-    transform: rotate(-15deg);
-  }
-  75% {
-    transform: rotate(15deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
-} */

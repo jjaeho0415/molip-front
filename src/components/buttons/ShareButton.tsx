@@ -1,9 +1,9 @@
 'use client';
 
-import Button from '../../app/components/buttons/Button';
+import Button from './Button';
 import Icon_download from '../../../../public/icons/buttons/download.svg';
 import Icon_disabled from '../../../../public/icons/buttons/download_disabled.svg';
-import styles from './share.module.css';
+import styles from './styles/share.module.css';
 import Image from 'next/image';
 
 interface IShareIprops {

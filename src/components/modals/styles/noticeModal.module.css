@@ -1,0 +1,49 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+}
+
+.modal {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  background-color: var(--white);
+  border-radius: 20px;
+  padding: 70px 50px 24px 50px;
+  width: 300px;
+  height: 250px;
+}
+
+.contentSection {
+  text-align: center;
+  color: var(--gray-80);
+  width: 200px;
+  height: 64px;
+}
+
+.mainTitle {
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 37.5px;
+}
+
+.subTitle {
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 25.5px;
+  white-space: nowrap;
+}
+
+.buttonSection {
+  display: flex;
+  gap: 8px;
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+}

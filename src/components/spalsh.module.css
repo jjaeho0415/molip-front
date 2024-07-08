@@ -27,8 +27,8 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
-  clip-path: circle(10% at 50% 50%);
-  animation: expand 5s forwards;
+  clip-path: circle(0% at 50% 50%);
+  animation: expand 4s forwards;
 }
 
 @keyframes expand {

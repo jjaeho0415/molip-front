@@ -6,6 +6,7 @@ import styles from './menuCardModal.module.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { FreeMode } from 'swiper/modules';
+import ModalButton from '../buttons/ModalButton';
 
 interface MenuCardModalProps {
   menuTitle: string;
@@ -20,9 +21,20 @@ export default function MenuCardModal({
   menuImage,
   setIsMenuCardModalOpen,
 }: MenuCardModalProps) {
+  const closeModal = () => {
+    setIsMenuCardModalOpen(false);
+  };
+
   return (
     <>
-      <div className={styles.overlay}>
+      <div
+        className={styles.overlay}
+        onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+          if (event.target === event.currentTarget) {
+            setIsMenuCardModalOpen(false);
+          }
+        }}
+      >
         <div className={styles.modal}>
           <Image
             className={styles.image}
@@ -46,12 +58,13 @@ export default function MenuCardModal({
               ))}
             </Swiper>
           </div>
-          <button
-            onClick={() => setIsMenuCardModalOpen(false)}
-            className={styles.closeButton}
-          >
-            닫기
-          </button>
+          <div className={styles.modalButtonSection}>
+            <ModalButton
+              handleClick={closeModal}
+              buttonText='닫기'
+              color='gray'
+            />
+          </div>
         </div>
       </div>
     </>

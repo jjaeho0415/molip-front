@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import styles from './roundButton.module.css';
+import styles from './styles/roundButton.module.css';
 import { useEffect, useState } from 'react';
 import Icon_option from '../../../public/icons/buttons/option.svg';
 import Icon_check from '../../../public/icons/buttons/check.svg';

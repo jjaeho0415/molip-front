@@ -1,6 +1,6 @@
 'use client';
 
-import styles from './button.module.css';
+import styles from './styles/button.module.css';
 
 interface IButtonProps {
   state?: 'default' | 'disabled';

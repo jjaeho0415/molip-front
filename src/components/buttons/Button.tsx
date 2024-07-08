@@ -3,7 +3,7 @@
 import styles from './styles/button.module.css';
 
 interface IButtonProps {
-  state?: 'default' | 'disabled';
+  state?: 'default' | 'disabled' | 'test';
   size?: 'small' | 'big';
   onClick?: () => void;
   children: React.ReactNode;

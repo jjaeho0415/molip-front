@@ -39,9 +39,7 @@ export default function TopNavBar({ menu = false, title }: ITopNavBarProps) {
           />
         )}
       </div>
-      {menu && isModalOpen && (
-        <MoreModal pageType='myMenu' setIsMoreModalOpen={setIsModalOpen} />
-      )}
+      {menu && isModalOpen && <MoreModal pageType='myMenu' />}
     </>
   );
 }

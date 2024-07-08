@@ -14,7 +14,7 @@ export default function Home() {
       <Header />
       <TabNavigation tab={tab} setTab={setTab} />
       <div className={styles.Container}></div>
-      <BottomSheet>
+      <BottomSheet size='small'>
         <span>Content</span>
       </BottomSheet>
     </>

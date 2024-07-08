@@ -2,7 +2,7 @@ import { useAnimation, AnimationControls, PanInfo } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import usePreviousValue from './usePreviousValue';
 
-const useBottomSheet = () => {
+export default function useBottomSheet() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const controls: AnimationControls = useAnimation();
   const prevIsOpen: boolean | undefined = usePreviousValue(isOpen);
@@ -29,6 +29,4 @@ const useBottomSheet = () => {
   }, [controls, isOpen, prevIsOpen]);
 
   return { onDragEnd, controls, setIsOpen, isOpen };
-};
-
-export default useBottomSheet;
+}

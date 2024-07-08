@@ -5,15 +5,19 @@ import styles from './BottomSheet.module.css';
 import BTMHeader from './BTMHeader';
 
 interface BottomSheetProps {
+  size?: 'default' | 'small';
   children: ReactNode;
 }
 
-const BottomSheet: React.FC<BottomSheetProps> = ({ children }) => {
+const BottomSheet: React.FC<BottomSheetProps> = ({
+  size = 'default',
+  children,
+}) => {
   const { onDragEnd, controls } = useBottomSheet();
 
   return (
     <motion.div
-      className={styles.wrapper}
+      className={styles[size]}
       drag='y'
       onDragEnd={(
         event: MouseEvent | TouchEvent | PointerEvent,
@@ -32,11 +36,6 @@ const BottomSheet: React.FC<BottomSheetProps> = ({ children }) => {
       }}
       dragConstraints={{ top: 0 }}
       dragElastic={0.2}
-      style={
-        {
-          '--bottom-sheet-height': '100vh',
-        } as React.CSSProperties
-      }
     >
       <BTMHeader />
       <div className={styles.contentWrapper}>{children}</div>

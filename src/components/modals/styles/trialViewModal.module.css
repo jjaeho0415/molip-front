@@ -50,6 +50,7 @@
   font-size: 17px;
   line-height: 25.5px;
   border: none;
+  cursor: pointer;
 }
 
 .loginDescription {

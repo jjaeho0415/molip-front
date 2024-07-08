@@ -4,12 +4,14 @@ import MenuCardModal from '@/components/modals/MenuCardModal';
 import { useState } from 'react';
 import TrialViewModal from '@/components/modals/TrialViewModal';
 import TopMenuButton from '@/components/buttons/TopMenuButton';
+import InputModal from '@/components/modals/InputModal';
 import Splash from '@/components/Splash';
 import OptionButton from '@/components/buttons/OptionButton';
 
 export default function Home() {
   const [isMenuCardModalOpen, setIsMenuCardModalOpen] =
     useState<boolean>(false);
+  const [isInputModalOpen, setIsInputModalOpen] = useState<boolean>(false);
   const [isTrialModalOpen, setIsTrialModalOpen] = useState<boolean>(false);
   return (
     <>
@@ -18,6 +20,7 @@ export default function Home() {
         <button onClick={() => setIsMenuCardModalOpen(true)}>
           메뉴카드 모달
         </button>
+        <button onClick={() => setIsInputModalOpen(true)}>입력 모달</button>
         <button onClick={() => setIsTrialModalOpen(true)}>체험판 모달</button>
         {isMenuCardModalOpen && (
           <MenuCardModal
@@ -27,8 +30,10 @@ export default function Home() {
             setIsMenuCardModalOpen={setIsMenuCardModalOpen}
           />
         )}
+        {isInputModalOpen && (
+          <InputModal setIsInputModalOpen={setIsInputModalOpen} />)}
         {isTrialModalOpen && (
-          <TrialViewModal setIsTrialModalOpen={setIsTrialModalOpen} />
+          <TrialViewModal setIsTrialModalOpen={ setIsTrialModalOpen} />
         )}
       </div>
       <TopMenuButton />
@@ -43,5 +48,6 @@ export default function Home() {
       </OptionButton>
       <OptionButton>짬뽕</OptionButton>
     </>
-  );
+    );
 }
+

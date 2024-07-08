@@ -5,9 +5,9 @@ import { useState } from 'react';
 import TrialViewModal from '@/components/modals/TrialViewModal';
 import TopMenuButton from '@/components/buttons/TopMenuButton';
 import Splash from '@/components/Splash';
-import OptionButton from '@/components/buttons/OptionButton';
 import MoreModal from '@/components/modals/MoreModal';
 import Image from 'next/image';
+import TopNavBar from '@/components/TopNavBar';
 
 export default function Home() {
   const [isMenuCardModalOpen, setIsMenuCardModalOpen] =
@@ -18,6 +18,8 @@ export default function Home() {
   return (
     <>
       <Splash />
+      <TopNavBar title='스위프의 메뉴판' />
+      <TopNavBar menu={true} />
       <div>
         <button onClick={() => setIsMenuCardModalOpen(true)}>
           메뉴카드 모달
@@ -59,13 +61,6 @@ export default function Home() {
       <br />
       <TopMenuButton size='small' />
       <br />
-      <OptionButton state='selected' option={false}>
-        짜장면
-      </OptionButton>
-      <OptionButton state='checked' option={false}>
-        물냉면
-      </OptionButton>
-      <OptionButton>짬뽕</OptionButton>
     </>
   );
 }

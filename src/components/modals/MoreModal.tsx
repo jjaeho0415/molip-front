@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './styles/moreModal.module.css';
 import InputModal from './InputModal';
 import NoticeModal from './NoticeModal';

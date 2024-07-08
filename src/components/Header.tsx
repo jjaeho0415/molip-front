@@ -4,8 +4,11 @@ import styles from './header.module.css';
 import Image from 'next/image';
 import Logo from '../../public/logo/Logo_noBg_orange.svg';
 import Icon from '../../public/icons/Icon_mypage.svg';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
+  const router = useRouter();
+
   return (
     <div className={styles.HeaderContainer}>
       <Image
@@ -14,9 +17,7 @@ export default function Header() {
         alt='logo'
         width={50}
         height={50}
-        onClick={() => {
-          return;
-        }}
+        onClick={() => router.push('/')}
       />
       <Image
         className={styles.Icon}

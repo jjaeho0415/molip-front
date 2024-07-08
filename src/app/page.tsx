@@ -35,7 +35,7 @@ export default function Home() {
               ? setIsMoreModalOpen(false)
               : setIsMoreModalOpen(true)
           }
-          style={{ position: 'relative' }}
+          style={{ position: 'relative', cursor: 'pointer' }}
         />
         {isMenuCardModalOpen && (
           <MenuCardModal
@@ -52,10 +52,7 @@ export default function Home() {
         {isMoreModalOpen && (
           <>
             <div style={{ position: 'absolute', left: '100px' }}>
-              <MoreModal
-                setIsMoreModalOpen={setIsMoreModalOpen}
-                pageType='insideTeamMenu'
-              />
+              <MoreModal pageType='insideTeamMenu' />
             </div>
           </>
         )}

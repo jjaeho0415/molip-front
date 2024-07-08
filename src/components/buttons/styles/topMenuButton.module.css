@@ -15,7 +15,6 @@
   transition:
     background-color 0.3s,
     color 0.3s;
-  width: 150px;
   height: 40px;
   border-radius: 10px;
 }
@@ -28,4 +27,12 @@
 .active {
   background-color: white;
   color: var(--gray-60);
+}
+
+.small {
+  width: 150px;
+}
+
+.big {
+  width: 180px;
 }

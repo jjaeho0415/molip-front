@@ -33,6 +33,8 @@ export default function Home() {
       </div>
       <TopMenuButton />
       <br />
+      <TopMenuButton size='small' />
+      <br />
       <OptionButton state='selected' option={false}>
         짜장면
       </OptionButton>

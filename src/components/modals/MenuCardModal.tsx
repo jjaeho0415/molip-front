@@ -46,9 +46,10 @@ export default function MenuCardModal({
             />
             <p className={styles.title}>{menuTitle}</p>
             <div className={styles.hashTagSwiper}>
+              {/* slidesPerView는 글자수에 따라 바껴서 이건 다시 해야함 */}
               <Swiper
-                spaceBetween={4}
-                slidesPerView={4.5}
+                spaceBetween={5}
+                slidesPerView={4}
                 freeMode={true}
                 modules={[FreeMode]}
               >

@@ -4,43 +4,25 @@ import styles from './login.module.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import '../../../swiper.bundle.css';
 import { Pagination } from 'swiper/modules';
 import Image from 'next/image';
 import LoginImage from '../../../public/svg/kakao_login_large_wide.svg';
 import Button from '@/components/buttons/Button';
 
 export default function Login() {
-  const loginHandler = async () => {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API}/oauth2/authorization/kakao`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error(
-        'There has been a problem with your fetch operation:',
-        error,
-      );
-    }
+  const loginHandler = () => {
+    window.location.href =
+      'http://3.39.119.209:8080/oauth2/authorization/kakao';
   };
 
   return (
     <div className={styles.Container}>
       <div className={styles.TutorialBox}>
         <Swiper
-          pagination={true}
+          pagination={{
+            clickable: true,
+          }}
           modules={[Pagination]}
           className={styles.TutorialBox}
         >

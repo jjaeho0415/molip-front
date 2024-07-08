@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import usePreviousValue from './usePreviousValue';
 
 const useBottomSheet = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const controls: AnimationControls = useAnimation();
   const prevIsOpen: boolean | undefined = usePreviousValue(isOpen);
 

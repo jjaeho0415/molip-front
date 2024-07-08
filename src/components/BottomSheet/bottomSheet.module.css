@@ -2,14 +2,14 @@
   flex-direction: column;
   position: fixed;
   z-index: 10;
-  top: 20vh;
+  top: 50px;
   left: 0;
   right: 0;
   width: 390px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
   background-color: white;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   height: 100vh; /* Placeholder for the constant */
   margin: 0 auto;
   overflow: auto;
@@ -17,8 +17,8 @@
 
 .headerWrapper {
   height: 48px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
   position: relative;
   padding-top: 16px;
   padding-bottom: 4px;
@@ -35,4 +35,5 @@
 .contentWrapper {
   height: 80vh;
   padding: 10px;
+  overflow: auto;
 }

@@ -8,8 +8,6 @@ interface BottomSheetProps {
   children: ReactNode;
 }
 
-const BOTTOM_SHEET_HEIGHT = 700; // 상수를 실제 값으로 설정해주세요.
-
 const BottomSheet: React.FC<BottomSheetProps> = ({ children }) => {
   const { onDragEnd, controls } = useBottomSheet();
 
@@ -30,7 +28,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({ children }) => {
       }}
       variants={{
         visible: { y: 0 },
-        hidden: { y: '100%' },
+        hidden: { y: '88%' },
       }}
       dragConstraints={{ top: 0 }}
       dragElastic={0.2}

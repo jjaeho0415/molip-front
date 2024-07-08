@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import React, { Dispatch, SetStateAction } from 'react';
-import styles from './menuCardModal.module.css';
+import styles from './styles/menuCardModal.module.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { FreeMode } from 'swiper/modules';
@@ -36,28 +36,31 @@ export default function MenuCardModal({
         }}
       >
         <div className={styles.modal}>
-          <Image
-            className={styles.image}
-            alt='menuImage'
-            src={menuImage}
-            height={240}
-            width={240}
-          />
-          <p className={styles.title}>{menuTitle}</p>
-          <div className={styles.hashTagSwiper}>
-            <Swiper
-              spaceBetween={4}
-              slidesPerView={4.5}
-              freeMode={true}
-              modules={[FreeMode]}
-            >
-              {hashTags.map((tag, index) => (
-                <SwiperSlide key={index} className={styles.hashTagList}>
-                  <div className={styles.hashtag}>#{tag}</div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
+          <div className={styles.contentSection}>
+            <Image
+              className={styles.image}
+              alt='menuImage'
+              src={menuImage}
+              height={240}
+              width={240}
+            />
+            <p className={styles.title}>{menuTitle}</p>
+            <div className={styles.hashTagSwiper}>
+              <Swiper
+                spaceBetween={4}
+                slidesPerView={4.5}
+                freeMode={true}
+                modules={[FreeMode]}
+              >
+                {hashTags.map((tag, index) => (
+                  <SwiperSlide key={index} className={styles.hashTagList}>
+                    <div className={styles.hashtag}>#{tag}</div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
           </div>
+
           <div className={styles.modalButtonSection}>
             <ModalButton
               handleClick={closeModal}

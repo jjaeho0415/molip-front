@@ -31,9 +31,9 @@ export default function Home() {
           />
         )}
         {isInputModalOpen && (
-          <InputModal setIsInputModalOpen={setIsInputModalOpen} />
+          <InputModal setIsInputModalOpen={setIsInputModalOpen} />)}
         {isTrialModalOpen && (
-          <TrialViewModal setIsTrialModalOpen={setIsTrialModalOpen} />
+          <TrialViewModal setIsTrialModalOpen={ setIsTrialModalOpen} />
         )}
       </div>
       <TopMenuButton />

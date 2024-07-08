@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import styles from './trialViewModal.module.css';
+import styles from './styles/trialViewModal.module.css';
 import ModalButton from '../buttons/ModalButton';
 
 interface TrialViewModalProps {
@@ -28,8 +28,12 @@ function TrialViewModal({ setIsTrialModalOpen }: TrialViewModalProps) {
       >
         <div className={styles.modal}>
           <div className={styles.topText}>
-            <span className={styles.orange}>우리 팀 전용 메뉴판</span>도
-            만들어봐요! 동료들과 메뉴 도장깨기 어떤가요?😆
+            <p>
+              {' '}
+              <span className={styles.orange}>우리 팀 전용 메뉴판</span>도
+              만들어봐요!
+            </p>{' '}
+            <p>동료들과 메뉴 도장깨기 어떤가요?😆</p>
           </div>
           <div className={styles.loginSection}>
             <button className={styles.loginButton}>로그인</button>

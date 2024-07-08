@@ -11,10 +11,10 @@
 .modal {
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  position: relative;
   background-color: var(--white);
   border-radius: 20px;
-  padding: 50px 30px 24px 30px;
+  padding: 50px 25px 24px 25px;
   width: 300px;
   height: 250px;
 }
@@ -42,4 +42,17 @@
   outline: none;
   border: none;
   border-bottom: 1px solid var(--black);
+}
+
+.empty {
+  color: var(--main-50);
+}
+
+.bottomSection {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
 }

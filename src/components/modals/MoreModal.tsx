@@ -33,28 +33,26 @@ function MoreModal({ setIsMoreModalOpen, pageType }: MoreModalProps) {
 
   return (
     <>
-      
-        <div className={styles.modal}>
-          {items.map((item, index) => (
-            <div
-              key={index}
-              className={styles.itemSection}
-              onClick={() => handleClick(item)}
-            >
-              {item}
-            </div>
-          ))}
-        </div>
-        {isInputModalOpen && (
-          <InputModal setIsInputModalOpen={setIsInputModalOpen} />
-        )}
-        {isNoticeModalOpen && (
-          <NoticeModal
-            setIsNoticeModalOpen={setIsNoticeModalOpen}
-            titleText='스위프의 메뉴판'
-          />
-        )}
-      
+      <div className={styles.modal}>
+        {items.map((item, index) => (
+          <div
+            key={index}
+            className={styles.itemSection}
+            onClick={() => handleClick(item)}
+          >
+            {item}
+          </div>
+        ))}
+      </div>
+      {isInputModalOpen && (
+        <InputModal setIsInputModalOpen={setIsInputModalOpen} />
+      )}
+      {isNoticeModalOpen && (
+        <NoticeModal
+          setIsNoticeModalOpen={setIsNoticeModalOpen}
+          titleText='스위프의 메뉴판'
+        />
+      )}
     </>
   );
 }

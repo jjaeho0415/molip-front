@@ -1,0 +1,19 @@
+.TabContainer {
+  display: flex;
+  padding: 20px 20px 20px 20px;
+  gap: 20px;
+}
+
+.active {
+  font-size: 19px;
+  color: var(--main-50);
+  border-bottom: 3px solid var(--main-50);
+  padding-bottom: 4px;
+  cursor: pointer;
+}
+
+.inactive {
+  font-size: 19px;
+  color: var(--gray-30);
+  cursor: pointer;
+}

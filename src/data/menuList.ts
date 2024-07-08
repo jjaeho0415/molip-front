@@ -2,10 +2,12 @@ export const teamMenuList = [
   {
     teamName: '스위프 10팀',
     menuName: '스위프 10팀의 메뉴판',
+    teamNumber: 5,
   },
   {
     teamName: '맛집 동아리 PIG',
     menuName: '3번째 정기 모임',
+    teamNumber: 6,
   },
 ];
 

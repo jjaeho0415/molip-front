@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import styles from './styles/noticeModal.module.css';
 import ModalButton from '../buttons/ModalButton';
+import ReactDOM from 'react-dom';
 
 interface NoticeModalProps {
   setIsNoticeModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -16,7 +17,7 @@ function NoticeModal({ setIsNoticeModalOpen, titleText }: NoticeModalProps) {
     setIsNoticeModalOpen(false);
   };
 
-  return (
+  return ReactDOM.createPortal(
     <div
       className={styles.overlay}
       onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -43,7 +44,8 @@ function NoticeModal({ setIsNoticeModalOpen, titleText }: NoticeModalProps) {
           />
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

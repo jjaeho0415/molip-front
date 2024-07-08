@@ -24,16 +24,27 @@ function MyMenuItem({ menuTitle }: MyMenuItemProps) {
               ? setIsMoreModalOpen(false)
               : setIsMoreModalOpen(true)
           }
-          style={{ position: 'relative', cursor: 'pointer' }}
+          style={{ position: 'relative', cursor: 'pointer', zIndex: '1' }}
         />
+        {isMoreModalOpen && (
+          <>
+            <div
+              style={{
+                position: 'absolute',
+                transform: 'translate(191.5px, 65px)',
+                zIndex: '6',
+              }}
+            >
+              <MoreModal
+                menuTitle={menuTitle}
+                teamNumber={0}
+                teamTitle=''
+                pageType='outsideMyMenu'
+              />
+            </div>
+          </>
+        )}
       </div>
-      {isMoreModalOpen && (
-        <>
-          <div style={{ position: 'absolute' }}>
-            <MoreModal pageType='myMenu' />
-          </div>
-        </>
-      )}
     </>
   );
 }

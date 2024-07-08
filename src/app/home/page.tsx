@@ -8,6 +8,7 @@ import { myMenuList, teamMenuList } from '@/data/menuList';
 import MyMenuItem from '@/components/menuItem/MyMenuItem';
 import TeamMenuItem from '@/components/menuItem/TeamMenuItem';
 import BottomSheet from '@/components/BottomSheet/BottomSheet';
+import Button from '@/components/buttons/Button';
 
 export default function Home() {
   const [tab, setTab] = useState<'my' | 'team'>('my');
@@ -16,12 +17,14 @@ export default function Home() {
     <>
       <Header />
       <TabNavigation tab={tab} setTab={setTab} />
+
+      <div className={styles.createContainer}>
+        <p className={styles.titleSection}>
+          {tab === 'my' ? '나의 ' : '팀 '}메뉴판
+        </p>
+        <Button state='new'>+ 새로만들기</Button>
+      </div>
       <div className={styles.Container}>
-        <div className={styles.createContainer}>
-          <p className={styles.titleSection}>
-            {tab === 'my' ? '나의 ' : '팀 '}메뉴판
-          </p>
-        </div>
         {tab === 'my' ? (
           <>
             {myMenuList.map((myMenuItem, index) => (
@@ -34,6 +37,7 @@ export default function Home() {
               <TeamMenuItem
                 teamTitle={teamMenuItem.teamName}
                 menuTitle={teamMenuItem.menuName}
+                teamNumber={teamMenuItem.teamNumber}
                 key={index}
               />
             ))}

@@ -20,7 +20,10 @@
 }
 
 .contentSection {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   color: var(--gray-80);
   width: 200px;
   height: 64px;
@@ -30,6 +33,7 @@
   font-weight: 700;
   font-size: 25px;
   line-height: 37.5px;
+  white-space: nowrap;
 }
 
 .subTitle {

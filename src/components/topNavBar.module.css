@@ -1,0 +1,32 @@
+.NavBarContainer {
+  width: 100%;
+  height: 56px;
+  background-color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.Icon_Back {
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+}
+
+.MenuButtonBox {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.Title {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.MoreBtn {
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+}

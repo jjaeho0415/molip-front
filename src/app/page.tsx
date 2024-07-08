@@ -7,12 +7,14 @@ import TopMenuButton from '@/components/buttons/TopMenuButton';
 import InputModal from '@/components/modals/InputModal';
 import Splash from '@/components/Splash';
 import OptionButton from '@/components/buttons/OptionButton';
+import NoticeModal from '@/components/modals/NoticeModal';
 
 export default function Home() {
   const [isMenuCardModalOpen, setIsMenuCardModalOpen] =
     useState<boolean>(false);
   const [isInputModalOpen, setIsInputModalOpen] = useState<boolean>(false);
   const [isTrialModalOpen, setIsTrialModalOpen] = useState<boolean>(false);
+  const [isNoticeModalOpen, setIsNoticeModalOpen] = useState<boolean>(false);
   return (
     <>
       <Splash />
@@ -22,6 +24,7 @@ export default function Home() {
         </button>
         <button onClick={() => setIsInputModalOpen(true)}>입력 모달</button>
         <button onClick={() => setIsTrialModalOpen(true)}>체험판 모달</button>
+        <button onClick={() => setIsNoticeModalOpen(true)}>알림 모달</button>
         {isMenuCardModalOpen && (
           <MenuCardModal
             menuTitle='감자탕'
@@ -31,9 +34,16 @@ export default function Home() {
           />
         )}
         {isInputModalOpen && (
-          <InputModal setIsInputModalOpen={setIsInputModalOpen} />)}
+          <InputModal setIsInputModalOpen={setIsInputModalOpen} />
+        )}
         {isTrialModalOpen && (
-          <TrialViewModal setIsTrialModalOpen={ setIsTrialModalOpen} />
+          <TrialViewModal setIsTrialModalOpen={setIsTrialModalOpen} />
+        )}
+        {isNoticeModalOpen && (
+          <NoticeModal
+            setIsNoticeModalOpen={setIsNoticeModalOpen}
+            titleText='스위프의 메뉴판'
+          />
         )}
       </div>
       <TopMenuButton />
@@ -48,6 +58,5 @@ export default function Home() {
       </OptionButton>
       <OptionButton>짬뽕</OptionButton>
     </>
-    );
+  );
 }
-

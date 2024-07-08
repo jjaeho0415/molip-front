@@ -4,17 +4,17 @@ import MenuCardModal from '@/components/modals/MenuCardModal';
 import { useState } from 'react';
 import TrialViewModal from '@/components/modals/TrialViewModal';
 import TopMenuButton from '@/components/buttons/TopMenuButton';
-import InputModal from '@/components/modals/InputModal';
 import Splash from '@/components/Splash';
 import OptionButton from '@/components/buttons/OptionButton';
-import NoticeModal from '@/components/modals/NoticeModal';
+import MoreModal from '@/components/modals/MoreModal';
+import Image from 'next/image';
 
 export default function Home() {
   const [isMenuCardModalOpen, setIsMenuCardModalOpen] =
     useState<boolean>(false);
-  const [isInputModalOpen, setIsInputModalOpen] = useState<boolean>(false);
   const [isTrialModalOpen, setIsTrialModalOpen] = useState<boolean>(false);
-  const [isNoticeModalOpen, setIsNoticeModalOpen] = useState<boolean>(false);
+  const [isMoreModalOpen, setIsMoreModalOpen] = useState<boolean>(false);
+
   return (
     <>
       <Splash />
@@ -22,9 +22,19 @@ export default function Home() {
         <button onClick={() => setIsMenuCardModalOpen(true)}>
           메뉴카드 모달
         </button>
-        <button onClick={() => setIsInputModalOpen(true)}>입력 모달</button>
         <button onClick={() => setIsTrialModalOpen(true)}>체험판 모달</button>
-        <button onClick={() => setIsNoticeModalOpen(true)}>알림 모달</button>
+        <Image
+          alt='moreIcon'
+          src='/svg/moreIcon.svg'
+          width={24}
+          height={24}
+          onClick={() =>
+            isMoreModalOpen
+              ? setIsMoreModalOpen(false)
+              : setIsMoreModalOpen(true)
+          }
+          style={{ position: 'relative' }}
+        />
         {isMenuCardModalOpen && (
           <MenuCardModal
             menuTitle='감자탕'
@@ -33,17 +43,19 @@ export default function Home() {
             setIsMenuCardModalOpen={setIsMenuCardModalOpen}
           />
         )}
-        {isInputModalOpen && (
-          <InputModal setIsInputModalOpen={setIsInputModalOpen} />
-        )}
         {isTrialModalOpen && (
           <TrialViewModal setIsTrialModalOpen={setIsTrialModalOpen} />
         )}
-        {isNoticeModalOpen && (
-          <NoticeModal
-            setIsNoticeModalOpen={setIsNoticeModalOpen}
-            titleText='스위프의 메뉴판'
-          />
+
+        {isMoreModalOpen && (
+          <>
+            <div style={{ position: 'absolute', left: '100px' }}>
+              <MoreModal
+                setIsMoreModalOpen={setIsMoreModalOpen}
+                pageType='insideTeamMenu'
+              />
+            </div>
+          </>
         )}
       </div>
       <TopMenuButton />

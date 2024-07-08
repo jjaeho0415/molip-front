@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import styles from './topMenuButton.module.css';
+import styles from './styles/topMenuButton.module.css';
 
 export default function TopMenuButton() {
   const [active, setActive] = useState('board');

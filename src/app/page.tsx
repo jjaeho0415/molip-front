@@ -5,6 +5,7 @@ import { useState } from 'react';
 import TrialViewModal from '@/components/modals/TrialViewModal';
 import TopMenuButton from '@/components/buttons/TopMenuButton';
 import Splash from '@/components/Splash';
+import OptionButton from '@/components/buttons/OptionButton';
 
 export default function Home() {
   const [isMenuCardModalOpen, setIsMenuCardModalOpen] =
@@ -31,6 +32,14 @@ export default function Home() {
         )}
       </div>
       <TopMenuButton />
+      <br />
+      <OptionButton state='selected' option={false}>
+        짜장면
+      </OptionButton>
+      <OptionButton state='checked' option={false}>
+        물냉면
+      </OptionButton>
+      <OptionButton>짬뽕</OptionButton>
     </>
   );
 }

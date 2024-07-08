@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './modalButton.module.css';
+import styles from './styles/modalButton.module.css';
 
 interface ModalButtonProps {
   handleClick: () => void;

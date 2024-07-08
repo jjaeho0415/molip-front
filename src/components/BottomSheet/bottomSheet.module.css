@@ -19,7 +19,7 @@
   flex-direction: column;
   position: fixed;
   z-index: 10;
-  top: calc(100vh - 320px);
+  top: calc(100vh - 300px);
   left: 0;
   right: 0;
   width: 390px;
@@ -28,7 +28,7 @@
   border-top-right-radius: 30px;
   background-color: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-  height: 320px; /* Placeholder for the constant */
+  height: 300px; /* Placeholder for the constant */
   margin: 0 auto;
   overflow: auto;
 }
@@ -52,6 +52,6 @@
 
 .contentWrapper {
   height: 80vh;
-  padding: 10px;
+  padding: 0 10px 0 10px;
   overflow: auto;
 }

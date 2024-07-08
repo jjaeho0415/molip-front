@@ -8,6 +8,7 @@ import Splash from '@/components/Splash';
 import MoreModal from '@/components/modals/MoreModal';
 import Image from 'next/image';
 import TopNavBar from '@/components/TopNavBar';
+import Button from '@/components/buttons/Button';
 
 export default function Home() {
   const [isMenuCardModalOpen, setIsMenuCardModalOpen] =
@@ -61,6 +62,7 @@ export default function Home() {
       <br />
       <TopMenuButton size='small' />
       <br />
+      <Button state='new'>+ 새로만들기</Button>
     </>
   );
 }

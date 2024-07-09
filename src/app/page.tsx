@@ -26,18 +26,6 @@ export default function Home() {
           메뉴카드 모달
         </button>
         <button onClick={() => setIsTrialModalOpen(true)}>체험판 모달</button>
-        <Image
-          alt='moreIcon'
-          src='/svg/moreIcon.svg'
-          width={24}
-          height={24}
-          onClick={() =>
-            isMoreModalOpen
-              ? setIsMoreModalOpen(false)
-              : setIsMoreModalOpen(true)
-          }
-          style={{ position: 'relative', cursor: 'pointer' }}
-        />
         {isMenuCardModalOpen && (
           <MenuCardModal
             menuTitle='감자탕'
@@ -50,13 +38,6 @@ export default function Home() {
           <TrialViewModal setIsTrialModalOpen={setIsTrialModalOpen} />
         )}
 
-        {isMoreModalOpen && (
-          <>
-            <div style={{ position: 'absolute', left: '100px' }}>
-              <MoreModal pageType='insideTeamMenu' />
-            </div>
-          </>
-        )}
       </div>
       <TopMenuButton />
       <br />

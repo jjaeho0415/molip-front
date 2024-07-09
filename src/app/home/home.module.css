@@ -1,0 +1,23 @@
+.createContainer {
+	margin-top: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 20px;
+}
+
+.titleSection {
+	font-weight: 700;
+	font-size: 32px;
+	line-height: 48px;
+	color: var(--black);
+}
+
+.Container {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	margin-top: 32px;
+	align-items: center;
+	justify-content: center;
+}

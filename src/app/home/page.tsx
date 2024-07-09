@@ -9,6 +9,7 @@ import MyMenuItem from '@/components/menuItem/MyMenuItem';
 import TeamMenuItem from '@/components/menuItem/TeamMenuItem';
 import BottomSheet from '@/components/BottomSheet/BottomSheet';
 import Button from '@/components/buttons/Button';
+import AddMenu_BS from '@/components/BottomSheet/AddMenu_BS';
 
 export default function Home() {
 	const [tab, setTab] = useState<'my' | 'team'>('my');
@@ -44,8 +45,8 @@ export default function Home() {
 					</>
 				)}
 			</div>
-			<BottomSheet size='small'>
-				<span>Content</span>
+			<BottomSheet>
+				<AddMenu_BS />
 			</BottomSheet>
 		</>
 	);

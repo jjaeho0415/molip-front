@@ -12,6 +12,7 @@ import { myMenuList, teamMenuList } from '@/data/menuList';
 import MenuEmpty from './_components/MenuEmpty';
 import Image from 'next/image';
 import InformationModal from './_components/InformationModal';
+import AddMenu_BS from '@/components/BottomSheet/AddMenu_BS';
 
 export default function Home() {
 	const [tab, setTab] = useState<'my' | 'team'>('my');
@@ -79,8 +80,8 @@ export default function Home() {
 					<TeamMenuList menuList={teamMenuList} />
 				)}
 			</div>
-			<BottomSheet size='small'>
-				<span>Content</span>
+			<BottomSheet>
+				<AddMenu_BS />
 			</BottomSheet>
 		</>
 	);

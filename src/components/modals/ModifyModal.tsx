@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import styles from './styles/modifyModal.module.css';
 import ModalButton from '../buttons/ModalButton';
+import ReactDOM from 'react-dom';
 
 interface ModifyModalProps {
   setIsModifyModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -39,7 +40,7 @@ function ModifyModal({
   };
   const items = [1, 2, 3, 4, 5, 6, 7, 8];
 
-  return (
+  return ReactDOM.createPortal(
     <>
       <div
         className={styles.overlay}
@@ -95,7 +96,8 @@ function ModifyModal({
           </div>
         </div>
       </div>
-    </>
+    </>,
+    document.body,
   );
 }
 

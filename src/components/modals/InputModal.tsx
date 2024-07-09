@@ -1,13 +1,15 @@
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import styles from './styles/inputModal.module.css';
 import ModalButton from '../buttons/ModalButton';
+import ReactDOM from 'react-dom';
 
 interface InputModalProps {
   setIsInputModalOpen: Dispatch<SetStateAction<boolean>>;
+  titleText: string;
 }
 
-function InputModal({ setIsInputModalOpen }: InputModalProps) {
-  const [value, setValue] = useState<string>('');
+function InputModal({ setIsInputModalOpen, titleText }: InputModalProps) {
+  const [value, setValue] = useState<string>(titleText);
   const [isEmpty, setIsEmpty] = useState<boolean>(false);
   const inputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -25,7 +27,7 @@ function InputModal({ setIsInputModalOpen }: InputModalProps) {
     setIsInputModalOpen(false);
   };
 
-  return (
+  return ReactDOM.createPortal(
     <>
       <div
         className={styles.overlay}
@@ -48,7 +50,6 @@ function InputModal({ setIsInputModalOpen }: InputModalProps) {
             <input
               value={value}
               onChange={(e) => inputChange(e)}
-              placeholder='ex) 스위프의 메뉴판'
               className={styles.inputSection}
             />
           </div>
@@ -66,7 +67,8 @@ function InputModal({ setIsInputModalOpen }: InputModalProps) {
           </div>
         </div>
       </div>
-    </>
+    </>,
+    document.body,
   );
 }
 

@@ -45,7 +45,12 @@ export default function Home() {
 								onClick={handleInformClick}
 							/>
 							{isInformOpen && (
-								<div style={{ position: 'absolute', transform: 'translate(49.5px, 97px)'}}>
+								<div
+									style={{
+										position: 'absolute',
+										transform: 'translate(49.5px, 97px)',
+									}}
+								>
 									<InformationModal />
 								</div>
 							)}
@@ -58,14 +63,17 @@ export default function Home() {
 			<div className={styles.Container}>
 				{tab === 'my' ? (
 					myMenuList.length === 0 ? (
-						<MenuEmpty tab='my' />
+						<MenuEmpty
+							tab='my'
+							myMenuIsEmpty={myMenuList.length === 0 ? true : false}
+						/>
 					) : (
 						<MyMenuList menuList={myMenuList} />
 					)
 				) : teamMenuList.length === 0 ? (
 					<MenuEmpty
 						tab='team'
-						myMenuIsEmpty={myMenuList.length === 0 ? false : true}
+						myMenuIsEmpty={myMenuList.length === 0 ? true : false}
 					/>
 				) : (
 					<TeamMenuList menuList={teamMenuList} />

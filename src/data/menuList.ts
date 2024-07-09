@@ -12,10 +12,10 @@ export const teamMenuList = [
 ];
 
 export const myMenuList = [
-	// {
-	//   menuName: '매운거 땡길 때',
-	// },
-	// {
-	//   menuName: '스위프의 메뉴판',
-	// },
+	{
+		menuName: '매운거 땡길 때',
+	},
+	{
+		menuName: '스위프의 메뉴판',
+	},
 ];

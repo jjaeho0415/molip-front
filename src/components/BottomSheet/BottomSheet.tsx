@@ -17,7 +17,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 
   return (
     <motion.div
-      className={styles[size]}
+      className={`${styles.wrapper} ${styles[size]}`}
       drag='y'
       onDragEnd={(
         event: MouseEvent | TouchEvent | PointerEvent,

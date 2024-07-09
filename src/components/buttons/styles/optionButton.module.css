@@ -1,32 +1,37 @@
 .Container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 30px;
-  font-size: 14px;
-  font-weight: 400;
-  height: 36px;
-  padding: 8px 16px 8px 16px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 30px;
+	font-size: 14px;
+	font-weight: 400;
+	height: 36px;
+	padding: 8px 16px 8px 16px;
 }
 
 .default {
-  background-color: var(--white);
-  border: 1px solid var(--gray-40);
-  color: var(--gray-40);
+	background-color: var(--white);
+	border: 1px solid var(--gray-40);
+	color: var(--gray-40);
 }
 
 .selected {
-  border: 1px solid var(--main-50);
-  color: var(--main-50);
-  background-color: var(--white);
+	border: 1px solid var(--main-50);
+	color: var(--main-50);
+	background-color: var(--white);
 }
 
 .checked {
-  background-color: var(--main-50);
-  color: var(--white);
-  border: 1px solid var(--main-50);
+	background-color: var(--main-50);
+	color: var(--white);
+	border: 1px solid var(--main-50);
 }
 
 .option {
-  cursor: pointer;
+	cursor: pointer;
+}
+
+.closeIcon {
+	margin-left: 5px;
+	cursor: pointer;
 }

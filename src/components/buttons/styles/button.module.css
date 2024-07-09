@@ -7,6 +7,11 @@
 }
 
 .big {
+  width: 350px;
+  height: 60px;
+}
+
+.madium {
   width: 280px;
   height: 60px;
 }

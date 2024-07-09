@@ -17,7 +17,7 @@ export default function ShareButton({
 }: IShareIprops) {
   return (
     <div className={styles.Container}>
-      <Button state={state} onClick={onClick}>
+      <Button size='medium' state={state} onClick={onClick}>
         공유하기
       </Button>
       <div

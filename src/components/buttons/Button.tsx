@@ -4,7 +4,7 @@ import styles from './styles/button.module.css';
 
 interface IButtonProps {
   state?: 'default' | 'disabled' | 'test' | 'new';
-  size?: 'small' | 'big';
+  size?: 'small' | 'medium' | 'big';
   onClick?: () => void;
   children: React.ReactNode;
 }

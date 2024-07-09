@@ -1,0 +1,35 @@
+.emptyContainer {
+	display: flex;
+	flex-direction: column;
+	height: calc(100vh - 231px);
+	justify-content: center;
+	align-items: center;
+	gap: 24px;
+}
+
+.textSection {
+	font-weight: 700;
+	font-size: 17px;
+	line-height: 25.5px;
+	text-align: center;
+	color: var(--gray-60);
+}
+
+.createButton {
+	width: 122px;
+	height: 40px;
+	border-radius: 50px;
+	border: 1px solid var(--gray-30);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	padding: 8px 20px;
+	background-color: var(--white);
+	font-size: 15px;
+	font-weight: 700;
+	line-height: 22.5px;
+	text-align: center;
+	color: var(--gray-60);
+	white-space: nowrap;
+}

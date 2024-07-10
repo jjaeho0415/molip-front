@@ -1,15 +1,19 @@
 'use client';
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import styles from './input.module.css';
 
 interface IInputProps {
 	placeholder?: string;
+	value: string;
+	setValue: Dispatch<SetStateAction<string>>;
 }
 
-export default function BigInput({ placeholder = '' }: IInputProps) {
-	const [value, setValue] = useState<string>('');
-
+export default function BigInput({
+	placeholder = '',
+	value,
+	setValue,
+}: IInputProps) {
 	const inputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);
 	};

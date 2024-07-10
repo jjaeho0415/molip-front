@@ -8,38 +8,60 @@ import MoreModal from './modals/MoreModal';
 import { useState } from 'react';
 
 interface ITopNavBarProps {
-  menu?: boolean;
-  title?: string;
+	menu?: boolean;
+	title?: string;
+	pageType?:
+		| 'insideTeamMenu'
+		| 'outsideTeamMenu'
+		| 'insideMyMenu'
+		| 'outsideMyMenu';
+	menuTitle?: string;
+	teamTitle?: string;
+	teamNumber?: number;
 }
 
-export default function TopNavBar({ menu = false, title }: ITopNavBarProps) {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  return (
-    <>
-      <div className={styles.NavBarContainer}>
-        <Image
-          className={styles.Icon_Back}
-          src={Icon_Back}
-          width={24}
-          height={24}
-          alt='backIcon'
-        />
-        {menu && <TopMenuButton size='small' />}
-        {title && <p className={styles.Title}>{title}</p>}
-        {menu && (
-          <Image
-            className={styles.MoreBtn}
-            alt='moreIcon'
-            src='/svg/moreIcon.svg'
-            width={24}
-            height={24}
-            onClick={() =>
-              isModalOpen ? setIsModalOpen(false) : setIsModalOpen(true)
-            }
-          />
-        )}
-      </div>
-      {menu && isModalOpen && <MoreModal pageType='myMenu' />}
-    </>
-  );
+export default function TopNavBar({
+	menu = false,
+	title,
+	pageType = 'insideTeamMenu',
+	menuTitle = '',
+	teamTitle = '',
+	teamNumber = -1,
+}: ITopNavBarProps) {
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+	return (
+		<>
+			<div className={styles.NavBarContainer}>
+				<Image
+					className={styles.Icon_Back}
+					src={Icon_Back}
+					width={24}
+					height={24}
+					alt='backIcon'
+				/>
+				{menu && <TopMenuButton size='small' />}
+				{title && <p className={styles.Title}>{title}</p>}
+				{menu && (
+					<Image
+						className={styles.MoreBtn}
+						alt='moreIcon'
+						src='/svg/moreIcon.svg'
+						width={24}
+						height={24}
+						onClick={() =>
+							isModalOpen ? setIsModalOpen(false) : setIsModalOpen(true)
+						}
+					/>
+				)}
+			</div>
+			{menu && isModalOpen && (
+				<MoreModal
+					pageType={pageType}
+					menuTitle={menuTitle}
+					teamTitle={teamTitle}
+					teamNumber={teamNumber}
+				/>
+			)}
+		</>
+	);
 }

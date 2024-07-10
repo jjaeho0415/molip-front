@@ -2,40 +2,42 @@
 @import url('./variables.css');
 
 body {
-  ::-webkit-scrollbar {
-    width: 0;
-  }
+	::-webkit-scrollbar {
+		width: 0;
+	}
+	background-color: var(--gray-10);
 }
 
 .root_container {
-  max-width: 390px;
-  height: 100vh;
-  margin: 0 auto;
-  position: relative;
-  box-sizing: border-box;
+	max-width: 390px;
+	height: 100vh;
+	margin: 0 auto;
+	position: relative;
+	box-sizing: border-box;
+	background-color: var(--white);
 }
 @font-face {
-  font-family: 'NanumSquare';
-  src: url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
-  font-weight: normal;
-  font-style: normal;
+	font-family: 'NanumSquare';
+	src: url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+	font-weight: normal;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: 'LOTTERIACHAB';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/LOTTERIACHAB.woff2')
-    format('woff2');
-  font-weight: normal;
-  font-style: normal;
+	font-family: 'LOTTERIACHAB';
+	src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/LOTTERIACHAB.woff2')
+		format('woff2');
+	font-weight: normal;
+	font-style: normal;
 }
 
 body,
 button,
 textarea,
 input {
-  font-family: 'NanumSquare';
+	font-family: 'NanumSquare';
 }
 
 div {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }

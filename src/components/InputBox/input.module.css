@@ -1,0 +1,38 @@
+.Container {
+	width: 100%;
+	height: fit-content;
+}
+
+.BigInputSection {
+	width: 350px;
+	height: 52px;
+	font-size: 32px;
+	font-weight: 600;
+	line-height: 37.5px;
+	color: var(--gray-60);
+	outline: none;
+	border: none;
+	border-bottom: 1px solid var(--black);
+}
+
+.BigInputSection::placeholder {
+	font-size: 32px;
+	color: var(--gray-20);
+}
+
+.SmallInpuSection {
+	width: 240px;
+	height: 42px;
+	font-size: 25px;
+	font-weight: 600;
+	line-height: 37.5px;
+	color: var(--gray-60);
+	outline: none;
+	border: none;
+	border-bottom: 1px solid var(--black);
+}
+
+.SmallInpuSection::placeholder {
+	font-size: 25px;
+	color: var(--gray-20);
+}

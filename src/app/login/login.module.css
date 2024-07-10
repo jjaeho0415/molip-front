@@ -1,29 +1,28 @@
 .Container {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+	height: 100vh;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
 }
 
 .TutorialBox {
-  height: 500px;
+	height: 500px;
 }
 
 .BtnBox {
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	margin-top: 10px;
 }
 
 .Sub {
-  font-size: 13px;
+	font-size: 13px;
 }
 
 .Kakao {
-  background-color: var(--kakao);
-  border-radius: 10px;
-  cursor: pointer;
+	border-radius: 10px;
+	cursor: pointer;
 }

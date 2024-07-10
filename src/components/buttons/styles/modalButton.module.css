@@ -1,19 +1,28 @@
 .closeButton {
-  background-color: var(--white);
-  padding: 8px 16px;
-  border-radius: 30px;
-  width: 120px;
-  height: 36px;
-  cursor: pointer;
-  text-align: center;
+	background-color: var(--white);
+	padding: 8px 16px;
+	border-radius: 30px;
+	width: 120px;
+	height: 36px;
+	text-align: center;
 }
 
 .orange {
-  border: 1px solid var(--main-50);
-  color: var(--main-50);
+	border: 1px solid var(--main-50);
+	color: var(--main-50);
 }
 
 .gray {
-  color: var(--gray-30);
-  border: 1px solid var(--gray-30);
+	color: var(--gray-30);
+	border: 1px solid var(--gray-30);
+}
+
+.disabled {
+	color: var(--white);
+	background-color: var(--gray-20);
+	border: none;
+}
+
+.cursor {
+	cursor: pointer;
 }

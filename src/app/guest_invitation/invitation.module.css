@@ -1,0 +1,64 @@
+.ContentsContainer {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+}
+
+.modal {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--white);
+	width: 250px;
+	height: fit-content;
+	margin-top: 200px;
+}
+
+.contentSection {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: var(--gray-80);
+	width: 200px;
+	height: 64px;
+}
+
+.mainTitle {
+	font-weight: 700;
+	font-size: 32px;
+	line-height: 37.5px;
+	white-space: nowrap;
+}
+
+.subTitle {
+	font-weight: 700;
+	font-size: 19px;
+	line-height: 25.5px;
+	white-space: nowrap;
+}
+
+.buttonSection {
+	display: flex;
+	gap: 8px;
+	margin-top: 50px;
+}
+
+.textDisabled {
+	color: var(--gray-40) !important;
+}
+
+.loginText {
+	font-size: 17px;
+	color: var(--main-50);
+	margin-top: 40px;
+	font-weight: 700;
+}
+
+.kakaoBtn {
+	position: absolute;
+	bottom: 25px;
+	border-radius: 10px;
+	cursor: pointer;
+}

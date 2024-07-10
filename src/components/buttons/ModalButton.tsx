@@ -2,20 +2,26 @@ import React from 'react';
 import styles from './styles/modalButton.module.css';
 
 interface ModalButtonProps {
-  handleClick: () => void;
-  buttonText: string;
-  color: 'gray' | 'orange';
+	handleClick: () => void;
+	buttonText: string;
+	color: 'gray' | 'orange' | 'disabled';
+	cursor?: boolean;
 }
 
-function ModalButton({ handleClick, buttonText, color }: ModalButtonProps) {
-  return (
-    <button
-      onClick={handleClick}
-      className={`${styles.closeButton} ${styles[color]}`}
-    >
-      {buttonText}
-    </button>
-  );
+function ModalButton({
+	handleClick,
+	buttonText,
+	color,
+	cursor = true,
+}: ModalButtonProps) {
+	return (
+		<button
+			onClick={handleClick}
+			className={`${styles.closeButton} ${styles[color]} ${cursor && styles.cursor}`}
+		>
+			{buttonText}
+		</button>
+	);
 }
 
 export default ModalButton;

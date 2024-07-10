@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { motion, PanInfo } from 'framer-motion';
 import useBottomSheet from '../../hooks/useBottomSheet';
-import styles from './BottomSheet.module.css';
+import styles from './bottomSheet.module.css';
 import BTMHeader from './BTMHeader';
 
 interface BottomSheetProps {

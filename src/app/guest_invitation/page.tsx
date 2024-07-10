@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 
 export default function Guest_Invitation() {
 	const router = useRouter();
-	const [isLogin, setIsLogin] = useState<boolean>(false);
+	const [isLogin] = useState<boolean>(true);
 
 	return (
 		<>
@@ -41,15 +41,19 @@ export default function Guest_Invitation() {
 							cursor={isLogin ? true : false}
 						/>
 					</div>
-					<p className={styles.loginText}>먼저 로그인 해주세요.</p>
-					<Image
-						className={styles.kakaoBtn}
-						src={LoginImage}
-						width={350}
-						height={60}
-						alt='login'
-						onClick={() => router.push('/login')}
-					/>
+					{!isLogin && (
+						<>
+							<p className={styles.loginText}>먼저 로그인 해주세요.</p>
+							<Image
+								className={styles.kakaoBtn}
+								src={LoginImage}
+								width={350}
+								height={60}
+								alt='login'
+								onClick={() => router.push('/login')}
+							/>
+						</>
+					)}
 				</div>
 			</div>
 		</>

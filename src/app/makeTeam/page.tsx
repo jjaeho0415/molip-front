@@ -49,6 +49,7 @@ export default function MakeTeam() {
 			</div>
 			<div className={styles.ButtonBox}>
 				<Button
+					size='big'
 					state={teamName !== '' && selectedNum !== 0 ? 'default' : 'disabled'}
 				>
 					완료

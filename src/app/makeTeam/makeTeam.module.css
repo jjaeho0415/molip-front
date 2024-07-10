@@ -8,6 +8,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	padding: 0 10px 0 10px;
 }
 
 .InputContainer {
@@ -26,10 +27,10 @@
 }
 
 .OptionButtonBox {
-	margin-top: 10px;
+	margin-top: 12px;
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
-	gap: 10px;
+	gap: 7px;
 }
 
 .OptionButton {

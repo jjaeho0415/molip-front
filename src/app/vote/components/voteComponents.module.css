@@ -9,7 +9,7 @@
 	margin-bottom: 15px;
 }
 
-.VotingSub {
+.VotingP {
 	font-size: 19px;
 	color: var(--gray-60);
 }
@@ -76,4 +76,78 @@
 	padding-top: 10px;
 	margin-bottom: 20px;
 	background-color: var(--white);
+}
+
+.DoubleButtonBox {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	position: absolute;
+	bottom: 0;
+	padding-top: 10px;
+	margin-bottom: 20px;
+	background-color: var(--white);
+	gap: 10px;
+}
+
+/* VoteDone */
+
+.DoneContentsContainer {
+	padding: 0 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.DoneContent {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 70px;
+	gap: 18px;
+}
+
+.DoneP {
+	font-size: 19px;
+	font-weight: 700;
+}
+
+.DoneOptionBox {
+	display: flex;
+	gap: 5px;
+}
+
+.DoneVotingComment {
+	font-size: 15px;
+	color: var(--gray-60);
+	font-weight: 400;
+	position: absolute;
+	bottom: 100px;
+}
+
+/* Vote Result */
+
+.ResultContentsContainer {
+	padding: 0 20px;
+}
+
+.ResultTextBox {
+	display: flex;
+	flex-direction: column;
+}
+
+.ResultDateBox {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.ResultSubRight {
+	font-size: 13px;
+	color: var(--gray-40);
+}
+
+.ResultDate {
+	font-size: 15px;
+	color: var(--gray-40);
 }

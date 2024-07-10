@@ -1,0 +1,59 @@
+.contentSection {
+	margin-top: 20px;
+	position: relative;
+	height: calc(100vh - 136px);
+	padding: 0 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.title {
+	font-size: 17px;
+	font-weight: 700;
+	line-height: 25.5px;
+	color: var(--black);
+}
+
+.userInfoSection {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.userNameSection {
+	display: flex;
+	gap: 82px;
+	font-weight: 700;
+	font-size: 15px;
+	line-height: 22.5px;
+}
+
+.userEmailSection {
+	display: flex;
+	gap: 52px;
+	font-weight: 700;
+	font-size: 15px;
+	line-height: 22.5px;
+}
+
+.leftText {
+	color: var(--gray-40);
+}
+
+.rightText {
+	color: var(--gray-60);
+}
+
+.logoutSection {
+	position: absolute;
+	font-weight: 400;
+	line-height: 22.5px;
+	font-size: 15px;
+	color: var(--gray-60);
+	bottom: 15px;
+	left: 50%;
+	transform: translateX(-50%);
+	border-bottom: 1px solid var(--gray-60);
+	cursor: pointer;
+}

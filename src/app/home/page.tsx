@@ -4,7 +4,6 @@ import Header from '@/components/Header';
 import styles from './home.module.css';
 import TabNavigation from '@/components/TabNavigation';
 import { useState } from 'react';
-import BottomSheet from '@/components/BottomSheet/BottomSheet';
 import Button from '@/components/buttons/Button';
 import MyMenuList from './_components/MyMenuList';
 import TeamMenuList from './_components/TeamMenuList';
@@ -12,11 +11,12 @@ import { myMenuList, teamMenuList } from '@/data/menuList';
 import MenuEmpty from './_components/MenuEmpty';
 import Image from 'next/image';
 import InformationModal from './_components/InformationModal';
-import AddMenu_BS from '@/components/BottomSheet/AddMenu_BS';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
 	const [tab, setTab] = useState<'my' | 'team'>('my');
 	const [isInformOpen, setIsInformOpen] = useState<boolean>(false);
+	const route = useRouter();
 
 	const handleInformClick = (): void => {
 		if (isInformOpen) {
@@ -24,6 +24,14 @@ export default function Home() {
 			return;
 		}
 		setIsInformOpen(true);
+	};
+
+	const handleCreateMenuBoard = () => {
+		if (tab === 'team') {
+			route.push('/makeTeam');
+		} else {
+			return;
+		}
 	};
 
 	return (
@@ -58,7 +66,9 @@ export default function Home() {
 						</>
 					)}
 				</p>
-				<Button state='new'>+ 새로만들기</Button>
+				<Button state='new' onClick={handleCreateMenuBoard}>
+					+ 새로만들기
+				</Button>
 			</div>
 
 			<div className={styles.Container}>
@@ -67,6 +77,7 @@ export default function Home() {
 						<MenuEmpty
 							tab='my'
 							myMenuIsEmpty={myMenuList.length === 0 ? true : false}
+							setTab={setTab}
 						/>
 					) : (
 						<MyMenuList menuList={myMenuList} />
@@ -75,14 +86,12 @@ export default function Home() {
 					<MenuEmpty
 						tab='team'
 						myMenuIsEmpty={myMenuList.length === 0 ? true : false}
+						setTab={setTab}
 					/>
 				) : (
 					<TeamMenuList menuList={teamMenuList} />
 				)}
 			</div>
-			<BottomSheet>
-				<AddMenu_BS />
-			</BottomSheet>
 		</>
 	);
 }

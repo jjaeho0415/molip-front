@@ -6,6 +6,7 @@ import Icon_Back from '../../public/icons/Icon_back.svg';
 import TopMenuButton from './buttons/TopMenuButton';
 import MoreModal from './modals/MoreModal';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface ITopNavBarProps {
 	menu?: boolean;
@@ -18,6 +19,7 @@ interface ITopNavBarProps {
 	menuTitle?: string;
 	teamTitle?: string;
 	teamNumber?: number;
+	backRoute?: string;
 }
 
 export default function TopNavBar({
@@ -27,8 +29,13 @@ export default function TopNavBar({
 	menuTitle = '',
 	teamTitle = '',
 	teamNumber = -1,
+	backRoute,
 }: ITopNavBarProps) {
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+	const route = useRouter();
+	const handleGoBack = () => {
+		backRoute && route.push(backRoute);
+	};
 	return (
 		<>
 			<div className={styles.NavBarContainer}>
@@ -38,6 +45,7 @@ export default function TopNavBar({
 					width={24}
 					height={24}
 					alt='backIcon'
+					onClick={handleGoBack}
 				/>
 				{menu && <TopMenuButton size='small' />}
 				{title && <p className={styles.Title}>{title}</p>}

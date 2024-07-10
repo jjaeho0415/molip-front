@@ -50,14 +50,13 @@
 
 .ul {
 	width: 348px;
-	min-height: 250px;
+	max-height: 250px;
 	border: 1px solid var(--gray-30);
 	background: #fff;
 	border-top: none;
 	overflow: auto;
 	color: var(--gray-60);
 	position: sticky;
-	bottom: 8px;
 }
 
 .disabled {

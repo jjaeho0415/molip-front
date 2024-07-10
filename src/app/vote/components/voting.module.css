@@ -1,0 +1,77 @@
+.VotingContentSection {
+	padding: 0 20px;
+}
+
+.VotingPBox {
+	display: flex;
+	align-items: center;
+	margin-top: 10px;
+	margin-bottom: 15px;
+}
+
+.VotingSub {
+	font-size: 19px;
+	color: var(--gray-60);
+}
+
+.VotingSub {
+	font-size: 15px;
+	color: var(--gray-60);
+	margin-right: auto;
+	margin-left: 5px;
+}
+
+.VotingSubRight {
+	font-size: 13px;
+	color: var(--gray-60);
+}
+
+.VotingListBox {
+	height: calc(100vh - 240px);
+	overflow: auto;
+	padding-top: 10px;
+}
+
+.VotingMenuList {
+	height: fit-content;
+	width: 100%;
+}
+
+.VotingCategory {
+	width: 100%;
+	margin: 10px 0;
+	font-size: 15px;
+	font-weight: 700;
+}
+
+.VotingCategoryBox {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 10px; /* 아이템 사이의 간격 */
+	margin-bottom: 30px;
+}
+
+.VotingMenuItemBox {
+	display: flex;
+	align-items: center;
+}
+
+.VotingCheckBox {
+	cursor: pointer;
+	margin-right: 3px;
+}
+
+.VotingMenuItem {
+	font-size: 15px;
+	color: var(--gray-60);
+}
+
+.VotingButtonBox {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	position: absolute;
+	bottom: 0;
+	margin-bottom: 20px;
+	background-color: var(--white);
+}

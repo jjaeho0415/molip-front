@@ -1,7 +1,7 @@
 'use client';
 
 import Button from '@/components/buttons/Button';
-import styles from './voting.module.css';
+import styles from './voteComponents.module.css';
 import TopNavBar from '@/components/TopNavBar';
 import { useState } from 'react';
 import Image from 'next/image';
@@ -80,7 +80,7 @@ export default function Voting({ onNext }: IVotingProps) {
 					</div>
 				</div>
 			</div>
-			<div className={styles.VotingButtonBox}>
+			<div className={styles.ButtonBox}>
 				<Button size='big' onClick={onNext}>
 					투표하기
 				</Button>

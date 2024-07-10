@@ -67,7 +67,7 @@
 	color: var(--gray-60);
 }
 
-.VotingButtonBox {
+.ButtonBox {
 	width: 100%;
 	display: flex;
 	justify-content: center;

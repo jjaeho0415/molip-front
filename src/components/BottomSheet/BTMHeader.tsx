@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './BottomSheet.module.css';
+import styles from './bottomSheet.module.css';
 
 const BTMHeader: React.FC = () => {
   return (

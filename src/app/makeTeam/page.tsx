@@ -22,7 +22,7 @@ export default function MakeTeam() {
 	return (
 		<div className={styles.Container}>
 			<Header />
-			<TopNavBar title='팀 만들기' />
+			<TopNavBar title='팀 만들기' backRoute='/home' />
 			<div className={styles.ContentsContainer}>
 				<div className={styles.InputContainer}>
 					<p className={styles.Sub}>팀 이름을 입력하세요.</p>

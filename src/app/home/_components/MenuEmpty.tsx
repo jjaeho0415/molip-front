@@ -1,14 +1,15 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import styles from './styles/menuEmpty.module.css';
 import Image from 'next/image';
+import useHomeStore from '../store/useHomeStore';
 
 interface MenuEmptyProps {
-	tab: 'my' | 'team';
 	myMenuIsEmpty: boolean;
-	setTab: Dispatch<SetStateAction<'my' | 'team'>>;
 }
 
-function MenuEmpty({ tab, myMenuIsEmpty, setTab }: MenuEmptyProps) {
+function MenuEmpty({ myMenuIsEmpty }: MenuEmptyProps) {
+	const { tab, setTab } = useHomeStore();
+
 	return (
 		<>
 			{tab === 'my' ? (

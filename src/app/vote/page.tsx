@@ -16,7 +16,7 @@ export default function Vote() {
 	return (
 		<>
 			<Header />
-			<TabNavigation tab='team' />
+			<TabNavigation />
 			<div className={styles.ContentsContainer}>
 				<Funnel>
 					<Step name='투표중'>

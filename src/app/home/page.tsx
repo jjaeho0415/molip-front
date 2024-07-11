@@ -12,9 +12,10 @@ import MenuEmpty from './_components/MenuEmpty';
 import Image from 'next/image';
 import InformationModal from './_components/InformationModal';
 import { useRouter } from 'next/navigation';
+import useHomeStore from './store/useHomeStore';
 
 export default function Home() {
-	const [tab, setTab] = useState<'my' | 'team'>('my');
+	const { tab } = useHomeStore();
 	const [isInformOpen, setIsInformOpen] = useState<boolean>(false);
 	const route = useRouter();
 
@@ -37,7 +38,7 @@ export default function Home() {
 	return (
 		<>
 			<Header />
-			<TabNavigation tab={tab} setTab={setTab} />
+			<TabNavigation />
 			<div className={styles.createContainer}>
 				<p className={styles.titleSection}>
 					{tab === 'my' ? (
@@ -74,20 +75,12 @@ export default function Home() {
 			<div className={styles.Container}>
 				{tab === 'my' ? (
 					myMenuList.length === 0 ? (
-						<MenuEmpty
-							tab='my'
-							myMenuIsEmpty={myMenuList.length === 0 ? true : false}
-							setTab={setTab}
-						/>
+						<MenuEmpty myMenuIsEmpty={myMenuList.length === 0 ? true : false} />
 					) : (
 						<MyMenuList menuList={myMenuList} />
 					)
 				) : teamMenuList.length === 0 ? (
-					<MenuEmpty
-						tab='team'
-						myMenuIsEmpty={myMenuList.length === 0 ? true : false}
-						setTab={setTab}
-					/>
+					<MenuEmpty myMenuIsEmpty={myMenuList.length === 0 ? true : false} />
 				) : (
 					<TeamMenuList menuList={teamMenuList} />
 				)}

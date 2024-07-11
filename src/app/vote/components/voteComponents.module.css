@@ -1,0 +1,189 @@
+.VotingContentSection {
+	padding: 0 20px;
+}
+
+.VotingPBox {
+	display: flex;
+	align-items: center;
+	margin-top: 10px;
+	margin-bottom: 15px;
+}
+
+.VotingP {
+	font-size: 19px;
+	color: var(--gray-60);
+}
+
+.VotingSub {
+	font-size: 15px;
+	color: var(--gray-60);
+	margin-right: auto;
+	margin-left: 5px;
+}
+
+.VotingSubRight {
+	font-size: 13px;
+	color: var(--gray-60);
+}
+
+.VotingListBox {
+	height: calc(100vh - 240px);
+	overflow: auto;
+	padding-top: 10px;
+	padding-bottom: 30px;
+}
+
+.VotingMenuList {
+	height: fit-content;
+	width: 100%;
+}
+
+.VotingCategory {
+	width: 100%;
+	margin: 10px 0;
+	font-size: 15px;
+	font-weight: 700;
+}
+
+.VotingCategoryBox {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 10px; /* 아이템 사이의 간격 */
+	margin-bottom: 30px;
+}
+
+.VotingMenuItemBox {
+	display: flex;
+	align-items: center;
+}
+
+.VotingCheckBox {
+	cursor: pointer;
+	margin-right: 3px;
+}
+
+.VotingMenuItem {
+	font-size: 15px;
+	color: var(--gray-60);
+}
+
+.ButtonBox {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	position: absolute;
+	bottom: 0;
+	padding-top: 10px;
+	margin-bottom: 20px;
+	background-color: var(--white);
+}
+
+.DoubleButtonBox {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	position: absolute;
+	bottom: 0;
+	padding-top: 10px;
+	margin-bottom: 20px;
+	background-color: var(--white);
+	gap: 10px;
+}
+
+/* VoteDone */
+
+.DoneContentsContainer {
+	padding: 0 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.DoneContent {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 70px;
+	gap: 18px;
+}
+
+.DoneP {
+	font-size: 19px;
+	font-weight: 700;
+}
+
+.DoneOptionBox {
+	display: flex;
+	gap: 5px;
+}
+
+.DoneVotingComment {
+	font-size: 15px;
+	color: var(--gray-60);
+	font-weight: 400;
+	position: absolute;
+	bottom: 100px;
+}
+
+/* Vote Result */
+
+.ResultContentsContainer {
+	padding: 0 20px;
+}
+
+.ResultTextBox {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	margin-top: 5px;
+}
+
+.ResultDateBox {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.ResultSubRight {
+	font-size: 13px;
+	color: var(--gray-40);
+}
+
+.ResultDate {
+	font-size: 15px;
+	color: var(--gray-40);
+}
+
+.ResultVoteListBox {
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+	height: calc(100vh - 350px);
+	overflow: auto;
+	padding: 10px 0 50px 0;
+	margin-top: 20px;
+}
+
+.ResultMenuItemBox {
+}
+
+.ResultMenuItemTextBox {
+	display: flex;
+	align-items: center;
+}
+
+.ResultMenuItem {
+	font-size: 19px;
+	color: var(--gray-60);
+	margin-right: auto;
+	display: flex;
+	align-items: center;
+}
+
+.ResultMenuVoteValue {
+	font-size: 15px;
+	color: var(--gray-60);
+}
+
+.ResultProgressBox {
+}

@@ -1,0 +1,17 @@
+.Container {
+	background-color: var(--gray-10);
+	width: 350px;
+	height: 8px;
+	border-radius: 4px;
+	position: relative;
+}
+
+.orange {
+	background-color: var(--main-50);
+	border-radius: 4px;
+}
+
+.gray {
+	background-color: var(--gray-30);
+	border-radius: 4px;
+}

@@ -1,11 +1,12 @@
 .NavBarContainer {
 	width: 100%;
-	height: 56px;
+	height: 66px;
 	background-color: var(--white);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	position: relative;
+	padding: 10px 0;
 }
 
 .Icon_Back {

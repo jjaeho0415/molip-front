@@ -5,6 +5,8 @@ type ErrorType = {
 	status: number;
 };
 
+axios.defaults.withCredentials = true;
+
 const customAxios = (() =>
 	axios.create({
 		baseURL: '/api/v1',

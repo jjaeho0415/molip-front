@@ -6,7 +6,7 @@ import Header from '@/components/Header';
 import TopNavBar from '@/components/TopNavBar';
 import { useRouter } from 'next/navigation';
 
-function myPage() {
+function MyPage() {
 	const route = useRouter();
 	return (
 		<>
@@ -32,4 +32,4 @@ function myPage() {
 	);
 }
 
-export default myPage;
+export default MyPage;

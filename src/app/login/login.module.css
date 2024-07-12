@@ -6,11 +6,11 @@
 }
 
 .TutorialBox {
-	height: 500px;
+	height: 545px;
 }
 
 .BtnBox {
-	padding: 10px;
+	
 	display: flex;
 	flex-direction: column;
 	align-items: center;

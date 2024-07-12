@@ -58,7 +58,7 @@ export default function Home() {
 								<div
 									style={{
 										position: 'absolute',
-										transform: 'translate(49.5px, 97px)',
+										transform: 'translate(23%, 80%)',
 									}}
 								>
 									<InformationModal />

@@ -33,7 +33,7 @@ const menus = [
 	},
 ];
 
-export default function AddMenu_BS() {
+export default function AddMenu_BS({ onClick }: { onClick: () => void }) {
 	const [isShowSelectBox, setIsShowSelectBox] = useState<boolean>(false);
 	const [selectedMyMenu, setSelectedMyMenu] = useState<string>('');
 	const [tags, setTags] = useState<string[]>([]);
@@ -144,7 +144,10 @@ export default function AddMenu_BS() {
 			</div>
 
 			<div className={styles.buttonBox}>
-				<Button state={tags.length === 0 ? 'disabled' : 'default'}>
+				<Button
+					state={tags.length === 0 ? 'disabled' : 'default'}
+					onClick={onClick}
+				>
 					적용하기
 				</Button>
 			</div>

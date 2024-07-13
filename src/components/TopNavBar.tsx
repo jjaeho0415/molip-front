@@ -7,6 +7,7 @@ import TopMenuButton from './buttons/TopMenuButton';
 import MoreModal from './modals/MoreModal';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import NoticeModal from './modals/NoticeModal';
 
 interface ITopNavBarProps {
 	menu?: boolean;
@@ -32,8 +33,13 @@ export default function TopNavBar({
 	backRoute,
 }: ITopNavBarProps) {
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+	const [isNoticeModalOpen, setIsNoticeModalOpen] = useState<boolean>(false);
 	const route = useRouter();
 	const handleGoBack = () => {
+		if (title === '') {
+			setIsNoticeModalOpen(true);
+			return;
+		}
 		backRoute && route.push(backRoute);
 	};
 	return (
@@ -69,6 +75,9 @@ export default function TopNavBar({
 					teamTitle={teamTitle}
 					teamNumber={teamNumber}
 				/>
+			)}
+			{isNoticeModalOpen && (
+				<NoticeModal titleText='' setIsNoticeModalOpen={setIsNoticeModalOpen} />
 			)}
 		</>
 	);

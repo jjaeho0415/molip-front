@@ -40,7 +40,6 @@ export default function TeamMenuPage() {
 						width={36}
 						height={36}
 						alt='edit'
-						className={styles.pencile}
 					/>
 				</div>
 				<div className={styles.middleBox}>

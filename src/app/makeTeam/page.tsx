@@ -6,10 +6,12 @@ import TopNavBar from '@/components/TopNavBar';
 import { useState } from 'react';
 import Button from '@/components/buttons/Button';
 import BigInput from '@/components/InputBox/BigInput';
+import { useRouter } from 'next/navigation';
 
 const numArr = [1, 2, 3, 4, 5, 6, 7, 8];
 
 export default function MakeTeam() {
+	const router = useRouter();
 	const [teamName, setTeamName] = useState<string>('');
 	const [selectedNum, setSelectedNum] = useState<number>(0);
 
@@ -17,6 +19,10 @@ export default function MakeTeam() {
 		if (num === selectedNum) {
 			setSelectedNum(0);
 		} else setSelectedNum(num);
+	};
+
+	const handleOk = () => {
+		router.push('/teamMenuPage');
 	};
 
 	return (
@@ -51,6 +57,7 @@ export default function MakeTeam() {
 				<Button
 					size='big'
 					state={teamName !== '' && selectedNum !== 0 ? 'default' : 'disabled'}
+					onClick={handleOk}
 				>
 					완료
 				</Button>

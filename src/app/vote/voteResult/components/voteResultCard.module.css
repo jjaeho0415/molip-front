@@ -1,0 +1,35 @@
+.Container {
+	display: flex;
+	flex-direction: column;
+	width: 350px;
+	height: 123px;
+	border-radius: 10px;
+	border: 1px solid var(--main-50);
+	padding: 24px;
+}
+
+.TopBox {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 15px;
+}
+
+.TeamName {
+	font-size: 19px;
+	font-weight: 700;
+	color: var(--gray-60);
+}
+
+.Date {
+	font-size: 15px;
+	color: var(--gray-40);
+	font-weight: 700;
+}
+
+.BottomBox {
+	height: 36px;
+}
+
+.Option {
+	width: fit-content !important;
+}

@@ -17,19 +17,17 @@ export default function Vote() {
 		<>
 			<Header />
 			<TabNavigation />
-			<div className={styles.ContentsContainer}>
-				<Funnel>
-					<Step name='투표중'>
-						<Voting onNext={() => setStep('투표완료')} />
-					</Step>
-					<Step name='투표완료'>
-						<VoteDone onNext={() => setStep('투표결과')} />
-					</Step>
-					<Step name='투표결과'>
-						<VoteResult />
-					</Step>
-				</Funnel>
-			</div>
+			<Funnel>
+				<Step name='투표중'>
+					<Voting onNext={() => setStep('투표완료')} />
+				</Step>
+				<Step name='투표완료'>
+					<VoteDone onNext={() => setStep('투표결과')} />
+				</Step>
+				<Step name='투표결과'>
+					<VoteResult />
+				</Step>
+			</Funnel>
 		</>
 	);
 }

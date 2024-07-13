@@ -1,17 +1,18 @@
 .itemContainer {
-  width: 350px;
-  height: 80px;
-  border-radius: 10px;
-  border: 1px solid var(--gray-30);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 24px 20px;
+	width: 350px;
+	height: 80px;
+	border-radius: 10px;
+	border: 1px solid var(--gray-30);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 24px 20px;
+	cursor: pointer;
 }
 
 .menuTitle {
-  font-size: 21px;
-  font-weight: 700;
-  line-height: 31.5px;
-  color: var(--gray-60);
+	font-size: 21px;
+	font-weight: 700;
+	line-height: 31.5px;
+	color: var(--gray-60);
 }

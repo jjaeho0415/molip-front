@@ -1,0 +1,12 @@
+.Container {
+	width: 100%;
+	height: 100vh;
+	position: relative;
+}
+
+.ContentsContainer {
+	display: flex;
+	flex-direction: column;
+	padding: 0 10px 0 10px;
+	height: calc(100vh - 152.2px);
+}

@@ -31,7 +31,7 @@ export default function Home() {
 		if (tab === 'team') {
 			route.push('/makeTeam');
 		} else {
-			return;
+			route.push('/createMyMenu');
 		}
 	};
 

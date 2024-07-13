@@ -26,7 +26,7 @@ export default function VoteResultCard({ voteResult }: IVoteResultProps) {
 			</div>
 			<Swiper
 				spaceBetween={5}
-				slidesPerView={3.5}
+				slidesPerView={'auto'}
 				freeMode={true}
 				modules={[FreeMode]}
 				className={styles.BottomBox}

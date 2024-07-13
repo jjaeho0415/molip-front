@@ -51,9 +51,10 @@
 }
 
 .MenuImageContainer {
+	width: 350px;
 	display: flex;
 	flex-direction: column;
-	gap: 24px;
+	gap: 30px;
 }
 
 .SideCategoryBox {
@@ -79,7 +80,7 @@
 	width: 290px;
 	display: flex;
 	flex-direction: column;
-	margin-left: 40px;
+	margin-left: 50px;
 }
 
 .ImageTop {

@@ -13,7 +13,7 @@ const food_category = [
 	{
 		category: '한식',
 		svg: '/icons/food_category/한식.svg',
-		svgG: '/icons/food_category/한식.svg',
+		svgG: '/icons/food_category/한식_gray.svg',
 	},
 	{
 		category: '중식',

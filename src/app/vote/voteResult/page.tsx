@@ -3,6 +3,7 @@ import styles from './voteResult.module.css';
 import TabNavigation from '@/components/TabNavigation';
 import TopNavBar from '@/components/TopNavBar';
 import VoteResultCard from './components/voteResultCard';
+import { useState } from 'react';
 
 const voteResults = [
 	{
@@ -33,11 +34,13 @@ const voteResults = [
 ];
 
 export default function VoteResult() {
+	const [active, setActive] = useState<'메뉴판' | '메뉴이미지'>('메뉴판');
+
 	return (
 		<div className={styles.Container}>
 			<Header />
 			<TabNavigation />
-			<TopNavBar title='지난 결과 보기' />
+			<TopNavBar title='지난 결과 보기' active={active} setActive={setActive} />
 			<div className={styles.ContentContainer}>
 				{voteResults ? (
 					<>

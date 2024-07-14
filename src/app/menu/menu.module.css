@@ -1,0 +1,14 @@
+.Container {
+	position: relative;
+}
+
+.ButtonBox {
+	background-color: var(--white);
+	position: absolute;
+	width: 100%;
+	height: 105px;
+	bottom: 10px;
+	display: flex;
+	justify-content: center;
+	padding-top: 10px;
+}

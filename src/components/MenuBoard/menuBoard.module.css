@@ -5,7 +5,7 @@
 	align-items: center;
 	height: calc(100vh - 163px);
 	overflow: auto;
-	padding-bottom: 30px;
+	padding-bottom: 130px;
 }
 
 .MenuTitle {
@@ -54,7 +54,7 @@
 	width: 350px;
 	display: flex;
 	flex-direction: column;
-	gap: 30px;
+	gap: 40px;
 }
 
 .SideCategoryBox {

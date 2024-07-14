@@ -1,7 +1,7 @@
 import styles from './menuBoard.module.css';
 import Image from 'next/image';
 import square from '../../../public/svg/square.svg';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 interface IMenuBoard {
 	teamName: string;
@@ -50,6 +50,12 @@ const food_category = [
 export default function MenuBoard({ teamName, menuList, type }: IMenuBoard) {
 	const [selectedImgCategory, setSelectedImgCategory] =
 		useState<string>('한식');
+	const categoryRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+	const handleCategoryClick = (category: string) => {
+		setSelectedImgCategory(category);
+		categoryRef.current[category]?.scrollIntoView({ behavior: 'smooth' });
+	};
 
 	const getImgSrcG = (category: string) => {
 		if (type === '메뉴이미지' && category !== selectedImgCategory) {
@@ -104,14 +110,20 @@ export default function MenuBoard({ teamName, menuList, type }: IMenuBoard) {
 									width={24}
 									height={24}
 									alt='category_img'
-									onClick={() => setSelectedImgCategory(category)}
+									onClick={() => handleCategoryClick(category)}
 								/>
 								<p className={styles.ImageP}>{category}</p>
 							</div>
 						))}
 					</div>
 					{menuList.map((menu, idx) => (
-						<div className={styles.MenuImageBox} key={idx}>
+						<div
+							className={styles.MenuImageBox}
+							key={idx}
+							ref={(el) => {
+								categoryRef.current[menu.category] = el;
+							}}
+						>
 							<div className={styles.ImageTop}>
 								<p className={styles.MenuP}>{menu.category}</p>
 								<Image

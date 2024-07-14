@@ -6,6 +6,8 @@ import TabNavigation from '@/components/TabNavigation';
 import TopNavBar from '@/components/TopNavBar';
 import { useState } from 'react';
 import MenuBoard from '@/components/MenuBoard/MenuBoard';
+import ShareButton from '@/components/buttons/ShareButton';
+import BottomSheet from '@/components/BottomSheet/BottomSheet';
 
 const menuList: IMenuType[] = [
 	{
@@ -49,6 +51,14 @@ export default function Menu() {
 			<div className={styles.ContentContainer}>
 				<MenuBoard teamName={'스위프'} menuList={menuList} type={active} />
 			</div>
+			{active === '메뉴판' && (
+				<div className={styles.ButtonBox}>
+					<ShareButton>옵션 수정하기</ShareButton>
+				</div>
+			)}
+			<BottomSheet>
+				<></>
+			</BottomSheet>
 		</>
 	);
 }

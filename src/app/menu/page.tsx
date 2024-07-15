@@ -45,6 +45,7 @@ export default function Menu() {
 	const [active, setActive] = useState<'메뉴판' | '메뉴이미지'>('메뉴판');
 
 	const handleSave = () => {
+		
 		alert('필터 적용이 완료되었습니다!');
 	};
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './addTaste.module.css';
 import Button from '../buttons/Button';
 import { categories } from '@/data/Categories';
+import Loading from '../Loading';
 
 interface AddTaste_BSProps {
 	onClick: () => void;
@@ -30,8 +31,16 @@ function AddTaste_BS({ onClick }: AddTaste_BSProps) {
 		console.log(selectedOptions);
 	}, [selectedOptions]);
 
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+
 	const handleSave = (): void => {
-		isAllTasteClicked && onClick();
+		if (isAllTasteClicked) {
+			setIsLoading(true);
+			setTimeout(() => {
+				setIsLoading(false);
+				onClick();
+			}, 3000);
+		}
 	};
 
 	const handleOptionClick = (
@@ -124,12 +133,18 @@ function AddTaste_BS({ onClick }: AddTaste_BSProps) {
 				<p className={styles.reset} onClick={handleReset}>
 					초기화
 				</p>
-				<Button
-					state={!isAllTasteClicked ? 'disabled' : 'default'}
-					onClick={handleSave}
-				>
-					적용하기
-				</Button>
+				{isLoading ? (
+					<Button>
+						<Loading backgroundColor='orange' />
+					</Button>
+				) : (
+					<Button
+						state={!isAllTasteClicked ? 'disabled' : 'default'}
+						onClick={handleSave}
+					>
+						적용하기
+					</Button>
+				)}
 			</div>
 		</>
 	);

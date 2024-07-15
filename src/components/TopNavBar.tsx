@@ -5,7 +5,7 @@ import styles from './topNavBar.module.css';
 import Icon_Back from '../../public/icons/Icon_back.svg';
 import TopMenuButton from './buttons/TopMenuButton';
 import MoreModal from './modals/MoreModal';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface ITopNavBarProps {
@@ -20,6 +20,8 @@ interface ITopNavBarProps {
 	teamTitle?: string;
 	teamNumber?: number;
 	backRoute?: string;
+	active?: '메뉴판' | '메뉴이미지';
+	setActive?: Dispatch<SetStateAction<'메뉴판' | '메뉴이미지'>>;
 }
 
 export default function TopNavBar({
@@ -30,6 +32,8 @@ export default function TopNavBar({
 	teamTitle = '',
 	teamNumber = -1,
 	backRoute,
+	active,
+	setActive,
 }: ITopNavBarProps) {
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 	const route = useRouter();
@@ -47,7 +51,9 @@ export default function TopNavBar({
 					alt='backIcon'
 					onClick={handleGoBack}
 				/>
-				{menu && <TopMenuButton size='small' />}
+				{menu && active && setActive && (
+					<TopMenuButton size='small' active={active} setActive={setActive} />
+				)}
 				{title && <p className={styles.Title}>{title}</p>}
 				{menu && (
 					<Image

@@ -6,6 +6,7 @@ import TopNavBar from '@/components/TopNavBar';
 import Image from 'next/image';
 import Icon from '../../../../public/icons/checkOrange.svg';
 import OptionButton from '@/components/buttons/OptionButton';
+import { useState } from 'react';
 
 interface IVoteDoneProps {
 	onNext: () => void;
@@ -14,9 +15,11 @@ interface IVoteDoneProps {
 const votes = ['김치찜', '물냉면', '짬뽕'];
 
 export default function VoteDone({ onNext }: IVoteDoneProps) {
+	const [active, setActive] = useState<'메뉴판' | '메뉴이미지'>('메뉴판');
+
 	return (
 		<>
-			<TopNavBar />
+			<TopNavBar active={active} setActive={setActive} />
 			<div className={styles.DoneContentsContainer}>
 				<div className={styles.DoneContent}>
 					<Image src={Icon} width={48} height={48} alt='check' />

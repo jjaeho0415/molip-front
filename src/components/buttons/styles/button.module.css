@@ -1,56 +1,56 @@
 .DefaultButton {
-  border-radius: 10px;
-  border: none;
-  color: var(--white);
-  font-weight: 600;
-  font-size: 17px;
+	border-radius: 10px;
+	border: none;
+	color: var(--white);
+	font-weight: 600;
+	font-size: 17px;
 }
 
 .big {
-  width: 350px;
-  height: 60px;
+	width: 350px;
+	height: 60px;
 }
 
-.madium {
-  width: 280px;
-  height: 60px;
+.medium {
+	width: 280px;
+	height: 60px;
 }
 
 .small {
-  width: 170px;
-  height: 60px;
+	width: 170px;
+	height: 60px;
 }
 
 .default {
-  background-color: var(--main-50);
-  cursor: pointer;
+	background-color: var(--main-50);
+	cursor: pointer;
 }
 
 .disabled {
-  background-color: var(--gray-20);
+	background-color: var(--gray-20);
 }
 
 .test {
-  width: 350px;
-  height: 60px;
-  background-color: var(--white);
-  border: 1px solid var(--main-50);
-  color: var(--main-50);
-  cursor: pointer;
+	width: 350px;
+	height: 60px;
+	background-color: var(--white);
+	border: 1px solid var(--main-50);
+	color: var(--main-50);
+	cursor: pointer;
 }
 
 .new {
-  width: 102px;
-  height: 40px;
-  background-color: var(--white);
-  border: 1px solid var(--main-50);
-  color: var(--main-50);
-  cursor: pointer;
-  font-size: 15px;
-  line-height: 22.5px;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 20px;
+	width: 102px;
+	height: 40px;
+	background-color: var(--white);
+	border: 1px solid var(--main-50);
+	color: var(--main-50);
+	cursor: pointer;
+	font-size: 15px;
+	line-height: 22.5px;
+	white-space: nowrap;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 20px;
 }

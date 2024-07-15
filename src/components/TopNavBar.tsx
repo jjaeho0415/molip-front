@@ -75,12 +75,14 @@ export default function TopNavBar({
 				)}
 			</div>
 			{menu && isModalOpen && (
-				<MoreModal
-					pageType={pageType}
-					menuTitle={menuTitle}
-					teamTitle={teamTitle}
-					teamNumber={teamNumber}
-				/>
+				<div style={{ position: 'absolute', right: '10px', transform: 'translateY(-10px)'}}>
+					<MoreModal
+						pageType={pageType}
+						menuTitle={menuTitle}
+						teamTitle={teamTitle}
+						teamNumber={teamNumber}
+					/>
+				</div>
 			)}
 			{isNoticeModalOpen && (
 				<NoticeModal titleText='' setIsNoticeModalOpen={setIsNoticeModalOpen} />

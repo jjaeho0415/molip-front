@@ -70,6 +70,15 @@ function AddTaste_BS({ onClick }: AddTaste_BSProps) {
 		});
 	};
 
+	const handleReset = () => {
+		setSelectedOptions({
+			todayCategory: [],
+			tansuCategory: [],
+			weatherCategory: [],
+			countryCategory: [],
+		});
+	};
+
 	return (
 		<>
 			<div className={styles.container}>
@@ -112,7 +121,9 @@ function AddTaste_BS({ onClick }: AddTaste_BSProps) {
 				))}
 			</div>
 			<div className={styles.buttonBox}>
-				<p className={styles.reset}>초기화</p>
+				<p className={styles.reset} onClick={handleReset}>
+					초기화
+				</p>
 				<Button
 					state={!isAllTasteClicked ? 'disabled' : 'default'}
 					onClick={handleSave}

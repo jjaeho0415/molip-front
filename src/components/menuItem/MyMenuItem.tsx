@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { MouseEventHandler, useState } from 'react';
 import styles from './myMenuItem.module.css';
 import Image from 'next/image';
 import MoreModal from '../modals/MoreModal';
+import { useRouter } from 'next/navigation';
 
 interface MyMenuItemProps {
 	menuTitle: string;
+	handleClick: () => void;
 }
 
-function MyMenuItem({ menuTitle }: MyMenuItemProps) {
+function MyMenuItem({ menuTitle, handleClick }: MyMenuItemProps) {
 	const [isMoreModalOpen, setIsMoreModalOpen] = useState<boolean>(false);
 
 	return (
 		<>
-			<div className={styles.itemContainer}>
+			<div className={styles.itemContainer} onClick={handleClick}>
 				<p className={styles.menuTitle}>{menuTitle}</p>
 				<Image
 					alt='moreIcon'

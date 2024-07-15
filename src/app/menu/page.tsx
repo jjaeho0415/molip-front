@@ -8,6 +8,7 @@ import { useState } from 'react';
 import MenuBoard from '@/components/MenuBoard/MenuBoard';
 import ShareButton from '@/components/buttons/ShareButton';
 import BottomSheet from '@/components/BottomSheet/BottomSheet';
+import AddTaste_BS from '@/components/BottomSheet/AddTaste_BS';
 
 const menuList: IMenuType[] = [
 	{
@@ -43,11 +44,21 @@ const menuList: IMenuType[] = [
 export default function Menu() {
 	const [active, setActive] = useState<'메뉴판' | '메뉴이미지'>('메뉴판');
 
+	const handleSave = () => {
+		alert('필터 적용이 완료되었습니다!');
+	};
+
 	return (
 		<>
 			<Header />
 			<TabNavigation />
-			<TopNavBar menu={true} active={active} setActive={setActive} />
+			<TopNavBar
+				menu={true}
+				active={active}
+				setActive={setActive}
+				pageType='insideMyMenu'
+				backRoute='/home'
+			/>
 			<div className={styles.ContentContainer}>
 				<MenuBoard teamName={'스위프'} menuList={menuList} type={active} />
 			</div>
@@ -57,7 +68,7 @@ export default function Menu() {
 				</div>
 			)}
 			<BottomSheet>
-				<></>
+				<AddTaste_BS onClick={handleSave} />
 			</BottomSheet>
 		</>
 	);

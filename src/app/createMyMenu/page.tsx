@@ -12,23 +12,30 @@ import RoundButton from '@/components/buttons/RoundButton';
 import BottomSheet from '@/components/BottomSheet/BottomSheet';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import AddTaste_BS from '@/components/BottomSheet/AddTaste_BS';
+import { useRouter } from 'next/navigation';
 
 function CreateMyMenu() {
 	const [value, setValue] = useState<string>('');
-	const [isEmpty, setIsEmpty] = useState<boolean>(false);
+	const [isEmptyModalOpen, setIsEmptyModalOpen] = useState<boolean>(false);
 	const { setIsOpen } = useBottomSheet();
+	const route = useRouter();
 
 	useEffect(() => {
 		if (value) {
-			setIsEmpty(false);
+			setIsEmptyModalOpen(false);
 			return;
 		}
-		setIsEmpty(true);
+		setIsEmptyModalOpen(true);
 	}, [value]);
 
 	const handleClickButton = () => {
+		if (isEmptyModalOpen) {
+			alert('메뉴판 이름을 지어주세요!');
+			return;
+		}
 		setIsOpen(false);
 		alert('필터 적용이 완료되었습니다.');
+		route.push('/menu');
 	};
 
 	return (
@@ -43,9 +50,9 @@ function CreateMyMenu() {
 						value={value}
 						setValue={setValue}
 					/>
-					{isEmpty && (
+					{isEmptyModalOpen && (
 						<div style={{ position: 'absolute', top: '70px', left: '20px' }}>
-							<IsEmptyModal setIsEmpty={setIsEmpty} />
+							<IsEmptyModal setIsEmpty={setIsEmptyModalOpen} />
 						</div>
 					)}
 					<Image

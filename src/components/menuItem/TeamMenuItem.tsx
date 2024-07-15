@@ -7,14 +7,20 @@ interface TeamMenuItemProps {
 	menuTitle: string;
 	teamTitle: string;
 	teamNumber: number;
+	handleClick: () => void;
 }
 
-function TeamMenuItem({ menuTitle, teamTitle, teamNumber }: TeamMenuItemProps) {
+function TeamMenuItem({
+	menuTitle,
+	teamTitle,
+	teamNumber,
+	handleClick,
+}: TeamMenuItemProps) {
 	const [isMoreModalOpen, setIsMoreModalOpen] = useState<boolean>(false);
 
 	return (
 		<>
-			<div className={styles.itemContainer}>
+			<div className={styles.itemContainer} onClick={handleClick}>
 				<div className={styles.titleSection}>
 					<p className={styles.teamTitle}>{teamTitle}</p>
 					<p className={styles.menuTitle}>{menuTitle}</p>

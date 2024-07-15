@@ -1,13 +1,21 @@
-.contentsContainer {
+.Container {
+	width: 100%;
+	height: 100vh;
+	position: relative;
+}
+
+.ContentsContainer {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	padding: 0 10px 0 10px;
 }
 
 .inputBox {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: relative;
 }
 
 .middleBox {
@@ -18,40 +26,10 @@
 	margin-top: 100px;
 }
 
-.buttonBox {
-	display: flex;
-	gap: 5px;
-}
-
 .comment {
 	font-size: 17px;
 	color: var(--gray-60);
 	font-weight: 700;
-}
-
-.BottomBox {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 20px;
-	margin-top: 80px;
-}
-
-.iconsBox {
-	display: flex;
-	gap: 30px;
-}
-
-.icon {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 7px;
-}
-
-.iconName {
-	font-size: 13px;
-	color: var(--gray-40);
 }
 
 .bottomComment {
@@ -59,5 +37,5 @@
 	color: var(--gray-40);
 	font-weight: 500;
 	position: absolute;
-	bottom: 35px;
+	bottom: 50px;
 }

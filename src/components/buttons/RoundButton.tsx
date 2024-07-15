@@ -41,7 +41,7 @@ const props = [
 export default function RoundButton({ property, onClick }: IRoundButtonProps) {
 	const [Icon, setIcon] = useState<string>('');
 	const [comment, setComment] = useState<string | undefined>('');
-	const [hasMyMenu] = useState<boolean>(false);
+	// const [hasMyMenu] = useState<boolean>(false);
 
 	useEffect(() => {
 		const matchedProp = props.find((p) => p.prop === property);

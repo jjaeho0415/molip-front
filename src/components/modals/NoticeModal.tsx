@@ -1,7 +1,10 @@
+'use client'
+
 import React, { Dispatch, SetStateAction } from 'react';
 import styles from './styles/noticeModal.module.css';
 import ModalButton from '../buttons/ModalButton';
 import ReactDOM from 'react-dom';
+import { useRouter } from 'next/navigation';
 
 interface NoticeModalProps {
 	setIsNoticeModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -9,11 +12,16 @@ interface NoticeModalProps {
 }
 
 function NoticeModal({ setIsNoticeModalOpen, titleText }: NoticeModalProps) {
+	const route = useRouter();
 	const closeModal = (): void => {
 		setIsNoticeModalOpen(false);
 	};
 
 	const handleDelete = (): void => {
+		if (titleText === '') {
+			setIsNoticeModalOpen(false);
+			route.push('/home');
+		}
 		setIsNoticeModalOpen(false);
 	};
 

@@ -22,7 +22,7 @@ export default function MakeTeam() {
 	};
 
 	const handleOk = () => {
-		router.push('/teamMenuPage');
+		teamName && router.push('/teamMenuPage');
 	};
 
 	return (

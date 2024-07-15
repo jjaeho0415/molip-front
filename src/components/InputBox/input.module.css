@@ -33,6 +33,6 @@
 }
 
 .SmallInputSection::placeholder {
-	font-size: 25px;
+	font-size: 32px;
 	color: var(--gray-20);
 }

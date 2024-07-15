@@ -40,33 +40,39 @@ export default function TeamMenuPage() {
 						width={36}
 						height={36}
 						alt='edit'
-						className={styles.pencile}
 					/>
 				</div>
 				<div className={styles.middleBox}>
-					<p className={styles.comment}>아직 메뉴를 추가하지 않았어요.</p>
 					{isDone ? (
-						<div className={styles.buttonBox}>
-							<RoundButton
-								property='메뉴추가완료'
-								onClick={() => {
-									return;
-								}}
-							/>
-							<RoundButton
-								property='새로고침'
-								onClick={() => {
-									return;
-								}}
-							/>
-						</div>
+						<>
+							<p className={styles.comment}>
+								아직 팀원이 메뉴를 선택 중입니다.
+							</p>
+							<div className={styles.buttonBox}>
+								<RoundButton
+									property='메뉴추가완료'
+									onClick={() => {
+										return;
+									}}
+								/>
+								<RoundButton
+									property='새로고침'
+									onClick={() => {
+										return;
+									}}
+								/>
+							</div>
+						</>
 					) : (
-						<RoundButton
-							property='메뉴'
-							onClick={() => {
-								return;
-							}}
-						/>
+						<>
+							<p className={styles.comment}>아직 메뉴를 추가하지 않았어요.</p>
+							<RoundButton
+								property='메뉴'
+								onClick={() => {
+									return;
+								}}
+							/>
+						</>
 					)}
 				</div>
 
@@ -85,13 +91,16 @@ export default function TeamMenuPage() {
 					</div>
 				</div>
 				<p className={styles.bottomComment}>위로 올려 옵션을 선택하세요.</p>
-				<BottomSheet>
-					{hasMyMenu ? (
+
+				{hasMyMenu ? (
+					<BottomSheet size='small'>
 						<NoMenu_BS />
-					) : (
+					</BottomSheet>
+				) : (
+					<BottomSheet>
 						<AddMenu_BS onClick={handleClickButton} />
-					)}
-				</BottomSheet>
+					</BottomSheet>
+				)}
 			</div>
 		</>
 	);

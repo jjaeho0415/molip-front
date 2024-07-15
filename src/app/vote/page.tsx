@@ -1,7 +1,6 @@
 'use client';
 
 import Header from '@/components/Header';
-import styles from './vote.module.css';
 import useFunnel from '@/hooks/useFunnel';
 import Voting from './components/voting';
 import VoteDone from './components/voteDone';

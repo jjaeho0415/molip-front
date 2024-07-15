@@ -1,3 +1,5 @@
+'use client';
+
 import Header from '@/components/Header';
 import styles from './voteResult.module.css';
 import TabNavigation from '@/components/TabNavigation';

@@ -98,7 +98,12 @@
 }
 
 .ImageBox {
+	cursor: pointer;
 }
 
 .MenuImageItemP {
+	font-weight: 400;
+	font-size: 13px;
+	line-height: 19.5px;
+	color: var(--gray-60);
 }

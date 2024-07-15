@@ -47,6 +47,7 @@ export default function Menu() {
 	const isLogin = true;
 
 	const handleSave = () => {
+		
 		alert('필터 적용이 완료되었습니다!');
 	};
 

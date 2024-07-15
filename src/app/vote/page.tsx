@@ -21,10 +21,13 @@ export default function Vote() {
 					<Voting onNext={() => setStep('투표완료')} />
 				</Step>
 				<Step name='투표완료'>
-					<VoteDone onNext={() => setStep('투표결과')} />
+					<VoteDone
+						onBefore={() => setStep('투표중')}
+						onNext={() => setStep('투표결과')}
+					/>
 				</Step>
 				<Step name='투표결과'>
-					<VoteResult />
+					<VoteResult onBefore={() => setStep('투표완료')} />
 				</Step>
 			</Funnel>
 		</>

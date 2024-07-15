@@ -44,7 +44,7 @@ function CreateMyMenu() {
 						setValue={setValue}
 					/>
 					{isEmpty && (
-						<div style={{ position: 'absolute', top: '70px', left: '10px' }}>
+						<div style={{ position: 'absolute', top: '70px', left: '20px' }}>
 							<IsEmptyModal setIsEmpty={setIsEmpty} />
 						</div>
 					)}

@@ -6,20 +6,18 @@ import TopNavBar from '@/components/TopNavBar';
 import Image from 'next/image';
 import Icon from '../../../../public/icons/checkOrange.svg';
 import OptionButton from '@/components/buttons/OptionButton';
-import { useState } from 'react';
 
 interface IVoteDoneProps {
 	onNext: () => void;
+	onBefore: () => void;
 }
 
 const votes = ['김치찜', '물냉면', '짬뽕'];
 
-export default function VoteDone({ onNext }: IVoteDoneProps) {
-	const [active, setActive] = useState<'메뉴판' | '메뉴이미지'>('메뉴판');
-
+export default function VoteDone({ onNext, onBefore }: IVoteDoneProps) {
 	return (
 		<>
-			<TopNavBar active={active} setActive={setActive} />
+			<TopNavBar />
 			<div className={styles.DoneContentsContainer}>
 				<div className={styles.DoneContent}>
 					<Image src={Icon} width={48} height={48} alt='check' />
@@ -39,7 +37,7 @@ export default function VoteDone({ onNext }: IVoteDoneProps) {
 				</p>
 			</div>
 			<div className={styles.DoubleButtonBox}>
-				<Button size='small' onClick={onNext}>
+				<Button size='small' onClick={onBefore}>
 					다시 선택하기
 				</Button>
 				<Button size='small' onClick={onNext}>

@@ -6,6 +6,7 @@ import TopNavBar from '@/components/TopNavBar';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import Icon_check from '../../../../public/icons/checkOrange_small.svg';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const menus = [
 	{ name: '물냉면', value: 5 },
@@ -19,7 +20,8 @@ const menus = [
 	{ name: '짬뽕', value: 2 },
 ];
 
-export default function VoteResult() {
+export default function VoteResult({ onBefore }: { onBefore: () => void }) {
+	const router = useRouter();
 	return (
 		<>
 			<TopNavBar title='스위프의 메뉴판' />
@@ -60,8 +62,12 @@ export default function VoteResult() {
 				</div>
 			</div>
 			<div className={styles.DoubleButtonBox}>
-				<Button size='small'>다시 선택하기</Button>
-				<Button size='small'>지난 결과 보기</Button>
+				<Button size='small' onClick={onBefore}>
+					다시 선택하기
+				</Button>
+				<Button size='small' onClick={() => router.push('/vote/voteResult')}>
+					지난 결과 보기
+				</Button>
 			</div>
 		</>
 	);

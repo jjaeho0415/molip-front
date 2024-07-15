@@ -1,7 +1,8 @@
 export const categories = [
 	{
 		title: '오늘의 입맛을 표현해주세요.',
-		todayCategory: [
+		name: 'todayCategory',
+		options: [
 			'ALL(상관없음)',
 			'매콤한',
 			'국물있는',
@@ -15,12 +16,14 @@ export const categories = [
 	},
 	{
 		title: '끌리는 탄수화물 종류가 있나요?',
-		tansuCategory: ['ALL(상관없음)', '밥', '면', '빵', '떡'],
+		name: 'tansuCategory',
+		options: ['ALL(상관없음)', '밥', '면', '빵', '떡'],
 	},
 	{
 		title: '오늘 날씨에 맞게 추천해줄게요',
-		weatherCategory: [
-			'ALL(상관없음',
+		name: 'weatherCategory',
+		options: [
+			'ALL(상관없음)',
 			'맑고 선선해요',
 			'비가 와요',
 			'더워요. 시원한 걸로요!',
@@ -29,7 +32,8 @@ export const categories = [
 	},
 	{
 		title: '나라별로도 선택해 볼래요?',
-		countryCategory: [
+		name: 'countryCategory',
+		options: [
 			'ALL(상관없음)',
 			'한식',
 			'중식',
@@ -37,6 +41,7 @@ export const categories = [
 			'양식',
 			'인도/베트남/태국',
 			'멕시코',
+			'기타(육류/해산물)',
 		],
 	},
 ];

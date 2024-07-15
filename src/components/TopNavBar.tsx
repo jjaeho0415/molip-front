@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import NoticeModal from './modals/NoticeModal';
 
 interface ITopNavBarProps {
+	isLogin?: boolean;
 	menu?: boolean;
 	title?: string;
 	pageType?:
@@ -27,6 +28,7 @@ interface ITopNavBarProps {
 
 export default function TopNavBar({
 	menu = false,
+	isLogin = true,
 	title,
 	pageType = 'insideTeamMenu',
 	menuTitle = '',
@@ -49,19 +51,22 @@ export default function TopNavBar({
 	return (
 		<>
 			<div className={styles.NavBarContainer}>
-				<Image
-					className={styles.Icon_Back}
-					src={Icon_Back}
-					width={24}
-					height={24}
-					alt='backIcon'
-					onClick={handleGoBack}
-				/>
+				{isLogin && (
+					<Image
+						className={styles.Icon_Back}
+						src={Icon_Back}
+						width={24}
+						height={24}
+						alt='backIcon'
+						onClick={handleGoBack}
+					/>
+				)}
+
 				{menu && active && setActive && (
 					<TopMenuButton size='small' active={active} setActive={setActive} />
 				)}
 				{title && <p className={styles.Title}>{title}</p>}
-				{menu && (
+				{menu && isLogin && (
 					<Image
 						className={styles.MoreBtn}
 						alt='moreIcon'
@@ -75,7 +80,13 @@ export default function TopNavBar({
 				)}
 			</div>
 			{menu && isModalOpen && (
-				<div style={{ position: 'absolute', right: '10px', transform: 'translateY(-10px)'}}>
+				<div
+					style={{
+						position: 'absolute',
+						right: '10px',
+						transform: 'translateY(-10px)',
+					}}
+				>
 					<MoreModal
 						pageType={pageType}
 						menuTitle={menuTitle}

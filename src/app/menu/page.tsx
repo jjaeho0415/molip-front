@@ -43,16 +43,19 @@ const menuList: IMenuType[] = [
 
 export default function Menu() {
 	const [active, setActive] = useState<'메뉴판' | '메뉴이미지'>('메뉴판');
+	// isLogin은 나중에 store의 isLogin으로 변경
+	const isLogin = true;
 
 	const handleSave = () => {
 		alert('필터 적용이 완료되었습니다!');
 	};
 
 	return (
-		<>
-			<Header />
-			<TabNavigation />
+		<div className={styles.Container}>
+			{isLogin ? <Header /> : <TopNavBar title='체험중' />}
+			<TabNavigation isUser={isLogin ? 'user' : 'guest'} />
 			<TopNavBar
+				isLogin={isLogin}
 				menu={true}
 				active={active}
 				setActive={setActive}
@@ -64,12 +67,17 @@ export default function Menu() {
 			</div>
 			{active === '메뉴판' && (
 				<div className={styles.ButtonBox}>
-					<ShareButton>옵션 수정하기</ShareButton>
+					{/* isLogin가 true면 옵션수정하기, false면 공유하기, onClick함수도 다르게 줘야함 */}
+					{isLogin ? (
+						<ShareButton>옵션 수정하기</ShareButton>
+					) : (
+						<ShareButton>공유하기</ShareButton>
+					)}
 				</div>
 			)}
 			<BottomSheet>
 				<AddTaste_BS onClick={handleSave} />
 			</BottomSheet>
-		</>
+		</div>
 	);
 }

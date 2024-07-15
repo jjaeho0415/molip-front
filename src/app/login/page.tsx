@@ -10,14 +10,20 @@ import Image from 'next/image';
 import LoginImage from '../../../public/svg/kakao_login_large_wide.svg';
 import Button from '@/components/buttons/Button';
 import TutorialStep from './_components/TutorialStep';
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
-  const loginHandler = () => {
-    window.location.href =
-      'http://3.39.119.209:8080/oauth2/authorization/kakao';
-  };
+	const route = useRouter();
 
-  return (
+	const loginHandler = () => {
+		window.location.href =
+			'http://3.39.119.209:8080/oauth2/authorization/kakao';
+	};
+	const handleTrialClick = () => {
+		route.push('/trial_version');
+	};
+
+	return (
 		<div className={styles.Container}>
 			<div className={styles.TutorialBox}>
 				<Swiper
@@ -45,7 +51,9 @@ export default function Login() {
 				<p className={styles.Sub}>
 					오늘, 당신의 입맛을 반영한 '나의 메뉴판'을 만들어보세요!
 				</p>
-				<Button state='test'>'나의 메뉴판' 체험하기</Button>
+				<Button state='test' onClick={handleTrialClick}>
+					'나의 메뉴판' 체험하기
+				</Button>
 				<Image
 					className={styles.Kakao}
 					src={LoginImage}

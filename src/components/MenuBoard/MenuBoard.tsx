@@ -2,6 +2,12 @@ import styles from './menuBoard.module.css';
 import Image from 'next/image';
 import square from '../../../public/svg/square.svg';
 import { useRef, useState } from 'react';
+import MenuCardModal from '../modals/MenuCardModal';
+
+interface IMenuType {
+	category: string;
+	menu: string[];
+}
 
 interface IMenuBoard {
 	teamName: string;
@@ -48,6 +54,8 @@ const food_category = [
 ];
 
 export default function MenuBoard({ teamName, menuList, type }: IMenuBoard) {
+	const [isMenuCardOpen, setIsMenuCardOpen] = useState<boolean>(false);
+	const [selectedMenuItem, setSelectedMenuItem] = useState<string | null>(null);
 	const [selectedImgCategory, setSelectedImgCategory] =
 		useState<string>('한식');
 	const categoryRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
@@ -71,6 +79,11 @@ export default function MenuBoard({ teamName, menuList, type }: IMenuBoard) {
 
 	const getCategories = () => {
 		return menuList.map((menu) => menu.category);
+	};
+
+	const handleMenuItemClick = (menuItem: string) => {
+		setSelectedMenuItem(menuItem);
+		setIsMenuCardOpen(true);
 	};
 
 	return (
@@ -135,17 +148,34 @@ export default function MenuBoard({ teamName, menuList, type }: IMenuBoard) {
 							</div>
 							<div className={styles.ImageBottom}>
 								{menu.menu.map((menuItem: string, index: number) => (
-									<div className={styles.ImageBox}>
-										<Image src={square} width={90} height={90} alt='square' />
-										<p className={styles.MenuItemP} key={index}>
-											{menuItem}
-										</p>
+									<div
+										key={index}
+										className={styles.ImageBox}
+										onClick={() => handleMenuItemClick(menuItem)}
+									>
+										<Image src={square} width={90} height={90} alt='menuItem' />
+										<p className={styles.MenuItemP}>{menuItem}</p>
 									</div>
 								))}
 							</div>
 						</div>
 					))}
 				</div>
+			)}
+			{isMenuCardOpen && selectedMenuItem && (
+				<MenuCardModal
+					menuTitle={selectedMenuItem}
+					menuImage=''
+					hashTags={[
+						'매콤한',
+						'국물있는',
+						'든든한',
+						'밥',
+						'추워요. 뜨끈한 걸로요!',
+						'한식',
+					]}
+					setIsMenuCardModalOpen={setIsMenuCardOpen}
+				/>
 			)}
 		</div>
 	);

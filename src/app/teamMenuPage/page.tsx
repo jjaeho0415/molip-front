@@ -35,12 +35,7 @@ export default function TeamMenuPage() {
 			<div className={styles.contentsContainer}>
 				<div className={styles.inputBox}>
 					<SmallInput value={value} setValue={setValue}></SmallInput>
-					<Image
-						src={Icon_pencile}
-						width={36}
-						height={36}
-						alt='edit'
-					/>
+					<Image src={Icon_pencile} width={36} height={36} alt='edit' />
 				</div>
 				<div className={styles.middleBox}>
 					{isDone ? (
@@ -84,8 +79,8 @@ export default function TeamMenuPage() {
 							<Image src={Icon_kakao} width={50} height={50} alt='kakao' />
 							<p className={styles.iconName}>카카오톡</p>
 						</div>
-						<div className={styles.iconBox}>
-							<Image src={Icon_copy} width={50} height={50} alt='kakao' />
+						<div className={styles.icon}>
+							<Image src={Icon_copy} width={50} height={50} alt='urlCopy' />
 							<p className={styles.iconName}>링크복사</p>
 						</div>
 					</div>

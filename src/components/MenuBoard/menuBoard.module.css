@@ -3,8 +3,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	height: calc(100vh - 163px);
-	overflow: auto;
+	height: 100%;
 	padding-bottom: 130px;
 }
 

@@ -43,6 +43,7 @@
 }
 
 .icon {
+	cursor: pointer;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -59,5 +60,5 @@
 	color: var(--gray-40);
 	font-weight: 500;
 	position: absolute;
-	bottom: 35px;
+	bottom: 80px;
 }

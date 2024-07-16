@@ -5,7 +5,7 @@ import styles from './teamMenu.module.css';
 import TabNavigation from '@/components/TabNavigation';
 import TopNavBar from '@/components/TopNavBar';
 import SmallInput from '@/components/InputBox/SmallInput';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Icon_pencile from '../../../public/icons/Icon_pencil.svg';
 import Image from 'next/image';
 import Icon_kakao from '../../../public/svg/Icon_kakao.svg';
@@ -21,7 +21,13 @@ export default function TeamMenuPage() {
 	const [value, setValue] = useState<string>('스위프 10팀의 메뉴판');
 	const [isDone] = useState<boolean>(true);
 	const [hasMyMenu] = useState<boolean>(false);
-	const currentUrl = window.location.href;
+	const [currentUrl, setCurrentUrl] = useState<string>('');
+
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			setCurrentUrl(window.location.href);
+		}
+	}, []);
 
 	const handleClickButton = () => {
 		setIsOpen(false);

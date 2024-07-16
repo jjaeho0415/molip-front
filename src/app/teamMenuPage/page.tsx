@@ -21,10 +21,20 @@ export default function TeamMenuPage() {
 	const [value, setValue] = useState<string>('스위프 10팀의 메뉴판');
 	const [isDone] = useState<boolean>(true);
 	const [hasMyMenu] = useState<boolean>(false);
+	const currentUrl = window.location.href;
 
 	const handleClickButton = () => {
 		setIsOpen(false);
 		alert('필터 적용이 완료되었습니다.');
+	};
+
+	const handleCopyClipBoard = async (text: string) => {
+		try {
+			await navigator.clipboard.writeText(text);
+			alert('클립보드에 링크가 복사되었어요.');
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (
@@ -35,12 +45,7 @@ export default function TeamMenuPage() {
 			<div className={styles.contentsContainer}>
 				<div className={styles.inputBox}>
 					<SmallInput value={value} setValue={setValue}></SmallInput>
-					<Image
-						src={Icon_pencile}
-						width={36}
-						height={36}
-						alt='edit'
-					/>
+					<Image src={Icon_pencile} width={36} height={36} alt='edit' />
 				</div>
 				<div className={styles.middleBox}>
 					{isDone ? (
@@ -84,7 +89,10 @@ export default function TeamMenuPage() {
 							<Image src={Icon_kakao} width={50} height={50} alt='kakao' />
 							<p className={styles.iconName}>카카오톡</p>
 						</div>
-						<div className={styles.iconBox}>
+						<div
+							className={styles.icon}
+							onClick={() => handleCopyClipBoard(currentUrl)}
+						>
 							<Image src={Icon_copy} width={50} height={50} alt='kakao' />
 							<p className={styles.iconName}>링크복사</p>
 						</div>

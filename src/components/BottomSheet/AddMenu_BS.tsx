@@ -7,6 +7,7 @@ import Button from '../buttons/Button';
 import Icon_unchecked from '../../../public/icons/checkBox/checkBox_unchecked.svg';
 import Icon_checked from '../../../public/icons/checkBox/checkBox_checked.svg';
 import OptionButton from '../buttons/OptionButton';
+import Loading from '../Loading';
 
 const options = [
 	'메뉴판1',
@@ -37,6 +38,7 @@ export default function AddMenu_BS({ onClick }: { onClick: () => void }) {
 	const [isShowSelectBox, setIsShowSelectBox] = useState<boolean>(false);
 	const [selectedMyMenu, setSelectedMyMenu] = useState<string>('');
 	const [tags, setTags] = useState<string[]>([]);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const handleSelectItem = (item: string) => {
 		if (tags.includes(item)) {
@@ -144,12 +146,24 @@ export default function AddMenu_BS({ onClick }: { onClick: () => void }) {
 			</div>
 
 			<div className={styles.buttonBox}>
-				<Button
-					state={tags.length === 0 ? 'disabled' : 'default'}
-					onClick={onClick}
-				>
-					적용하기
-				</Button>
+				{isLoading ? (
+					<Button>
+						<Loading backgroundColor='orange' />
+					</Button>
+				) : (
+					<Button
+						state={tags.length === 0 ? 'disabled' : 'default'}
+						onClick={() => {
+							setIsLoading(true);
+							setTimeout(() => {
+								setIsLoading(false);
+								onClick();
+							}, 3000);
+						}}
+					>
+						적용하기
+					</Button>
+				)}
 			</div>
 		</>
 	);

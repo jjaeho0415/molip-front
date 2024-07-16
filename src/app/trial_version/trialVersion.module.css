@@ -1,13 +1,21 @@
-.contentsContainer {
+.Container {
+	width: 100%;
+	height: 100vh;
+	position: relative;
+}
+
+.ContentsContainer {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	padding: 80px 10px 0 10px;
 }
 
 .inputBox {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: relative;
 }
 
 .middleBox {
@@ -18,42 +26,10 @@
 	margin-top: 100px;
 }
 
-.buttonBox {
-	display: flex;
-	gap: 5px;
-}
-
 .comment {
 	font-size: 17px;
 	color: var(--gray-60);
 	font-weight: 700;
-}
-
-.BottomBox {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 20px;
-	margin-top: 80px;
-}
-
-.iconsBox {
-	display: flex;
-	gap: 30px;
-}
-
-.icon {
-	cursor: pointer;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 7px;
-	cursor: pointer;
-}
-
-.iconName {
-	font-size: 13px;
-	color: var(--gray-40);
 }
 
 .bottomComment {

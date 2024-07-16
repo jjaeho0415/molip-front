@@ -22,12 +22,7 @@ export default function ShareButton({
 			<Button size='medium' state={state} onClick={onClick}>
 				{children}
 			</Button>
-			<div
-				className={`${styles[state]} ${styles.BtnBox}`}
-				onClick={() => {
-					return;
-				}}
-			>
+			<div className={`${styles[state]} ${styles.BtnBox}`} onClick={onClick}>
 				<Image
 					src={state === 'default' ? Icon_download : Icon_disabled}
 					width={24}

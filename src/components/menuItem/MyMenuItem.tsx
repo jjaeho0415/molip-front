@@ -1,8 +1,7 @@
-import React, { MouseEventHandler, useState } from 'react';
+import React, {  useState } from 'react';
 import styles from './myMenuItem.module.css';
 import Image from 'next/image';
 import MoreModal from '../modals/MoreModal';
-import { useRouter } from 'next/navigation';
 
 interface MyMenuItemProps {
 	menuTitle: string;

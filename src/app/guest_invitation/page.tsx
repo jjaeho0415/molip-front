@@ -3,14 +3,14 @@
 import Header from '@/components/Header';
 import styles from './invitation.module.css';
 import ModalButton from '@/components/buttons/ModalButton';
-import { useState } from 'react';
 import LoginImage from '../../../public/svg/kakao_login_large_wide.svg';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useAuthStore } from '../login/store/useAuthStore';
 
 export default function Guest_Invitation() {
 	const router = useRouter();
-	const [isLogin] = useState<boolean>(true);
+	const { isLogin } = useAuthStore.getState();
 
 	return (
 		<>

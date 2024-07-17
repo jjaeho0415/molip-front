@@ -1,13 +1,14 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './myPage.module.css';
 import Header from '@/components/Header';
 import TopNavBar from '@/components/TopNavBar';
-import { useRouter } from 'next/navigation';
+import NoticeModal from '@/components/modals/NoticeModal';
 
 function MyPage() {
-	const route = useRouter();
+	const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
+	
 	return (
 		<>
 			<Header />
@@ -24,9 +25,19 @@ function MyPage() {
 						<p className={styles.rightText}>molip@gmail.com</p>
 					</div>
 				</div>
-				<p className={styles.logoutSection} onClick={() => route.push('/')}>
+				<p
+					className={styles.logoutSection}
+					onClick={() => setIsLogoutModalOpen(true)}
+				>
 					로그아웃
 				</p>
+				{isLogoutModalOpen && (
+					<NoticeModal
+						setIsNoticeModalOpen={setIsLogoutModalOpen}
+						titleText=''
+						isLogout={true}
+					/>
+				)}
 			</div>
 		</>
 	);

@@ -3,6 +3,8 @@ import { Suspense } from 'react';
 import './styles/globals.css';
 import RQProvider from '@/components/RQProvider';
 import Loading from '@/components/Loading';
+import { constant } from '@/utils/constant';
+import Script from 'next/script';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -27,6 +29,8 @@ export const metadata: Metadata = {
 	// },
 };
 
+export const API = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${constant.kakaoKey}&libraries=services,clusterer&autoload=false`;
+
 export default function RootLayout({
 	children,
 }: Readonly<{
@@ -39,6 +43,7 @@ export default function RootLayout({
 				<RQProvider>
 					<Suspense fallback={<Loading backgroundColor='white' />}>
 						<div className='root_container'>{children}</div>
+						<Script src={API} strategy='beforeInteractive' />
 					</Suspense>
 				</RQProvider>
 				<div id='portal' />

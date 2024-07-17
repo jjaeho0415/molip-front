@@ -2,15 +2,15 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 interface HomeStore {
-	tab: 'my' | 'team';
-	setTab: (tab: 'my' | 'team') => void;
+	tab: 'my' | 'team' | 'map';
+	setTab: (tab: 'my' | 'team' | 'map') => void;
 }
 
 const useHomeStore = create<HomeStore>(
 	persist(
 		(set) => ({
 			tab: 'my',
-			setTab: (selected: 'my' | 'team') => set({ tab: selected }),
+			setTab: (selected: 'my' | 'team' | 'map') => set({ tab: selected }),
 		}),
 		{
 			name: 'home-store',

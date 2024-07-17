@@ -3,7 +3,7 @@
 import Header from '@/components/Header';
 import styles from './home.module.css';
 import TabNavigation from '@/components/TabNavigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@/components/buttons/Button';
 import MyMenuList from './_components/MyMenuList';
 import TeamMenuList from './_components/TeamMenuList';
@@ -13,9 +13,9 @@ import Image from 'next/image';
 import InformationModal from './_components/InformationModal';
 import { useRouter } from 'next/navigation';
 import useHomeStore from './store/useHomeStore';
-// import { useQuery } from '@tanstack/react-query';
-// import { fetchData } from '@/_lib/axios';
-// import { apiRoutes } from '@/_lib/apiRoutes';
+import { useQuery } from '@tanstack/react-query';
+import { fetchData } from '@/_lib/axios';
+import { apiRoutes } from '@/_lib/apiRoutes';
 // import { useAuthStore } from '../login/store/useAuthStore';
 // import { getAccessToken } from '@/api/postRefresh';
 // import { useMutation } from '@tanstack/react-query';
@@ -37,17 +37,23 @@ export default function Home() {
 	// 	getAccess();
 	// }, []);
 
-	// const { data } = useQuery({
-	// 	queryKey: ['TEAM_MENU_LIST'],
-	// 	queryFn: async () => {
-	// 		fetchData<undefined, IGetTeamMenuType>(
-	// 			'GET',
-	// 			`${apiRoutes.teamBoards}/list/`,
-	// 			userId,
-	//             process.env.NEXT_PUBLIC_ACCESS
-	// 		);
-	// 	},
-	// });
+	const { data } = useQuery({
+		queryKey: ['TEAM_MENU_LIST'],
+		queryFn: async () => {
+			fetchData<IGetTeamMenuType>(
+				'GET',
+				`${apiRoutes.teamBoards}/list`,
+				undefined,
+				process.env.NEXT_PUBLIC_ACCESS,
+			);
+		},
+	});
+
+	useEffect(() => {
+		if (data) {
+			console.log(data);
+		}
+	}, []);
 
 	const handleInformClick = (): void => {
 		if (isInformOpen) {
@@ -88,7 +94,7 @@ export default function Home() {
 								<div
 									style={{
 										position: 'absolute',
-										transform: 'translate(23%, 80%)',
+										transform: 'translate(13%, 80%)',
 									}}
 								>
 									<InformationModal />

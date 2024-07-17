@@ -4,10 +4,12 @@
 	gap: 20px;
 	width: 100%;
 	border-bottom: 1px solid var(--gray-20);
+	justify-content: space-between;
 }
 
 .active {
 	font-size: 19px;
+	font-weight: 800;
 	color: var(--main-50);
 	border-bottom: 3px solid var(--main-50);
 	padding-bottom: 4px;
@@ -15,6 +17,7 @@
 }
 
 .inactive {
+	font-weight: 800;
 	font-size: 19px;
 	color: var(--gray-30);
 	cursor: pointer;

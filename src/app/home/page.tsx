@@ -16,6 +16,7 @@ import useHomeStore from './store/useHomeStore';
 import { useQuery } from '@tanstack/react-query';
 import { fetchData } from '@/_lib/axios';
 import { apiRoutes } from '@/_lib/apiRoutes';
+import { constant } from '@/utils/constant';
 // import { useAuthStore } from '../login/store/useAuthStore';
 // import { getAccessToken } from '@/api/postRefresh';
 // import { useMutation } from '@tanstack/react-query';
@@ -27,7 +28,8 @@ export default function Home() {
 
 	const { data } = useQuery({
 		queryKey: ['my_menu_list'],
-		queryFn: async () => fetchData('GET', apiRoutes.porsonalboard),
+		queryFn: async () =>
+			fetchData('GET', apiRoutes.porsonalboard, constant.token),
 	});
 
 	useEffect(() => {

@@ -10,7 +10,7 @@ type ErrorType = {
 axios.defaults.withCredentials = true;
 
 const refreshAxios = axios.create({
-	baseURL: `${process.env.NEXT_PUBLIC_API}/${apiRoutes.refresh}`,
+	baseURL: `${process.env.NEXT_PUBLIC_API}${apiRoutes.refresh}`,
 	timeout: 5000,
 });
 

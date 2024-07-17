@@ -1,8 +1,8 @@
 export const apiRoutes = {
-  logout: '/logout',
-  refresh: '/reissue-token',
-  votes: '/votes',
-  porsonalboard: '/personalboards',
-  teamBoard: '/teamboards',
-  users: '/users'
+	logout: '/logout',
+	refresh: '/reissue-token',
+	votes: '/votes',
+	porsonalboards: '/personalboards',
+	teamBoards: '/teamboards',
+	users: '/users',
 };

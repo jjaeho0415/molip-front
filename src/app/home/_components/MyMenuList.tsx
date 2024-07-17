@@ -3,9 +3,7 @@ import MyMenuItem from '@/components/menuItem/MyMenuItem';
 import { useRouter } from 'next/navigation';
 
 interface MyMenuListProps {
-	menuList: {
-		menuName: string;
-	}[];
+	menuList: IGetMyMenuType[];
 }
 
 function MyMenuList({ menuList }: MyMenuListProps) {
@@ -20,7 +18,7 @@ function MyMenuList({ menuList }: MyMenuListProps) {
 		<>
 			{menuList.map((myMenuItem, index) => (
 				<MyMenuItem
-					menuTitle={myMenuItem.menuName}
+					menuTitle={myMenuItem.name}
 					key={index}
 					handleClick={handleMenuItemClick}
 				/>

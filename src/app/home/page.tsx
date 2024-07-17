@@ -7,58 +7,43 @@ import { useEffect, useState } from 'react';
 import Button from '@/components/buttons/Button';
 import MyMenuList from './_components/MyMenuList';
 import TeamMenuList from './_components/TeamMenuList';
-import { myMenuList, teamMenuList } from '@/data/menuList';
 import MenuEmpty from './_components/MenuEmpty';
 import Image from 'next/image';
 import InformationModal from './_components/InformationModal';
 import { useRouter } from 'next/navigation';
 import useHomeStore from './store/useHomeStore';
-import { useQuery } from '@tanstack/react-query';
-import { fetchData } from '@/_lib/axios';
-import { apiRoutes } from '@/_lib/apiRoutes';
-import { constant } from '@/utils/constant';
-// import { useAuthStore } from '../login/store/useAuthStore';
-// import { getAccessToken } from '@/api/postRefresh';
-// import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useAuthStore } from '../login/store/useAuthStore';
+import { getAccessToken } from '@/api/postRefresh';
+import { getMyMenuList } from '@/api/getMyMenuList';
+import { getTeamMenuList } from '@/api/getTeamMenuList';
 
 export default function Home() {
 	const { tab } = useHomeStore();
 	const [isInformOpen, setIsInformOpen] = useState<boolean>(false);
 	const route = useRouter();
 
-	const { data } = useQuery({
-		queryKey: ['my_menu_list'],
-		queryFn: async () =>
-			fetchData('GET', apiRoutes.porsonalboard, constant.token),
+	const { mutate: getAccess } = useMutation<string>({
+		mutationFn: getAccessToken,
+		mutationKey: ['refresh'],
+		onSuccess: (token: string) => {
+			useAuthStore.setState({ isLogin: true, accessToken: token });
+		},
 	});
 
 	useEffect(() => {
-		console.log(data);
-	}, [data]);
+		getAccess();
+	}, []);
 
-	// const { mutate: getAccess } = useMutation<string>({
-	// 	mutationFn: getAccessToken,
-	// 	mutationKey: ['refresh'],
-	// 	onSuccess: (token: string) => {
-	// 		useAuthStore.setState({ isLogin: true, accessToken: token });
-	// 	},
-	// });
+	const { data: myMenuList } = useQuery<IGetMyMenuType[]>({
+		queryKey: ['my_menu_list'],
+		queryFn: getMyMenuList,
+	});
 
-	// useEffect(() => {
-	// 	getAccess();
-	// }, []);
-
-	// const { data } = useQuery({
-	// 	queryKey: ['TEAM_MENU_LIST'],
-	// 	queryFn: async () => {
-	// 		fetchData<undefined, IGetTeamMenuType>(
-	// 			'GET',
-	// 			`${apiRoutes.teamBoards}/list/`,
-	// 			userId,
-	//             process.env.NEXT_PUBLIC_ACCESS
-	// 		);
-	// 	},
-	// });
+	const { data: teamMenuList } = useQuery<IGetTeamMenuType[]>({
+		queryKey: ['TEAM_MENU_LIST'],
+		queryFn: getTeamMenuList,
+	});
 
 	const handleInformClick = (): void => {
 		if (isInformOpen) {
@@ -99,7 +84,7 @@ export default function Home() {
 								<div
 									style={{
 										position: 'absolute',
-										transform: 'translate(23%, 80%)',
+										transform: 'translate(13%, 80%)',
 									}}
 								>
 									<InformationModal />
@@ -114,16 +99,26 @@ export default function Home() {
 			</div>
 
 			<div className={styles.Container}>
-				{tab === 'my' ? (
-					myMenuList.length === 0 ? (
-						<MenuEmpty myMenuIsEmpty={myMenuList.length === 0 ? true : false} />
-					) : (
-						<MyMenuList menuList={myMenuList} />
-					)
-				) : teamMenuList.length === 0 ? (
-					<MenuEmpty myMenuIsEmpty={myMenuList.length === 0 ? true : false} />
-				) : (
-					<TeamMenuList menuList={teamMenuList} />
+				{myMenuList && teamMenuList && (
+					<>
+						{tab === 'my' ? (
+							myMenuList && myMenuList.length === 0 ? (
+								<MenuEmpty
+									myMenuIsEmpty={
+										myMenuList && myMenuList.length === 0 ? true : false
+									}
+								/>
+							) : (
+								<MyMenuList menuList={myMenuList && myMenuList} />
+							)
+						) : teamMenuList && teamMenuList.length === 0 ? (
+							<MenuEmpty
+								myMenuIsEmpty={myMenuList.length === 0 ? true : false}
+							/>
+						) : (
+							<TeamMenuList menuList={teamMenuList} />
+						)}
+					</>
 				)}
 			</div>
 		</>

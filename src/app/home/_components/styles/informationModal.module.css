@@ -14,8 +14,8 @@
 	top: -18px;
 	left: 90px;
 	border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    border-bottom: 20px solid var(--main-10);
+	border-right: 20px solid transparent;
+	border-bottom: 20px solid var(--main-10);
 }
 
 .content {
@@ -42,5 +42,5 @@
 }
 
 .content span {
-    margin-left: 15.5px;
+	margin-left: 15.5px;
 }

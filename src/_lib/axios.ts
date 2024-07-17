@@ -33,27 +33,27 @@ export const fetchData = async <ResponseType, RequestType = undefined>(
 		switch (method) {
 			case 'GET':
 				response = await customAxios.get(endpoint, {
-					headers: { Authorization: `Bearer ${token}` },
+					headers: { access: `${token}` },
 				});
 				break;
 			case 'POST':
 				response = await customAxios.post<ResponseType>(endpoint, data, {
-					headers: { Authorization: `Bearer ${token}` },
+					headers: { access: `${token}` },
 				});
 				break;
 			case 'PUT':
 				response = await customAxios.put<ResponseType>(endpoint, data, {
-					headers: { Authorization: `Bearer ${token}` },
+					headers: { access: `${token}` },
 				});
 				break;
 			case 'DELETE':
 				response = await customAxios.delete<ResponseType>(endpoint, {
-					headers: { Authorization: `Bearer ${token}` },
+					headers: { access: `${token}` },
 				});
 				break;
 			case 'PATCH':
 				response = await customAxios.patch<ResponseType>(endpoint, data, {
-					headers: { Authorization: `Bearer ${token}` },
+					headers: { access: `${token}` },
 				});
 				break;
 			default:
@@ -94,7 +94,7 @@ customAxios.interceptors.response.use(
 					isLogin: isLogin,
 					accessToken: newAccessToken,
 				});
-				originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+				originalRequest.headers.access = `${newAccessToken}`;
 				return customAxios(originalRequest);
 			} catch (refreshError) {
 				console.error('Failed to refresh access token: ', refreshError);

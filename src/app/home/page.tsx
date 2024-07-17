@@ -3,7 +3,7 @@
 import Header from '@/components/Header';
 import styles from './home.module.css';
 import TabNavigation from '@/components/TabNavigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@/components/buttons/Button';
 import MyMenuList from './_components/MyMenuList';
 import TeamMenuList from './_components/TeamMenuList';
@@ -13,6 +13,9 @@ import Image from 'next/image';
 import InformationModal from './_components/InformationModal';
 import { useRouter } from 'next/navigation';
 import useHomeStore from './store/useHomeStore';
+import { useQuery } from '@tanstack/react-query';
+import { fetchData } from '@/_lib/axios';
+import { apiRoutes } from '@/_lib/apiRoutes';
 // import { useAuthStore } from '../login/store/useAuthStore';
 // import { getAccessToken } from '@/api/postRefresh';
 // import { useMutation } from '@tanstack/react-query';
@@ -21,6 +24,15 @@ export default function Home() {
 	const { tab } = useHomeStore();
 	const [isInformOpen, setIsInformOpen] = useState<boolean>(false);
 	const route = useRouter();
+
+	const { data } = useQuery({
+		queryKey: ['my_menu_list'],
+		queryFn: async () => fetchData('GET', apiRoutes.porsonalboard),
+	});
+
+	useEffect(() => {
+		console.log(data);
+	}, [data]);
 
 	// const { mutate: getAccess } = useMutation<string>({
 	// 	mutationFn: getAccessToken,

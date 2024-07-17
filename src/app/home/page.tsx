@@ -46,6 +46,18 @@ export default function Home() {
 	// 	getAccess();
 	// }, []);
 
+	// const { data } = useQuery({
+	// 	queryKey: ['TEAM_MENU_LIST'],
+	// 	queryFn: async () => {
+	// 		fetchData<undefined, IGetTeamMenuType>(
+	// 			'GET',
+	// 			`${apiRoutes.teamBoards}/list/`,
+	// 			userId,
+	//             process.env.NEXT_PUBLIC_ACCESS
+	// 		);
+	// 	},
+	// });
+
 	const handleInformClick = (): void => {
 		if (isInformOpen) {
 			setIsInformOpen(false);

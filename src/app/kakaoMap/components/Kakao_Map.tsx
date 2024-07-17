@@ -17,7 +17,7 @@ interface IKakaoMap {
 export default function Kakao_Map({ keyword }: IKakaoMap) {
 	useKakaoLoader();
 	const mapRef = useRef<kakao.maps.Map>(null);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [position, setPosition] = useState<{ lat: number; lng: number }>({
 		lat: 33.450701,
 		lng: 126.570667,
@@ -43,7 +43,6 @@ export default function Kakao_Map({ keyword }: IKakaoMap) {
 	const [map, setMap] = useState<kakao.maps.Map | null>(null);
 
 	useEffect(() => {
-		setIsLoading(true);
 		const watchId = navigator.geolocation.watchPosition(
 			(pos) => {
 				setPosition({ lat: pos.coords.latitude, lng: pos.coords.longitude });
@@ -98,13 +97,13 @@ export default function Kakao_Map({ keyword }: IKakaoMap) {
 					style={{
 						// 지도의 크기
 						width: '100%',
-						height: '100vh',
+						height: 'calc(100vh - 96.2px)',
 					}}
 					level={3} // 지도의 확대 레벨
 					ref={mapRef}
 					onCreate={setMap}
 				>
-					<ZoomControl position={'RIGHT'} />
+					{/* <ZoomControl position={'RIGHT'} /> */}
 					{markers.map((marker) => (
 						<MapMarker
 							key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}

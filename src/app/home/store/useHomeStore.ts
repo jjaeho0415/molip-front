@@ -1,20 +1,20 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface HomeStore {
-	tab: 'my' | 'team' | 'map';
+	tab: 'my' | 'team' | 'map' | null;
 	setTab: (tab: 'my' | 'team' | 'map') => void;
 }
 
 const useHomeStore = create<HomeStore>(
 	persist(
 		(set) => ({
-			tab: 'my',
+			tab: null,
 			setTab: (selected: 'my' | 'team' | 'map') => set({ tab: selected }),
 		}),
 		{
 			name: 'home-store',
-			getStorage: () => sessionStorage, // 세션 스토리지를 사용하도록 설정
+			storage: createJSONStorage(() => sessionStorage), // 세션 스토리지를 사용하도록 설정
 		},
 	) as (set: (fn: (state: HomeStore) => HomeStore) => void) => HomeStore,
 );

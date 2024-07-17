@@ -17,13 +17,14 @@ import { useAuthStore } from '../login/store/useAuthStore';
 import { getAccessToken } from '@/api/postRefresh';
 import { getMyMenuList } from '@/api/getMyMenuList';
 import { getTeamMenuList } from '@/api/getTeamMenuList';
+import Loading from '@/components/Loading';
 
 export default function Home() {
 	const { tab } = useHomeStore();
 	const [isInformOpen, setIsInformOpen] = useState<boolean>(false);
 	const route = useRouter();
 
-	const { mutate: getAccess } = useMutation<string>({
+	const { mutate: getAccess } = useMutation({
 		mutationFn: getAccessToken,
 		mutationKey: ['refresh'],
 		onSuccess: (token: string) => {
@@ -32,11 +33,14 @@ export default function Home() {
 	});
 
 	useEffect(() => {
-		getAccess();
+		const current = window.location.href;
+		if (current && current.includes('molip.site')) {
+			getAccess();
+		}
 	}, []);
 
 	const { data: myMenuList } = useQuery<IGetMyMenuType[]>({
-		queryKey: ['my_menu_list'],
+		queryKey: ['MY_MENU_LIST'],
 		queryFn: getMyMenuList,
 	});
 
@@ -61,37 +65,45 @@ export default function Home() {
 		}
 	};
 
+	if (tab === null) {
+		return (
+			<div className={styles.loading}>
+				<Loading backgroundColor='white' />
+			</div>
+		);
+	}
+
 	return (
 		<>
 			<Header />
 			<TabNavigation />
 			<div className={styles.createContainer}>
 				<p className={styles.titleSection}>
-					{tab === 'my' ? (
-						'나의 메뉴판'
-					) : (
-						<>
-							팀 메뉴판
-							<Image
-								alt='informationIcon'
-								width={32}
-								height={32}
-								src='/svg/informationIcon.svg'
-								style={{ cursor: 'pointer' }}
-								onClick={handleInformClick}
-							/>
-							{isInformOpen && (
-								<div
-									style={{
-										position: 'absolute',
-										transform: 'translate(13%, 80%)',
-									}}
-								>
-									<InformationModal />
-								</div>
+					{tab === 'my'
+						? '나의 메뉴판'
+						: tab === 'team' && (
+								<>
+									팀 메뉴판
+									<Image
+										alt='informationIcon'
+										width={32}
+										height={32}
+										src='/svg/informationIcon.svg'
+										style={{ cursor: 'pointer' }}
+										onClick={handleInformClick}
+									/>
+									{isInformOpen && (
+										<div
+											style={{
+												position: 'absolute',
+												transform: 'translate(13%, 80%)',
+											}}
+										>
+											<InformationModal />
+										</div>
+									)}
+								</>
 							)}
-						</>
-					)}
 				</p>
 				<Button state='new' onClick={handleCreateMenuBoard}>
 					+ 새로만들기
@@ -102,21 +114,19 @@ export default function Home() {
 				{myMenuList && teamMenuList && (
 					<>
 						{tab === 'my' ? (
-							myMenuList && myMenuList.length === 0 ? (
+							myMenuList.length === 0 ? (
 								<MenuEmpty
-									myMenuIsEmpty={
-										myMenuList && myMenuList.length === 0 ? true : false
-									}
+									myMenuIsEmpty={myMenuList.length === 0 ? true : false}
 								/>
 							) : (
-								<MyMenuList menuList={myMenuList && myMenuList} />
+								<MyMenuList menuList={myMenuList} />
 							)
-						) : teamMenuList && teamMenuList.length === 0 ? (
+						) : tab === 'team' && teamMenuList.length === 0 ? (
 							<MenuEmpty
 								myMenuIsEmpty={myMenuList.length === 0 ? true : false}
 							/>
 						) : (
-							<TeamMenuList menuList={teamMenuList} />
+							tab === 'team' && <TeamMenuList menuList={teamMenuList} />
 						)}
 					</>
 				)}

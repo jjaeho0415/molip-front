@@ -7,16 +7,16 @@ type ErrorType = {
 	status: number;
 };
 
-axios.defaults.withCredentials = true;
-
 const refreshAxios = axios.create({
 	baseURL: `${process.env.NEXT_PUBLIC_API}${apiRoutes.refresh}`,
+	withCredentials: true,
 	timeout: 5000,
 });
 
 const customAxios = (() =>
 	axios.create({
 		baseURL: `${process.env.NEXT_PUBLIC_API}`,
+		withCredentials: true,
 		headers: {
 			'Content-Type': 'application/json',
 		},

@@ -15,6 +15,7 @@ function TeamMenuList({ menuList }: TeamMenuListProps) {
   const route = useRouter();
 
 	const handleMenuItemClick = () => {
+		
 		route.push('/menu');
 	};
 

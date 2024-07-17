@@ -21,7 +21,7 @@ function MyMenuItem({ menuTitle, handleClick }: MyMenuItemProps) {
 					width={24}
 					height={24}
 					onClick={(e) => {
-						e.preventDefault();
+						e.stopPropagation();
 						isMoreModalOpen
 							? setIsMoreModalOpen(false)
 							: setIsMoreModalOpen(true);

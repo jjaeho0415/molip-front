@@ -1,4 +1,6 @@
+import { useAuthStore } from '@/app/login/store/useAuthStore';
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import { apiRoutes } from './apiRoutes';
 
 type ErrorType = {
 	message: string;
@@ -7,9 +9,14 @@ type ErrorType = {
 
 axios.defaults.withCredentials = true;
 
+const refreshAxios = axios.create({
+	baseURL: `${process.env.NEXT_PUBLIC_API}/${apiRoutes.refresh}`,
+	timeout: 5000,
+});
+
 const customAxios = (() =>
 	axios.create({
-		baseURL: '/api/v1',
+		baseURL: `${process.env.NEXT_PUBLIC_API}`,
 		headers: {
 			'Content-Type': 'application/json',
 		},
@@ -19,24 +26,35 @@ export const fetchData = async <ResponseType, RequestType = undefined>(
 	method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
 	endpoint: string,
 	data?: RequestType,
+	token?: string,
 ): Promise<ResponseType> => {
 	try {
 		let response: AxiosResponse<ResponseType>;
 		switch (method) {
 			case 'GET':
-				response = await customAxios.get(endpoint);
+				response = await customAxios.get(endpoint, {
+					headers: { Authorization: `Bearer ${token}` },
+				});
 				break;
 			case 'POST':
-				response = await customAxios.post<ResponseType>(endpoint, data);
+				response = await customAxios.post<ResponseType>(endpoint, data, {
+					headers: { Authorization: `Bearer ${token}` },
+				});
 				break;
 			case 'PUT':
-				response = await customAxios.put<ResponseType>(endpoint, data);
+				response = await customAxios.put<ResponseType>(endpoint, data, {
+					headers: { Authorization: `Bearer ${token}` },
+				});
 				break;
 			case 'DELETE':
-				response = await customAxios.delete<ResponseType>(endpoint);
+				response = await customAxios.delete<ResponseType>(endpoint, {
+					headers: { Authorization: `Bearer ${token}` },
+				});
 				break;
 			case 'PATCH':
-				response = await customAxios.patch<ResponseType>(endpoint, data);
+				response = await customAxios.patch<ResponseType>(endpoint, data, {
+					headers: { Authorization: `Bearer ${token}` },
+				});
 				break;
 			default:
 				throw new Error('Invalid HTTP method');
@@ -61,3 +79,28 @@ export const fetchData = async <ResponseType, RequestType = undefined>(
 		}
 	}
 };
+
+// refreshToken으로 accessToken 갱신하기
+customAxios.interceptors.response.use(
+	(response) => response,
+	async (error) => {
+		const originalRequest = error.config;
+		if (error.response.status === 401 || error.response.status === 400) {
+			try {
+				const response = await refreshAxios.post('');
+				const { isLogin } = useAuthStore.getState();
+				const newAccessToken = response.headers['access'];
+				useAuthStore.setState({
+					isLogin: isLogin,
+					accessToken: newAccessToken,
+				});
+				originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+				return customAxios(originalRequest);
+			} catch (refreshError) {
+				console.error('Failed to refresh access token: ', refreshError);
+			}
+		} else {
+			console.error('Refresh token not found.');
+		}
+	},
+);

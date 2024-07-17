@@ -3,28 +3,29 @@ import { Suspense } from 'react';
 import './styles/globals.css';
 import RQProvider from '@/components/RQProvider';
 import Loading from '@/components/Loading';
+import { Metadata } from 'next';
 
-// export const metadata: Metadata = {
-//   title: '',
-//   description: '',
-//   icons: {
-//     icon: '',
-//   },
-//   openGraph: {
-//     title: '',
-//     description: '',
-//     images: [
-//       {
-//         url: 'https://raw.githubusercontent.com/SWYP-LUCKY-SEVEN/front-end/develop/public/Icon_Logo.png',
-//         width: 1900,
-//         height: 600,
-//       },
-//     ],
+export const metadata: Metadata = {
+	title: '모두의 입맛 - molip',
+	description: '직장인 메뉴 선정 서비스',
+	icons: {
+		icon: '/logo/Logo_noBg_orange.svg',
+	},
+	// openGraph: {
+	//   title: '',
+	//   description: '',
+	//   images: [
+	//     {
+	//       url: 'https://raw.githubusercontent.com/SWYP-LUCKY-SEVEN/front-end/develop/public/Icon_Logo.png',
+	//       width: 1900,
+	//       height: 600,
+	//     },
+	//   ],
 
-//     siteName: '모두의 입맛 - molip',
-//     type: 'website',
-//   },
-// };
+	// siteName: '모두의 입맛 - molip',
+	// type: 'website',
+	// },
+};
 
 export default function RootLayout({
 	children,
@@ -33,6 +34,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='ko'>
+			<link rel='icon' href='/logo/Logo_noBg_orange.svg' sizes='any' />
 			<body>
 				<RQProvider>
 					<Suspense fallback={<Loading backgroundColor='white' />}>

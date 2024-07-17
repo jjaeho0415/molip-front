@@ -10,7 +10,6 @@ import TeamMenuList from './_components/TeamMenuList';
 import MenuEmpty from './_components/MenuEmpty';
 import Image from 'next/image';
 import InformationModal from './_components/InformationModal';
-import { useRouter } from 'next/navigation';
 import useHomeStore from './store/useHomeStore';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useAuthStore } from '../login/store/useAuthStore';
@@ -18,11 +17,14 @@ import { getAccessToken } from '@/api/postRefresh';
 import { getMyMenuList } from '@/api/getMyMenuList';
 import { getTeamMenuList } from '@/api/getTeamMenuList';
 import Loading from '@/components/Loading';
+import { useRouter } from 'next/navigation';
+import { postCreateMyMenu } from '@/api/postCreateMyMenu';
 
 export default function Home() {
 	const { tab } = useHomeStore();
 	const [isInformOpen, setIsInformOpen] = useState<boolean>(false);
 	const route = useRouter();
+	const [defaultMyMenuName, setDefaultMyMenuName] = useState<string>('');
 
 	const { mutate: getAccess } = useMutation({
 		mutationFn: getAccessToken,
@@ -44,9 +46,38 @@ export default function Home() {
 		queryFn: getMyMenuList,
 	});
 
+	useEffect(() => {
+		if (myMenuList && myMenuList.length > 0) {
+			let index = 1;
+			// 사용자 이름 받아오면 그걸로 수정해야함
+			let newValue = `OOO의 메뉴판`;
+			while (index <= myMenuList.length) {
+				myMenuList.map((menuItem) => {
+					menuItem.name.includes(`${menuItem.userName}의 메뉴판${index}`) &&
+						index++;
+					newValue = `${menuItem.userName}의 메뉴판(${index})`;
+				});
+			}
+			setDefaultMyMenuName(newValue);
+		} else {
+			setDefaultMyMenuName('OOO의 메뉴판');
+		}
+	}, [myMenuList]);
+
 	const { data: teamMenuList } = useQuery<IGetTeamMenuType[]>({
 		queryKey: ['TEAM_MENU_LIST'],
 		queryFn: getTeamMenuList,
+	});
+
+	const { mutate: createMyMenu } = useMutation({
+		mutationFn: () => postCreateMyMenu(defaultMyMenuName),
+		mutationKey: ['CREATE_MY_MENU'],
+		onSuccess: () => {
+			route.push(
+				`/createMyMenu?menuName=${encodeURIComponent(defaultMyMenuName)}`,
+			);
+		},
+		onError: (error) => console.error(error),
 	});
 
 	const handleInformClick = (): void => {
@@ -61,7 +92,7 @@ export default function Home() {
 		if (tab === 'team') {
 			route.push('/makeTeam');
 		} else {
-			route.push('/createMyMenu');
+			createMyMenu();
 		}
 	};
 

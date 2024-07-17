@@ -24,7 +24,7 @@ export default function TabNavigation({ isUser = 'user' }: TabNavigationProps) {
 		}
 	};
 
-	const handleTeamTag = () => {
+	const handleTeamTab = () => {
 		if (isUser === 'guest') {
 			if (confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?')) {
 				router.push('/login');
@@ -32,6 +32,17 @@ export default function TabNavigation({ isUser = 'user' }: TabNavigationProps) {
 		} else {
 			setTab('team');
 			router.push('/home');
+		}
+	};
+
+	const handleMapTab = () => {
+		if (isUser === 'guest') {
+			if (confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?')) {
+				router.push('/login');
+			}
+		} else {
+			setTab('map');
+			router.push('/kakaoMap');
 		}
 	};
 
@@ -45,9 +56,15 @@ export default function TabNavigation({ isUser = 'user' }: TabNavigationProps) {
 			</p>
 			<p
 				className={tab === 'team' ? styles.active : styles.inactive}
-				onClick={handleTeamTag}
+				onClick={handleTeamTab}
 			>
 				팀 메뉴판
+			</p>
+			<p
+				className={tab === 'map' ? styles.active : styles.inactive}
+				onClick={handleMapTab}
+			>
+				지도 검색
 			</p>
 		</div>
 	);

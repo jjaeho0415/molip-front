@@ -13,6 +13,9 @@ import Image from 'next/image';
 import InformationModal from './_components/InformationModal';
 import { useRouter } from 'next/navigation';
 import useHomeStore from './store/useHomeStore';
+// import { useQuery } from '@tanstack/react-query';
+// import { fetchData } from '@/_lib/axios';
+// import { apiRoutes } from '@/_lib/apiRoutes';
 // import { useAuthStore } from '../login/store/useAuthStore';
 // import { getAccessToken } from '@/api/postRefresh';
 // import { useMutation } from '@tanstack/react-query';
@@ -33,6 +36,18 @@ export default function Home() {
 	// useEffect(() => {
 	// 	getAccess();
 	// }, []);
+
+	// const { data } = useQuery({
+	// 	queryKey: ['TEAM_MENU_LIST'],
+	// 	queryFn: async () => {
+	// 		fetchData<undefined, IGetTeamMenuType>(
+	// 			'GET',
+	// 			`${apiRoutes.teamBoards}/list/`,
+	// 			userId,
+	//             process.env.NEXT_PUBLIC_ACCESS
+	// 		);
+	// 	},
+	// });
 
 	const handleInformClick = (): void => {
 		if (isInformOpen) {

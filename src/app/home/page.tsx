@@ -13,11 +13,26 @@ import Image from 'next/image';
 import InformationModal from './_components/InformationModal';
 import { useRouter } from 'next/navigation';
 import useHomeStore from './store/useHomeStore';
+// import { useAuthStore } from '../login/store/useAuthStore';
+// import { getAccessToken } from '@/api/postRefresh';
+// import { useMutation } from '@tanstack/react-query';
 
 export default function Home() {
 	const { tab } = useHomeStore();
 	const [isInformOpen, setIsInformOpen] = useState<boolean>(false);
 	const route = useRouter();
+
+	// const { mutate: getAccess } = useMutation<string>({
+	// 	mutationFn: getAccessToken,
+	// 	mutationKey: ['refresh'],
+	// 	onSuccess: (token: string) => {
+	// 		useAuthStore.setState({ isLogin: true, accessToken: token });
+	// 	},
+	// });
+
+	// useEffect(() => {
+	// 	getAccess();
+	// }, []);
 
 	const handleInformClick = (): void => {
 		if (isInformOpen) {

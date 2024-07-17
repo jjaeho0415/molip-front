@@ -11,8 +11,8 @@ interface MyMenuListProps {
 function MyMenuList({ menuList }: MyMenuListProps) {
 	const route = useRouter();
 
-	const handleMenuItemClick = (e: React.MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
+	const handleMenuItemClick = () => {
+		
 		route.push('/menu');
 	};
 
@@ -22,7 +22,7 @@ function MyMenuList({ menuList }: MyMenuListProps) {
 				<MyMenuItem
 					menuTitle={myMenuItem.menuName}
 					key={index}
-					handleClick={() => handleMenuItemClick}
+					handleClick={handleMenuItemClick}
 				/>
 			))}
 		</>

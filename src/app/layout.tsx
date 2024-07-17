@@ -2,6 +2,7 @@
 import { Suspense } from 'react';
 import './styles/globals.css';
 import RQProvider from '@/components/RQProvider';
+import Loading from '@/components/Loading';
 
 // export const metadata: Metadata = {
 //   title: '',
@@ -26,20 +27,20 @@ import RQProvider from '@/components/RQProvider';
 // };
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <html lang='ko'>
-      <body>
-        <RQProvider>
-          <Suspense>
-            <div className='root_container'>{children}</div>
-          </Suspense>
-        </RQProvider>
-        <div id='portal' />
-      </body>
-    </html>
-  );
+	return (
+		<html lang='ko'>
+			<body>
+				<RQProvider>
+					<Suspense fallback={<Loading backgroundColor='white' />}>
+						<div className='root_container'>{children}</div>
+					</Suspense>
+				</RQProvider>
+				<div id='portal' />
+			</body>
+		</html>
+	);
 }

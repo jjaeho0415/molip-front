@@ -12,13 +12,19 @@ import RoundButton from '@/components/buttons/RoundButton';
 import BottomSheet from '@/components/BottomSheet/BottomSheet';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import AddTaste_BS from '@/components/BottomSheet/AddTaste_BS';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 function CreateMyMenu() {
-	const [value, setValue] = useState<string>('');
 	const [isEmptyModalOpen, setIsEmptyModalOpen] = useState<boolean>(false);
 	const { setIsOpen } = useBottomSheet();
 	const route = useRouter();
+	const createMyMenu = useSearchParams();
+	const defaultName = createMyMenu.get('menuName');
+	const [value, setValue] = useState<string>('');
+
+	useEffect(() => {
+		defaultName && setValue(defaultName);
+	}, [defaultName]);
 
 	useEffect(() => {
 		if (value) {
@@ -46,7 +52,7 @@ function CreateMyMenu() {
 			<div className={styles.ContentsContainer}>
 				<div className={styles.inputBox}>
 					<SmallInput
-						placeholder='OOO의 메뉴판'
+						placeholder={`${defaultName}`}
 						value={value}
 						setValue={setValue}
 					/>

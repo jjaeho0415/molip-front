@@ -28,7 +28,6 @@ function AddTaste_BS({ onClick }: AddTaste_BSProps) {
 		} else {
 			setIsAllTasteClicked(false);
 		}
-		console.log(selectedOptions);
 	}, [selectedOptions]);
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);

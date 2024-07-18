@@ -3,29 +3,23 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 
 interface TeamMenuListProps {
-  menuList: {
-    teamName: string;
-    menuName: string;
-    teamNumber: number;
-  }[];
+	menuList: IGetTeamMenuType[];
 }
 
 function TeamMenuList({ menuList }: TeamMenuListProps) {
-
-  const route = useRouter();
+	const route = useRouter();
 
 	const handleMenuItemClick = () => {
-		
 		route.push('/menu');
 	};
 
-  return (
+	return (
 		<>
 			{menuList.map((teamMenuItem, index) => (
 				<TeamMenuItem
 					teamTitle={teamMenuItem.teamName}
-					menuTitle={teamMenuItem.menuName}
-					teamNumber={teamMenuItem.teamNumber}
+					menuTitle={teamMenuItem.teamBoardName}
+					teamNumber={teamMenuItem.teamMembersNum}
 					key={index}
 					handleClick={handleMenuItemClick}
 				/>

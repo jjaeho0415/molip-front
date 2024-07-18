@@ -15,10 +15,17 @@ import RoundButton from '@/components/buttons/RoundButton';
 import NoMenu_BS from '@/components/BottomSheet/NoMenu_BS';
 import AddMenu_BS from '@/components/BottomSheet/AddMenu_BS';
 import useBottomSheet from '@/hooks/useBottomSheet';
+import { useSearchParams } from 'next/navigation';
+import { getTeamMenuList } from '@/api/getTeamMenuList';
+import { useQuery } from '@tanstack/react-query';
 
 export default function TeamMenuPage() {
 	const { setIsOpen } = useBottomSheet();
-	const [value, setValue] = useState<string>('스위프 10팀의 메뉴판');
+	const searchParams = useSearchParams();
+	const teamName = searchParams.get('teamName') as string;
+	const [menuBoardName, setMenuBoardName] = useState<string>(
+		`${teamName}의 메뉴판`,
+	);
 	const [isDone] = useState<boolean>(true);
 	const [hasMyMenu] = useState<boolean>(false);
 	const [currentUrl, setCurrentUrl] = useState<string>('');
@@ -28,6 +35,22 @@ export default function TeamMenuPage() {
 			setCurrentUrl(window.location.href);
 		}
 	}, []);
+
+	const { data: teamMenuList } = useQuery<IGetTeamMenuType[]>({
+		queryKey: ['TEAM_MENU_LIST'],
+		queryFn: getTeamMenuList,
+	});
+
+	useEffect(() => {
+		const teamBoardNames = teamMenuList?.filter(
+			(item) => item.teamBoardName === `${teamName}의 메뉴판`,
+		);
+		if (teamBoardNames && teamBoardNames.length > 1) {
+			setMenuBoardName(`${teamName}의 메뉴판${teamBoardNames.length}`);
+		} else {
+			setMenuBoardName(`${teamName}의 메뉴판`);
+		}
+	}, [teamName, teamMenuList]);
 
 	const handleClickButton = () => {
 		setIsOpen(false);
@@ -50,7 +73,10 @@ export default function TeamMenuPage() {
 			<TopNavBar backRoute='/home' />
 			<div className={styles.contentsContainer}>
 				<div className={styles.inputBox}>
-					<SmallInput value={value} setValue={setValue}></SmallInput>
+					<SmallInput
+						value={menuBoardName}
+						setValue={setMenuBoardName}
+					></SmallInput>
 					<Image src={Icon_pencile} width={36} height={36} alt='edit' />
 				</div>
 				<div className={styles.middleBox}>

@@ -7,6 +7,8 @@ import { useState } from 'react';
 import Button from '@/components/buttons/Button';
 import BigInput from '@/components/InputBox/BigInput';
 import { useRouter } from 'next/navigation';
+import { useMutation } from '@tanstack/react-query';
+import { postCreateTeamMenu } from '@/api/postCreatTeamMenu copy';
 
 const numArr = [1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -15,6 +17,16 @@ export default function MakeTeam() {
 	const [teamName, setTeamName] = useState<string>('');
 	const [selectedNum, setSelectedNum] = useState<number>(0);
 
+	const { mutate: createTeamMenu } = useMutation({
+		mutationFn: () =>
+			postCreateTeamMenu(teamName, selectedNum, `${teamName}의 메뉴판`),
+		mutationKey: ['CREATE_TEAM_MENU'],
+		onSuccess: () => {
+			router.push(`/teamMenuPage?teamName=${teamName}`);
+		},
+		onError: (error) => console.error(error),
+	});
+
 	const handleSelectNum = (num: number) => {
 		if (num === selectedNum) {
 			setSelectedNum(0);
@@ -22,7 +34,7 @@ export default function MakeTeam() {
 	};
 
 	const handleOk = () => {
-		teamName && router.push('/teamMenuPage');
+		teamName && createTeamMenu();
 	};
 
 	return (

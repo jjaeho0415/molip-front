@@ -16,7 +16,7 @@ interface NoticeModalProps {
 	setIsNoticeModalOpen: Dispatch<SetStateAction<boolean>>;
 	titleText: string;
 	isLogout?: boolean;
-	menuId: number;
+	menuId?: number;
 	setIsMoreModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -74,7 +74,7 @@ function NoticeModal({
 			deleteMenu(Number(defaultMenuId));
 			return;
 		}
-		deleteMenu(menuId);
+		menuId && deleteMenu(menuId);
 	};
 
 	return ReactDOM.createPortal(

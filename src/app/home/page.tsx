@@ -85,7 +85,7 @@ export default function Home() {
 		mutationKey: ['CREATE_MY_MENU'],
 		onSuccess: (data) => {
 			route.push(
-				`/createMyMenu?menuName=${data.name}&id=${data.personalBoardId}`,
+				`/createMyMenu?menuName=${data.name}&menuId=${data.personalBoardId}`,
 			);
 		},
 		onError: (error) => alert(error),

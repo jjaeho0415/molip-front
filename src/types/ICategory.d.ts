@@ -1,6 +1,6 @@
 type ISelctedOptionsType = {
-	todayCategory: string[];
-	tansuCategory: string[];
-	weatherCategory: string[];
-	countryCategory: string[];
+	tasteOptions: string[];
+	carbOptions: string[];
+	weatherOptions: string[];
+	categoryOptions: string[];
 };

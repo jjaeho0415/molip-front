@@ -27,7 +27,7 @@ function NoticeModal({
 }: NoticeModalProps) {
 	const route = useRouter();
 	const createMyMenu = useSearchParams();
-	const defaultMenuId = createMyMenu.get('id');
+	const defaultMenuId = createMyMenu.get('menuId');
 	const queryClient = useQueryClient();
 	const { mutate: deleteMenu } = useMutation({
 		mutationFn: (id: string | null) => deleteMyMenu(id),

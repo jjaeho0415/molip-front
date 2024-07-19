@@ -2,7 +2,7 @@ import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import styles from './styles/inputModal.module.css';
 import ModalButton from '../buttons/ModalButton';
 import ReactDOM from 'react-dom';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { patchModifyMyMenu } from '@/api/patchModifyMyMenu';
 
 interface InputModalProps {
@@ -20,7 +20,6 @@ function InputModal({
 }: InputModalProps) {
 	const [value, setValue] = useState<string>(titleText);
 	const [isEmpty, setIsEmpty] = useState<boolean>(false);
-	const queryClient = useQueryClient();
 
 	const inputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);
@@ -32,13 +31,12 @@ function InputModal({
 	const { mutate: modifyMenuName } = useMutation({
 		mutationFn: ({ menuId, newMenuName }: modifyMenuNameParams) =>
 			patchModifyMyMenu(menuId, newMenuName),
-		mutationKey: ['modify_myMenu'],
 		onSuccess: () => {
 			setIsEmpty(false);
 			setIsInputModalOpen(false);
 			setIsMoreModalOpen(false);
 			alert('메뉴판 이름 수정 성공!');
-			queryClient.invalidateQueries();
+			
 		},
 	});
 

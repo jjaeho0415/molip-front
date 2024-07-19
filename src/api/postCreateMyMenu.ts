@@ -9,10 +9,7 @@ export const postCreateMyMenu = async (
 	return await fetchData(
 		'POST',
 		`${apiRoutes.porsonalboards}?name=${menuName}`,
-<<<<<<< HEAD
-=======
 		undefined,
->>>>>>> dev
 		`${accessToken ? accessToken : process.env.NEXT_PUBLIC_ACCESS}`,
 	);
 };

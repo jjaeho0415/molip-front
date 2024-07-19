@@ -12,13 +12,10 @@ import Image from 'next/image';
 import InformationModal from './_components/InformationModal';
 import useHomeStore from './store/useHomeStore';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useAuthStore } from '../login/store/useAuthStore';
-import { getAccessToken } from '@/api/postRefresh';
 import { getMyMenuList } from '@/api/getMyMenuList';
 import { getTeamMenuList } from '@/api/getTeamMenuList';
 import { useRouter } from 'next/navigation';
 import { postCreateMyMenu } from '@/api/postCreateMyMenu';
-import { apiRoutes } from '@/_lib/apiRoutes';
 import { getUserName } from '@/api/getUserName';
 import Loading from '@/components/Loading';
 
@@ -65,6 +62,10 @@ export default function Home() {
 		queryKey: ['TEAM_MENU_LIST'],
 		queryFn: getTeamMenuList,
 	});
+
+	useEffect(() => {
+		console.log(myMenuList, teamMenuList);
+	}, [myMenuList, teamMenuList]);
 
 	useEffect(() => {
 		if (user && myMenuList && myMenuList.length > 0) {
@@ -163,7 +164,7 @@ export default function Home() {
 						{myMenuList && teamMenuList && (
 							<>
 								{tab === 'my' ? (
-									myMenuList === null || myMenuList.length === 0 ? (
+									myMenuList.length === 0 ? (
 										<MenuEmpty myMenuIsEmpty={true} />
 									) : (
 										<MyMenuList menuList={myMenuList} />

@@ -4,6 +4,7 @@ import { useAuthStore } from '@/app/login/store/useAuthStore';
 
 export const getTeamMenuList = async (): Promise<IGetTeamMenuType[]> => {
 	const { accessToken } = useAuthStore.getState();
+
 	return await fetchData(
 		'GET',
 		`${apiRoutes.teamBoards}/list`,

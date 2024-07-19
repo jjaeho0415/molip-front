@@ -10,8 +10,8 @@ interface MyMenuListProps {
 function MyMenuList({ menuList }: MyMenuListProps) {
 	const route = useRouter();
 
-	const handleMenuItemClick = () => {
-		route.push('/menu');
+	const handleMenuItemClick = (menuId: number, menuName: string) => {
+		route.push(`/menu?menuId=${menuId}&menuName=${menuName}`);
 	};
 
 	return (
@@ -19,8 +19,11 @@ function MyMenuList({ menuList }: MyMenuListProps) {
 			{menuList.map((myMenuItem, index) => (
 				<MyMenuItem
 					menuTitle={myMenuItem.name}
+					menuId={myMenuItem.personalBoardId}
 					key={index}
-					handleClick={handleMenuItemClick}
+					handleClick={() =>
+						handleMenuItemClick(myMenuItem.personalBoardId, myMenuItem.name)
+					}
 				/>
 			))}
 		</div>

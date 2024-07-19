@@ -16,7 +16,10 @@ function ModalButton({
 }: ModalButtonProps) {
 	return (
 		<button
-			onClick={handleClick}
+			onClick={(e) => {
+				e.stopPropagation();
+				handleClick();
+			}}
 			className={`${styles.closeButton} ${styles[color]} ${cursor && styles.cursor}`}
 		>
 			{buttonText}

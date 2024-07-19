@@ -10,3 +10,15 @@ type IGetMyMenuType = {
 type IGetUserNameType = {
 	username: string;
 };
+
+type IGetMyCategoryMenuType = {
+	category: string;
+	menu: IMenuItemType[]
+}
+
+type IMenuItemType = {
+	menuId: number;
+	imageUrl: string;
+	menuName: string;
+	tags: string[];
+}

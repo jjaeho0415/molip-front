@@ -29,10 +29,3 @@
 	justify-content: center;
 	height: calc(100vh - 185px);
 }
-
-.loading {
-	display: flex;
-	height: 100vh;
-	justify-content: center;
-	align-items: center;
-}

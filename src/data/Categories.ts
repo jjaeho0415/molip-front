@@ -1,7 +1,7 @@
 export const categories = [
 	{
 		title: '오늘의 입맛을 표현해주세요.',
-		name: 'todayCategory',
+		name: 'tasteOptions',
 		options: [
 			'ALL(상관없음)',
 			'매콤한',
@@ -16,12 +16,12 @@ export const categories = [
 	},
 	{
 		title: '끌리는 탄수화물 종류가 있나요?',
-		name: 'tansuCategory',
+		name: 'carbOptions',
 		options: ['ALL(상관없음)', '밥', '면', '빵', '떡'],
 	},
 	{
 		title: '오늘 날씨에 맞게 추천해줄게요',
-		name: 'weatherCategory',
+		name: 'weatherOptions',
 		options: [
 			'ALL(상관없음)',
 			'맑고 선선해요',
@@ -32,7 +32,7 @@ export const categories = [
 	},
 	{
 		title: '나라별로도 선택해 볼래요?',
-		name: 'countryCategory',
+		name: 'categoryOptions',
 		options: [
 			'ALL(상관없음)',
 			'한식',

@@ -89,7 +89,9 @@ export default function Home() {
 		mutationFn: () => postCreateMyMenu(defaultMyMenuName),
 		mutationKey: ['CREATE_MY_MENU'],
 		onSuccess: (data) => {
-			route.push(`/createMyMenu?menuName=${data.name}`);
+			route.push(
+				`/createMyMenu?menuName=${data.name}&menuId=${data.personalBoardId}`,
+			);
 		},
 		onError: (error) => alert(error),
 	});
@@ -109,14 +111,6 @@ export default function Home() {
 			createMyMenu();
 		}
 	};
-
-	// if (tab === null) {
-	// 	return (
-	// 		<div className={styles.loading}>
-	// 			<Loading backgroundColor='white' />
-	// 		</div>
-	// 	);
-	// }
 
 	return (
 		<div className={styles.homeContainer}>

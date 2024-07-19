@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import styles from './styles/moreModal.module.css';
 import InputModal from './InputModal';
 import NoticeModal from './NoticeModal';
@@ -13,6 +13,8 @@ interface MoreModalProps {
 	menuTitle: string;
 	teamTitle: string;
 	teamNumber: number;
+	menuId?: number;
+	setIsMoreModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 function MoreModal({
@@ -20,6 +22,8 @@ function MoreModal({
 	menuTitle,
 	teamTitle,
 	teamNumber,
+	menuId,
+	setIsMoreModalOpen,
 }: MoreModalProps) {
 	const [isInputModalOpen, setIsInputModalOpen] = useState<boolean>(false);
 	const [isNoticeModalOpen, setIsNoticeModalOpen] = useState<boolean>(false);
@@ -53,7 +57,10 @@ function MoreModal({
 					<div
 						key={index}
 						className={styles.itemSection}
-						onClick={() => handleClick(item)}
+						onClick={(e) => {
+							e.stopPropagation();
+							handleClick(item);
+						}}
 					>
 						{item}
 					</div>
@@ -61,6 +68,8 @@ function MoreModal({
 			</div>
 			{isInputModalOpen && (
 				<InputModal
+					setIsMoreModalOpen={setIsMoreModalOpen}
+					menuId={menuId}
 					setIsInputModalOpen={setIsInputModalOpen}
 					titleText={menuTitle}
 				/>
@@ -69,6 +78,8 @@ function MoreModal({
 				<NoticeModal
 					setIsNoticeModalOpen={setIsNoticeModalOpen}
 					titleText={menuTitle}
+					menuId={menuId}
+					setIsMoreModalOpen={setIsMoreModalOpen}
 				/>
 			)}
 			{isModifyModalOpen && (

@@ -4,23 +4,42 @@ import React, { Dispatch, SetStateAction } from 'react';
 import styles from './styles/noticeModal.module.css';
 import ModalButton from '../buttons/ModalButton';
 import ReactDOM from 'react-dom';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuthStore } from '@/app/login/store/useAuthStore';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postLogout } from '@/api/postLogout';
+import { deleteMyMenu } from '@/api/deleteMyMenu';
 
 interface NoticeModalProps {
 	setIsNoticeModalOpen: Dispatch<SetStateAction<boolean>>;
 	titleText: string;
 	isLogout?: boolean;
+	menuId?: number;
+	setIsMoreModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 function NoticeModal({
 	setIsNoticeModalOpen,
 	titleText,
 	isLogout = false,
+	menuId,
+	setIsMoreModalOpen,
 }: NoticeModalProps) {
 	const route = useRouter();
+	const createMyMenu = useSearchParams();
+	const defaultMenuId = createMyMenu.get('menuId');
+	const queryClient = useQueryClient();
+	const { mutate: deleteMenu } = useMutation({
+		mutationFn: (id: string | null) => deleteMyMenu(id),
+		mutationKey: ['DELETE_MY_MENU'],
+		onSuccess: () => {
+			setIsNoticeModalOpen(false);
+			setIsMoreModalOpen(false);
+			alert('메뉴판이 성공적으로 삭제되었습니다.');
+			queryClient.invalidateQueries();
+			route.push('/home');
+		},
+	});
 	const closeModal = (): void => {
 		setIsNoticeModalOpen(false);
 	};
@@ -28,6 +47,7 @@ function NoticeModal({
 	const { clearLoginState } = useAuthStore();
 	const { mutate: logout } = useMutation({
 		mutationFn: postLogout,
+		mutationKey: ['logout'],
 		onSettled: () => {
 			clearLoginState();
 			setIsNoticeModalOpen(false);
@@ -41,10 +61,10 @@ function NoticeModal({
 			return;
 		}
 		if (titleText === '') {
-			setIsNoticeModalOpen(false);
-			route.push('/home');
+			deleteMenu(defaultMenuId);
+			return;
 		}
-		setIsNoticeModalOpen(false);
+		deleteMenu(String(menuId));
 	};
 
 	return ReactDOM.createPortal(
@@ -56,7 +76,7 @@ function NoticeModal({
 				}
 			}}
 		>
-			<div className={styles.modal}>
+			<div className={styles.modal} onClick={(e) => e.stopPropagation()}>
 				<div className={styles.contentSection}>
 					{titleText && <p className={styles.mainTitle}>{`‘${titleText}’`}</p>}
 					{!isLogout ? (

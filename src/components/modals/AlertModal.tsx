@@ -19,7 +19,7 @@ function AlertModal({ setIsAlertModalOpen, max }: AlertModalProps) {
 					}
 				}}
 			>
-				<div className={styles.modal}>
+				<div className={styles.modal} onClick={(e) => e.stopPropagation()}>
 					<div className={styles.contentSection}>
 						<Image
 							alt='checkIcon'

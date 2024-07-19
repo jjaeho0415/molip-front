@@ -6,7 +6,7 @@ import Icon_Back from '../../public/icons/Icon_back.svg';
 import TopMenuButton from './buttons/TopMenuButton';
 import MoreModal from './modals/MoreModal';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import NoticeModal from './modals/NoticeModal';
 
 interface ITopNavBarProps {
@@ -41,6 +41,8 @@ export default function TopNavBar({
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 	const [isNoticeModalOpen, setIsNoticeModalOpen] = useState<boolean>(false);
 	const route = useRouter();
+	const searchParams = useSearchParams();
+	const menuId = Number(searchParams.get('menuId'));
 	const handleGoBack = () => {
 		if (title === '') {
 			setIsNoticeModalOpen(true);
@@ -92,11 +94,17 @@ export default function TopNavBar({
 						menuTitle={menuTitle}
 						teamTitle={teamTitle}
 						teamNumber={teamNumber}
+						menuId={menuId}
+						setIsMoreModalOpen={setIsModalOpen}
 					/>
 				</div>
 			)}
 			{isNoticeModalOpen && (
-				<NoticeModal titleText='' setIsNoticeModalOpen={setIsNoticeModalOpen} />
+				<NoticeModal
+					titleText=''
+					setIsMoreModalOpen={setIsModalOpen}
+					setIsNoticeModalOpen={setIsNoticeModalOpen}
+				/>
 			)}
 		</>
 	);

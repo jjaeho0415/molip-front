@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './addMenu.module.css';
 import Image from 'next/image';
 import Icon_down from '../../../public/icons/down.svg';
@@ -18,7 +18,9 @@ interface IAddMenu {
 export default function AddMenu_BS({ onClick, myMenuList }: IAddMenu) {
 	const [isShowSelectBox, setIsShowSelectBox] = useState<boolean>(false);
 	const [selectedMyMenu, setSelectedMyMenu] = useState<string>('');
-	const [selectedAddMenu, setSelectedAddMenu] = useState<number[]>([]);
+	const [selectedPostAddMenu, setSelectedPostAddMenu] = useState<number[]>([]);
+	const [selectedAddMenu, setSelectedAddMenu] = useState<string[]>([]);
+
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [selectedBoardId, setSelectedBoardId] = useState<number>(-1);
 
@@ -29,7 +31,7 @@ export default function AddMenu_BS({ onClick, myMenuList }: IAddMenu) {
 		queryFn: () => getMyMenu(selectedBoardId),
 	});
 
-	const handleSelectItem = (item: number) => {
+	const handleSelectItem = (item: string) => {
 		if (selectedAddMenu.includes(item)) {
 			const newTagArr = selectedAddMenu.filter((menuItem) => menuItem !== item);
 			setSelectedAddMenu(newTagArr);
@@ -38,7 +40,7 @@ export default function AddMenu_BS({ onClick, myMenuList }: IAddMenu) {
 		}
 	};
 
-	const handleDeleteItem = (item: number) => {
+	const handleDeleteItem = (item: string) => {
 		if (selectedAddMenu.includes(item)) {
 			const newTagArr = selectedAddMenu.filter((menuItem) => menuItem !== item);
 			setSelectedAddMenu(newTagArr);
@@ -47,6 +49,7 @@ export default function AddMenu_BS({ onClick, myMenuList }: IAddMenu) {
 
 	const handleMyBoardClick = (board: IGetMyMenuType) => {
 		setSelectedMyMenu(board.name);
+		setSelectedPostAddMenu([...selectedPostAddMenu, board.personalBoardId]);
 		setSelectedBoardId(board.personalBoardId);
 		setIsShowSelectBox(!isShowSelectBox);
 	};
@@ -121,14 +124,14 @@ export default function AddMenu_BS({ onClick, myMenuList }: IAddMenu) {
 												<Image
 													className={styles.checkBox}
 													src={
-														selectedAddMenu.includes(item.menuId)
+														selectedAddMenu.includes(item.menuName)
 															? Icon_checked
 															: Icon_unchecked
 													}
 													width={24}
 													height={24}
 													alt='checkBox'
-													onClick={() => handleSelectItem(item.menuId)}
+													onClick={() => handleSelectItem(item.menuName)}
 												/>
 												<p className={styles.menuItem}>{item.menuName}</p>
 											</div>

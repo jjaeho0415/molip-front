@@ -1,6 +1,6 @@
 import { apiRoutes } from "@/_lib/apiRoutes"
-import { fetchData } from "@/_lib/axios"
+import api from "@/_lib/fetcher";
 
-export const postLogout = async() => {
-    return await fetchData('POST', apiRoutes.logout);
+export const postLogout = async () => {
+    return await api.post({endpoint: apiRoutes.logout})
 }

@@ -1,13 +1,11 @@
 import { apiRoutes } from '@/_lib/apiRoutes';
-import { fetchData } from '@/_lib/axios';
+import api from '@/_lib/fetcher';
 import { useAuthStore } from '@/app/login/store/useAuthStore';
 
 export const getMyMenuList = async ():Promise<IGetMyMenuType[]> => {
 	const { accessToken } = useAuthStore.getState();
-	return await fetchData(
-		'GET',
-		apiRoutes.porsonalboards,
-		undefined,
-		`${accessToken ? accessToken : process.env.NEXT_PUBLIC_ACCESS}`,
-	);
+	return await api.get({
+		endpoint: apiRoutes.porsonalboards,
+		authorization: `${accessToken ? accessToken : process.env.NEXT_PUBLIC_ACCESS}`,
+	});
 };

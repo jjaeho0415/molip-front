@@ -1,5 +1,4 @@
 import TeamMenuItem from '@/components/menuItem/TeamMenuItem';
-import { useRouter } from 'next/navigation';
 import React from 'react';
 import styles from './styles/menuList.module.css';
 
@@ -8,12 +7,6 @@ interface TeamMenuListProps {
 }
 
 function TeamMenuList({ menuList }: TeamMenuListProps) {
-	const route = useRouter();
-
-	const handleMenuItemClick = () => {
-		route.push('/menu');
-	};
-
 	return (
 		<div className={styles.ListContainer}>
 			{menuList.map((teamMenuItem, index) => (
@@ -22,7 +15,7 @@ function TeamMenuList({ menuList }: TeamMenuListProps) {
 					menuTitle={teamMenuItem.teamBoardName}
 					teamNumber={teamMenuItem.teamMembersNum}
 					key={index}
-					handleClick={handleMenuItemClick}
+					id={teamMenuItem.teamBoardId}
 				/>
 			))}
 		</div>

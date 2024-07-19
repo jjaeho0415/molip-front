@@ -16,19 +16,19 @@ import NoMenu_BS from '@/components/BottomSheet/NoMenu_BS';
 import AddMenu_BS from '@/components/BottomSheet/AddMenu_BS';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import { useSearchParams } from 'next/navigation';
-import { getTeamMenuList } from '@/api/getTeamMenuList';
 import { useQuery } from '@tanstack/react-query';
+import { getTeamMenuList } from '@/api/getTeamMenuList';
+import { getTeamMenu } from '@/api/getTeamMenu';
 
 export default function TeamMenuPage() {
 	const { setIsOpen } = useBottomSheet();
 	const searchParams = useSearchParams();
-	const teamName = searchParams.get('teamName') as string;
-	const [menuBoardName, setMenuBoardName] = useState<string>(
-		`${teamName}의 메뉴판`,
-	);
+	const boardName = searchParams.get('name') as string;
+	const [menuBoardName, setMenuBoardName] = useState<string>(boardName);
 	const [isDone] = useState<boolean>(true);
 	const [hasMyMenu] = useState<boolean>(false);
 	const [currentUrl, setCurrentUrl] = useState<string>('');
+	const [teamBoardId, setTeamBoardId] = useState<number>(-1);
 
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
@@ -36,26 +36,29 @@ export default function TeamMenuPage() {
 		}
 	}, []);
 
+	const handleClickButton = () => {
+		setIsOpen(false);
+		alert('필터 적용이 완료되었습니다.');
+	};
+
 	const { data: teamMenuList } = useQuery<IGetTeamMenuType[]>({
 		queryKey: ['TEAM_MENU_LIST'],
 		queryFn: getTeamMenuList,
 	});
 
 	useEffect(() => {
-		const teamBoardNames = teamMenuList?.filter(
-			(item) => item.teamBoardName === `${teamName}의 메뉴판`,
+		const sameName = teamMenuList?.filter(
+			(item) => item.teamBoardName === boardName,
 		);
-		if (teamBoardNames && teamBoardNames.length > 1) {
-			setMenuBoardName(`${teamName}의 메뉴판${teamBoardNames.length}`);
-		} else {
-			setMenuBoardName(`${teamName}의 메뉴판`);
-		}
-	}, [teamName, teamMenuList]);
+		sameName?.map((item) => {
+			setTeamBoardId(item.teamBoardId);
+		});
+	}, [teamMenuList, boardName]);
 
-	const handleClickButton = () => {
-		setIsOpen(false);
-		alert('필터 적용이 완료되었습니다.');
-	};
+	const { data: teamMenuItem } = useQuery<IGetTeamMenuType>({
+		queryKey: ['TEAM_MENU_LIST'],
+		queryFn: getTeamMenu(teamBoardId),
+	});
 
 	const handleCopyClipBoard = async (text: string) => {
 		try {

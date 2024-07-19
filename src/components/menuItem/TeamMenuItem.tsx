@@ -2,25 +2,31 @@ import React, { useState } from 'react';
 import styles from './teamMenuItem.module.css';
 import MoreModal from '../modals/MoreModal';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 interface TeamMenuItemProps {
 	menuTitle: string;
 	teamTitle: string;
 	teamNumber: number;
-	handleClick: () => void;
+	id: number;
 }
 
 function TeamMenuItem({
 	menuTitle,
 	teamTitle,
 	teamNumber,
-	handleClick,
+	id,
 }: TeamMenuItemProps) {
+	const router = useRouter();
 	const [isMoreModalOpen, setIsMoreModalOpen] = useState<boolean>(false);
+
+	const handleMenuItemClick = () => {
+		router.push(`/menu?teamBoardId=${id}`);
+	};
 
 	return (
 		<>
-			<div className={styles.itemContainer} onClick={handleClick}>
+			<div className={styles.itemContainer} onClick={handleMenuItemClick}>
 				<div className={styles.titleSection}>
 					<p className={styles.teamTitle}>{teamTitle}</p>
 					<p className={styles.menuTitle}>{menuTitle}</p>

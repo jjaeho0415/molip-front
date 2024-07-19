@@ -1,6 +1,7 @@
 import TeamMenuItem from '@/components/menuItem/TeamMenuItem';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import styles from './styles/menuList.module.css';
 
 interface TeamMenuListProps {
 	menuList: IGetTeamMenuType[];
@@ -14,7 +15,7 @@ function TeamMenuList({ menuList }: TeamMenuListProps) {
 	};
 
 	return (
-		<>
+		<div className={styles.ListContainer}>
 			{menuList.map((teamMenuItem, index) => (
 				<TeamMenuItem
 					teamTitle={teamMenuItem.teamName}
@@ -24,7 +25,7 @@ function TeamMenuList({ menuList }: TeamMenuListProps) {
 					handleClick={handleMenuItemClick}
 				/>
 			))}
-		</>
+		</div>
 	);
 }
 

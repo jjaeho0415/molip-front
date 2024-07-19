@@ -119,7 +119,7 @@ export default function Home() {
 	// }
 
 	return (
-		<>
+		<div className={styles.homeContainer}>
 			<Header />
 			<TabNavigation />
 			{isLoading ? (
@@ -178,6 +178,6 @@ export default function Home() {
 					</div>
 				</>
 			)}
-		</>
+		</div>
 	);
 }

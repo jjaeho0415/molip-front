@@ -16,9 +16,9 @@ import { useAuthStore } from '../login/store/useAuthStore';
 import { getAccessToken } from '@/api/postRefresh';
 import { getMyMenuList } from '@/api/getMyMenuList';
 import { getTeamMenuList } from '@/api/getTeamMenuList';
-import Loading from '@/components/Loading';
 import { useRouter } from 'next/navigation';
 import { postCreateMyMenu } from '@/api/postCreateMyMenu';
+import Loading from '@/components/Loading';
 
 export default function Home() {
 	const { tab } = useHomeStore();
@@ -41,9 +41,14 @@ export default function Home() {
 		}
 	}, []);
 
-	const { data: myMenuList } = useQuery<IGetMyMenuType[]>({
+	const { data: myMenuList, isLoading } = useQuery<IGetMyMenuType[]>({
 		queryKey: ['MY_MENU_LIST'],
 		queryFn: getMyMenuList,
+	});
+
+	const { data: teamMenuList } = useQuery<IGetTeamMenuType[]>({
+		queryKey: ['TEAM_MENU_LIST'],
+		queryFn: getTeamMenuList,
 	});
 
 	useEffect(() => {
@@ -63,11 +68,6 @@ export default function Home() {
 			setDefaultMyMenuName('OOO의 메뉴판');
 		}
 	}, [myMenuList]);
-
-	const { data: teamMenuList } = useQuery<IGetTeamMenuType[]>({
-		queryKey: ['TEAM_MENU_LIST'],
-		queryFn: getTeamMenuList,
-	});
 
 	const { mutate: createMyMenu } = useMutation({
 		mutationFn: () => postCreateMyMenu(defaultMyMenuName),
@@ -96,72 +96,66 @@ export default function Home() {
 		}
 	};
 
-	if (tab === null) {
-		return (
-			<div className={styles.loading}>
-				<Loading backgroundColor='white' />
-			</div>
-		);
-	}
-
 	return (
 		<>
 			<Header />
 			<TabNavigation />
-			<div className={styles.createContainer}>
-				<p className={styles.titleSection}>
-					{tab === 'my'
-						? '나의 메뉴판'
-						: tab === 'team' && (
-								<>
-									팀 메뉴판
-									<Image
-										alt='informationIcon'
-										width={32}
-										height={32}
-										src='/svg/informationIcon.svg'
-										style={{ cursor: 'pointer' }}
-										onClick={handleInformClick}
-									/>
-									{isInformOpen && (
-										<div
-											style={{
-												position: 'absolute',
-												transform: 'translate(13%, 80%)',
-											}}
-										>
-											<InformationModal />
-										</div>
+			{isLoading ? (
+				<Loading backgroundColor='white' />
+			) : (
+				<>
+					<div className={styles.createContainer}>
+						<p className={styles.titleSection}>
+							{tab === 'my'
+								? '나의 메뉴판'
+								: tab === 'team' && (
+										<>
+											팀 메뉴판
+											<Image
+												alt='informationIcon'
+												width={32}
+												height={32}
+												src='/svg/informationIcon.svg'
+												style={{ cursor: 'pointer' }}
+												onClick={handleInformClick}
+											/>
+											{isInformOpen && (
+												<div
+													style={{
+														position: 'absolute',
+														transform: 'translate(13%, 80%)',
+													}}
+												>
+													<InformationModal />
+												</div>
+											)}
+										</>
 									)}
-								</>
-							)}
-				</p>
-				<Button state='new' onClick={handleCreateMenuBoard}>
-					+ 새로만들기
-				</Button>
-			</div>
+						</p>
+						<Button state='new' onClick={handleCreateMenuBoard}>
+							+ 새로만들기
+						</Button>
+					</div>
 
-			<div className={styles.Container}>
-				{myMenuList && teamMenuList && (
-					<>
-						{tab === 'my' ? (
-							myMenuList.length === 0 ? (
-								<MenuEmpty
-									myMenuIsEmpty={myMenuList.length === 0 ? true : false}
-								/>
-							) : (
-								<MyMenuList menuList={myMenuList} />
-							)
-						) : tab === 'team' && teamMenuList.length === 0 ? (
-							<MenuEmpty
-								myMenuIsEmpty={myMenuList.length === 0 ? true : false}
-							/>
-						) : (
-							tab === 'team' && <TeamMenuList menuList={teamMenuList} />
+					<div className={styles.Container}>
+						{myMenuList && teamMenuList && (
+							<>
+								{tab === 'my' ? (
+									myMenuList === null || myMenuList.length === 0 ? (
+										<MenuEmpty myMenuIsEmpty={true} />
+									) : (
+										<MyMenuList menuList={myMenuList} />
+									)
+								) : tab === 'team' && teamMenuList.length === 0 ? (
+									<MenuEmpty myMenuIsEmpty={true} />
+								) : (
+									tab === 'team' && <TeamMenuList menuList={teamMenuList} />
+								)}
+							</>
 						)}
-					</>
-				)}
-			</div>
+					</div>
+				</>
+			)}
 		</>
 	);
 }

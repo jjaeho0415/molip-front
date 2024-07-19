@@ -8,7 +8,7 @@ import Button from '@/components/buttons/Button';
 import BigInput from '@/components/InputBox/BigInput';
 import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
-import { postCreateTeamMenu } from '@/api/postCreatTeamMenu copy';
+import { postCreateTeamMenu } from '@/api/postCreatTeamMenu';
 
 const numArr = [1, 2, 3, 4, 5, 6, 7, 8];
 

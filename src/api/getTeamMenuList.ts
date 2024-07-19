@@ -7,6 +7,7 @@ export const getTeamMenuList = async (): Promise<IGetTeamMenuType[]> => {
 	return await fetchData(
 		'GET',
 		`${apiRoutes.teamBoards}/list`,
+		undefined,
 		`${accessToken ? accessToken : process.env.NEXT_PUBLIC_ACCESS}`,
 	);
 };

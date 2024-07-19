@@ -11,6 +11,7 @@ export const postCreateTeamMenu = async (
 	return await fetchData(
 		'POST',
 		`${apiRoutes.teamBoards}?teamName=${teamName}&teamMembersNum=${teamMembersNum}&teamBoardName=${teamBoardName}`,
+		undefined,
 		`${accessToken ? accessToken : process.env.NEXT_PUBLIC_ACCESS}`,
 	);
 };

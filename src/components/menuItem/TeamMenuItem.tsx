@@ -48,6 +48,7 @@ function TeamMenuItem({
 							}}
 						>
 							<MoreModal
+								setIsMoreModalOpen={setIsMoreModalOpen}
 								menuTitle={menuTitle}
 								teamNumber={teamNumber}
 								teamTitle={teamTitle}

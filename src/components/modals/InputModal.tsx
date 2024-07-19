@@ -2,7 +2,7 @@ import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import styles from './styles/inputModal.module.css';
 import ModalButton from '../buttons/ModalButton';
 import ReactDOM from 'react-dom';
-import { UseQueryResult, useMutation } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { patchModifyMyMenu } from '@/api/patchModifyMyMenu';
 import { useRouter } from 'next/navigation';
 

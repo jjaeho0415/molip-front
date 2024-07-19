@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 	// },
 };
 
-export const API:string = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${constant.kakaoKey}&libraries=services,clusterer&autoload=false`;
+const API:string = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${constant.kakaoKey}&libraries=services,clusterer&autoload=false`;
 
 export default function RootLayout({
 	children,

@@ -5,4 +5,5 @@ export const apiRoutes = {
 	porsonalboards: '/personalboards',
 	teamBoards: '/teamboards',
 	users: '/users',
+	userName: '/user/username'
 };

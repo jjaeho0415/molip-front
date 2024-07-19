@@ -35,7 +35,7 @@ export default function MenuCardModal({
 					}
 				}}
 			>
-				<div className={styles.modal}>
+				<div className={styles.modal} onClick={(e) => e.stopPropagation()}>
 					<div className={styles.contentSection}>
 						<Image
 							className={styles.image}

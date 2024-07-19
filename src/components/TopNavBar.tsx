@@ -92,11 +92,16 @@ export default function TopNavBar({
 						menuTitle={menuTitle}
 						teamTitle={teamTitle}
 						teamNumber={teamNumber}
+						setIsMoreModalOpen={setIsModalOpen}
 					/>
 				</div>
 			)}
 			{isNoticeModalOpen && (
-				<NoticeModal titleText='' setIsNoticeModalOpen={setIsNoticeModalOpen} />
+				<NoticeModal
+					titleText=''
+					setIsMoreModalOpen={setIsModalOpen}
+					setIsNoticeModalOpen={setIsNoticeModalOpen}
+				/>
 			)}
 		</>
 	);

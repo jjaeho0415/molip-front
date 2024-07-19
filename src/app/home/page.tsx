@@ -14,7 +14,7 @@ import useHomeStore from './store/useHomeStore';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getMyMenuList } from '@/api/getMyMenuList';
 import { getTeamMenuList } from '@/api/getTeamMenuList';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { postCreateMyMenu } from '@/api/postCreateMyMenu';
 import { getUserName } from '@/api/getUserName';
 import { useAuthStore } from '../login/store/useAuthStore';
@@ -84,7 +84,9 @@ export default function Home() {
 		mutationFn: () => postCreateMyMenu(defaultMyMenuName),
 		mutationKey: ['CREATE_MY_MENU'],
 		onSuccess: (data) => {
-			route.push(`/createMyMenu?menuName=${data.name}`);
+			route.push(
+				`/createMyMenu?menuName=${data.name}&id=${data.personalBoardId}`,
+			);
 		},
 		onError: (error) => alert(error),
 	});
@@ -104,14 +106,6 @@ export default function Home() {
 			createMyMenu();
 		}
 	};
-
-	// if (tab === null) {
-	// 	return (
-	// 		<div className={styles.loading}>
-	// 			<Loading backgroundColor='white' />
-	// 		</div>
-	// 	);
-	// }
 
 	return (
 		<>

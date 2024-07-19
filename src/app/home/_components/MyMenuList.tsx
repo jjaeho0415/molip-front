@@ -10,7 +10,6 @@ function MyMenuList({ menuList }: MyMenuListProps) {
 	const route = useRouter();
 
 	const handleMenuItemClick = () => {
-		
 		route.push('/menu');
 	};
 
@@ -19,6 +18,7 @@ function MyMenuList({ menuList }: MyMenuListProps) {
 			{menuList.map((myMenuItem, index) => (
 				<MyMenuItem
 					menuTitle={myMenuItem.name}
+					menuId={myMenuItem.personalBoardId}
 					key={index}
 					handleClick={handleMenuItemClick}
 				/>

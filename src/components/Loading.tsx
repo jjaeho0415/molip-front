@@ -18,6 +18,7 @@ function Loading({ backgroundColor }: LoadingProps) {
 						? '/svg/orangeBackgroundLoading.svg'
 						: '/svg/whiteBackgroundLoading.svg'
 				}
+				priority
 			/>
 		</div>
 	);

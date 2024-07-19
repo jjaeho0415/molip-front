@@ -25,36 +25,37 @@ const customAxios = (() =>
 export const fetchData = async <ResponseType, RequestType = undefined>(
 	method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
 	endpoint: string,
-	data?: RequestType,
 	token?: string,
+	data?: RequestType,
 ): Promise<ResponseType> => {
 	try {
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+				...(token && { access: token }),
+			},
+		};
+
 		let response: AxiosResponse<ResponseType>;
 		switch (method) {
 			case 'GET':
-				response = await customAxios.get(endpoint, {
-					headers: { access: token },
-				});
+				response = await customAxios.get(endpoint, config);
 				break;
 			case 'POST':
-				response = await customAxios.post<ResponseType>(endpoint, data, {
-					headers: { access: token },
-				});
+				response = await customAxios.post<ResponseType>(endpoint, data, config);
 				break;
 			case 'PUT':
-				response = await customAxios.put<ResponseType>(endpoint, data, {
-					headers: { access: token },
-				});
+				response = await customAxios.put<ResponseType>(endpoint, data, config);
 				break;
 			case 'DELETE':
-				response = await customAxios.delete<ResponseType>(endpoint, {
-					headers: { access: token },
-				});
+				response = await customAxios.delete<ResponseType>(endpoint, config);
 				break;
 			case 'PATCH':
-				response = await customAxios.patch<ResponseType>(endpoint, data, {
-					headers: { access: token },
-				});
+				response = await customAxios.patch<ResponseType>(
+					endpoint,
+					data,
+					config,
+				);
 				break;
 			default:
 				throw new Error('Invalid HTTP method');

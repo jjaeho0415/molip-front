@@ -18,9 +18,11 @@ import useBottomSheet from '@/hooks/useBottomSheet';
 import { useSearchParams } from 'next/navigation';
 import { getTeamMenuList } from '@/api/getTeamMenuList';
 import { useQuery } from '@tanstack/react-query';
+import { useAuthStore } from '../login/store/useAuthStore';
 
 export default function TeamMenuPage() {
 	const { setIsOpen } = useBottomSheet();
+	const { accessToken } = useAuthStore();
 	const searchParams = useSearchParams();
 	const teamName = searchParams.get('teamName') as string;
 	const [menuBoardName, setMenuBoardName] = useState<string>(
@@ -38,7 +40,10 @@ export default function TeamMenuPage() {
 
 	const { data: teamMenuList } = useQuery<IGetTeamMenuType[]>({
 		queryKey: ['TEAM_MENU_LIST'],
-		queryFn: getTeamMenuList,
+		queryFn: () =>
+			getTeamMenuList(
+				`${accessToken ? accessToken : process.env.NEXT_PUBLIC_ACCESS}`,
+			),
 	});
 
 	useEffect(() => {

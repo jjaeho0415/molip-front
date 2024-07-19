@@ -2,14 +2,14 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface HomeStore {
-	tab: 'my' | 'team' | 'map' | null;
+	tab: 'my' | 'team' | 'map';
 	setTab: (tab: 'my' | 'team' | 'map') => void;
 }
 
 const useHomeStore = create<HomeStore>(
 	persist(
 		(set) => ({
-			tab: null,
+			tab: 'my',
 			setTab: (selected: 'my' | 'team' | 'map') => set({ tab: selected }),
 		}),
 		{

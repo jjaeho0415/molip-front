@@ -16,12 +16,12 @@ import { useAuthStore } from '../login/store/useAuthStore';
 import { getAccessToken } from '@/api/postRefresh';
 import { getMyMenuList } from '@/api/getMyMenuList';
 import { getTeamMenuList } from '@/api/getTeamMenuList';
-import Loading from '@/components/Loading';
 import { useRouter } from 'next/navigation';
 import { postCreateMyMenu } from '@/api/postCreateMyMenu';
 
 export default function Home() {
 	const { tab } = useHomeStore();
+	const { accessToken } = useAuthStore();
 	const [isInformOpen, setIsInformOpen] = useState<boolean>(false);
 	const route = useRouter();
 	const [defaultMyMenuName, setDefaultMyMenuName] = useState<string>('');
@@ -43,8 +43,24 @@ export default function Home() {
 
 	const { data: myMenuList } = useQuery<IGetMyMenuType[]>({
 		queryKey: ['MY_MENU_LIST'],
-		queryFn: getMyMenuList,
+		queryFn: () =>
+			getMyMenuList(
+				`${accessToken ? accessToken : process.env.NEXT_PUBLIC_ACCESS}`,
+			),
 	});
+
+	const { data: teamMenuList } = useQuery<IGetTeamMenuType[]>({
+		queryKey: ['TEAM_MENU_LIST'],
+		queryFn: () =>
+			getTeamMenuList(
+				`${accessToken ? accessToken : process.env.NEXT_PUBLIC_ACCESS}`,
+			),
+	});
+
+	useEffect(() => {
+		if (myMenuList) console.log(myMenuList);
+		if (teamMenuList) console.log(teamMenuList);
+	}, []);
 
 	useEffect(() => {
 		if (myMenuList && myMenuList.length > 0) {
@@ -63,11 +79,6 @@ export default function Home() {
 			setDefaultMyMenuName('OOO의 메뉴판');
 		}
 	}, [myMenuList]);
-
-	const { data: teamMenuList } = useQuery<IGetTeamMenuType[]>({
-		queryKey: ['TEAM_MENU_LIST'],
-		queryFn: getTeamMenuList,
-	});
 
 	const { mutate: createMyMenu } = useMutation({
 		mutationFn: () => postCreateMyMenu(defaultMyMenuName),
@@ -95,14 +106,6 @@ export default function Home() {
 			createMyMenu();
 		}
 	};
-
-	if (tab === null) {
-		return (
-			<div className={styles.loading}>
-				<Loading backgroundColor='white' />
-			</div>
-		);
-	}
 
 	return (
 		<>

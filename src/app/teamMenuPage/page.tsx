@@ -41,7 +41,7 @@ export default function TeamMenuPage() {
 		alert('필터 적용이 완료되었습니다.');
 	};
 
-	const { data: myMenuList, isLoading } = useQuery<IGetMyMenuType[]>({
+	const { data: myMenuList } = useQuery<IGetMyMenuType[]>({
 		queryKey: ['MY_MENU_LIST'],
 		queryFn: getMyMenuList,
 	});

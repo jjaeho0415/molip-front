@@ -23,7 +23,6 @@ export default function Menu() {
 	const canvasRef = useRef<HTMLDivElement>(null);
 	const searchParams = useSearchParams();
 	const menuId = Number(searchParams.get('menuId'));
-	const menuName = searchParams.get('menuName');
 
 	const {
 		data: menuList,

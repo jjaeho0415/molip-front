@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware';
 
 interface LoginState {
 	isLogin: boolean;
-	accessToken: string;
+	accessToken: string | null;
 	setLoginState: (isLogin: boolean, accessToken: string) => void;
 	clearLoginState: () => void;
 }
@@ -12,7 +12,7 @@ export const useAuthStore = create<LoginState>(
 	persist(
 		(set) => ({
 			isLogin: false,
-			accessToken: '',
+			accessToken: null,
 			setLoginState: (isLogin, accessToken) =>
 				set({
 					isLogin,

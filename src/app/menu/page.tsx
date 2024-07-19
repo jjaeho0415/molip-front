@@ -25,12 +25,20 @@ export default function Menu() {
 	const menuId = Number(searchParams.get('menuId'));
 	const menuName = searchParams.get('menuName');
 
-	const { data: menuList, isLoading } = useQuery<IGetMyCategoryMenuType[]>({
+	const {
+		data: menuList,
+		isLoading,
+		refetch,
+	} = useQuery<IGetMyCategoryMenuType[]>({
 		queryKey: ['MENU_LIST'],
 		queryFn: () => getMyMenu(menuId),
 	});
 
 	const handleShare = () => {
+		return;
+	};
+
+	const handleModifyOption = () => {
 		return;
 	};
 
@@ -79,18 +87,28 @@ export default function Menu() {
 								<div className={styles.ButtonBox}>
 									{/* isLogin가 true면 옵션수정하기, false면 공유하기, onClick함수도 다르게 줘야함 */}
 									{isLogin ? (
-										<ShareButton onClick={handleShare}>
+										<ShareButton
+											handleRightClick={handleDownImage}
+											handleLeftClick={handleModifyOption}
+										>
 											옵션 수정하기
 										</ShareButton>
 									) : (
-										<ShareButton onClick={handleDownImage}>
+										<ShareButton
+											handleLeftClick={handleShare}
+											handleRightClick={handleDownImage}
+										>
 											공유하기
 										</ShareButton>
 									)}
 								</div>
 							)}
 							<BottomSheet>
-								<AddTaste_BS menuId={menuId} menuName={menuName} />
+								<AddTaste_BS
+									menuId={menuId}
+									menuName={menuName}
+									refetch={refetch}
+								/>
 							</BottomSheet>
 						</div>
 					</>

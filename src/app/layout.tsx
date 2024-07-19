@@ -1,8 +1,6 @@
-// import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import './styles/globals.css';
 import RQProvider from '@/components/RQProvider';
-import Loading from '@/components/Loading';
 import { constant } from '@/utils/constant';
 import Script from 'next/script';
 import { Metadata } from 'next';
@@ -29,7 +27,7 @@ export const metadata: Metadata = {
 	// },
 };
 
-export const API = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${constant.kakaoKey}&libraries=services,clusterer&autoload=false`;
+export const API:string = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${constant.kakaoKey}&libraries=services,clusterer&autoload=false`;
 
 export default function RootLayout({
 	children,
@@ -41,7 +39,7 @@ export default function RootLayout({
 			<link rel='icon' href='/logo/Logo_noBg_orange.svg' sizes='any' />
 			<body>
 				<RQProvider>
-					<Suspense fallback={<Loading backgroundColor='white' />}>
+					<Suspense>
 						<div className='root_container'>{children}</div>
 						<Script src={API} strategy='beforeInteractive' />
 					</Suspense>

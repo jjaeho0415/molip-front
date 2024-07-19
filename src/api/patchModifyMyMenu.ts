@@ -2,7 +2,7 @@ import { apiRoutes } from '@/_lib/apiRoutes';
 import api from '@/_lib/fetcher';
 import { useAuthStore } from '@/app/login/store/useAuthStore';
 
-export const patchModifyMyMenu = async (menuId: number, newMenuName: string) => {
+export const patchModifyMyMenu = async (menuId: number, newMenuName: string):Promise<IGetMyMenuType> => {
 	const { accessToken } = useAuthStore.getState();
 	return await api.patch({
 		endpoint: `${apiRoutes.porsonalboards}/${menuId}?name=${newMenuName}`,

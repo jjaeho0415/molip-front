@@ -8,7 +8,9 @@ import NoticeModal from '@/components/modals/NoticeModal';
 
 function MyPage() {
 	const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
-	
+	const [isMoreModalOpen, setIsMoreModalOpen] = useState<boolean>(false);
+	isMoreModalOpen && console.log(isMoreModalOpen);
+
 	return (
 		<>
 			<Header />
@@ -36,6 +38,7 @@ function MyPage() {
 						setIsNoticeModalOpen={setIsLogoutModalOpen}
 						titleText=''
 						isLogout={true}
+						setIsMoreModalOpen={setIsMoreModalOpen}
 					/>
 				)}
 			</div>

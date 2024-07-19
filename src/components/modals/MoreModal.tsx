@@ -3,6 +3,7 @@ import styles from './styles/moreModal.module.css';
 import InputModal from './InputModal';
 import NoticeModal from './NoticeModal';
 import ModifyModal from './ModifyModal';
+import { UseQueryResult } from '@tanstack/react-query';
 
 interface MoreModalProps {
 	pageType:

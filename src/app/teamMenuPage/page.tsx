@@ -50,7 +50,7 @@ export default function TeamMenuPage() {
 			<TopNavBar backRoute='/home' />
 			<div className={styles.contentsContainer}>
 				<div className={styles.inputBox}>
-					<SmallInput value={value} setValue={setValue}></SmallInput>
+					<SmallInput value={value} setValue={setValue} menuId={1}></SmallInput>
 					<Image src={Icon_pencile} width={36} height={36} alt='edit' />
 				</div>
 				<div className={styles.middleBox}>

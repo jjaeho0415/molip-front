@@ -1,8 +1,12 @@
 type IGetMyMenuType = {
-    personalBoardId: number,
-    name: string;
-    userName: string;
-    userEmail: string;
-    createdDate: string;
-    modifiedDate: string;
-}
+	personalBoardId: number;
+	name: string;
+	userName: string;
+	userEmail: string;
+	createdDate: string;
+	modifiedDate: string;
+};
+
+type IGetUserNameType = {
+	username: string;
+};

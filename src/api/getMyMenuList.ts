@@ -7,6 +7,7 @@ export const getMyMenuList = async ():Promise<IGetMyMenuType[]> => {
 	return await fetchData(
 		'GET',
 		apiRoutes.porsonalboards,
+		undefined,
 		`${accessToken ? accessToken : process.env.NEXT_PUBLIC_ACCESS}`,
 	);
 };

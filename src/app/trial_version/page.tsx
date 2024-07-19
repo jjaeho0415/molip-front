@@ -19,7 +19,6 @@ function Trial_Version() {
 	const { setIsOpen } = useBottomSheet();
 	const route = useRouter();
 	const createMyMenu = useSearchParams();
-	const defaultName = createMyMenu.get('menuName');
 	const menuId = Number(createMyMenu.get('menuId'));
 
 	useEffect(() => {
@@ -78,7 +77,6 @@ function Trial_Version() {
 					<AddTaste_BS
 						onClick={handleClickButton}
 						menuId={menuId}
-						menuName={defaultName}
 					/>
 				</BottomSheet>
 			</div>

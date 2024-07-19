@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import styles from './addMenu.module.css';
 import Image from 'next/image';
 import Icon_down from '../../../public/icons/down.svg';

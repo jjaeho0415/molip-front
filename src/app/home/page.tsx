@@ -49,7 +49,7 @@ export default function Home() {
 	useEffect(() => {
 		const current = window.location.href;
 		const { accessToken } = useAuthStore.getState();
-		if (current && current.includes('molip.site') && accessToken === '') {
+		if (current && current.includes('molip.site') && accessToken === null) {
 			getAccess();
 		}
 	}, []);

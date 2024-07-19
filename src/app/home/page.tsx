@@ -59,14 +59,16 @@ export default function Home() {
 		queryFn: getMyMenuList,
 	});
 
+	useEffect(() => {
+		if (myMenuList) {
+			localStorage.setItem('myMenuNum', String(myMenuList.length));
+		}
+	}, [myMenuList]);
+
 	const { data: teamMenuList } = useQuery<IGetTeamMenuType[]>({
 		queryKey: ['TEAM_MENU_LIST'],
 		queryFn: getTeamMenuList,
 	});
-
-	useEffect(() => {
-		console.log(myMenuList, teamMenuList);
-	}, [myMenuList, teamMenuList]);
 
 	useEffect(() => {
 		if (myMenuList && myMenuList.length > 0) {

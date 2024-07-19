@@ -12,7 +12,7 @@ function TeamMenuList({ menuList }: TeamMenuListProps) {
 			{menuList.map((teamMenuItem, index) => (
 				<TeamMenuItem
 					teamTitle={teamMenuItem.teamName}
-					menuTitle={teamMenuItem.teamBoardName}
+					menuName={teamMenuItem.teamBoardName}
 					teamNumber={teamMenuItem.teamMembersNum}
 					key={index}
 					id={teamMenuItem.teamBoardId}

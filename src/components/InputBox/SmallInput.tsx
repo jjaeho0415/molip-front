@@ -10,6 +10,8 @@ import {
 import styles from './input.module.css';
 import { useMutation } from '@tanstack/react-query';
 import { patchModifyMyMenu } from '@/api/patchModifyMyMenu';
+import useHomeStore from '@/app/home/store/useHomeStore';
+import { patchModifyTeamMenu } from '@/api/patchModifyTeamMenu';
 
 interface IInputProps {
 	placeholder?: string;
@@ -24,14 +26,20 @@ export default function SmallInput({
 	setValue,
 	menuId,
 }: IInputProps) {
+	const { tab } = useHomeStore();
 	const [debounceValue, setDebounceValue] = useState<string>(value);
 	const inputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);
 	};
 
 	const { mutate: modifyName } = useMutation({
-		mutationFn: ({ menuId, newMenuName }: modifyMenuNameParams) =>
-			patchModifyMyMenu(menuId, newMenuName),
+		mutationFn: ({ menuId, newMenuName }: modifyMenuNameParams) => {
+			if (tab === 'my') {
+				return patchModifyMyMenu(menuId, newMenuName);
+			} else {
+				return patchModifyTeamMenu(menuId, newMenuName);
+			}
+		},
 	});
 
 	useEffect(() => {

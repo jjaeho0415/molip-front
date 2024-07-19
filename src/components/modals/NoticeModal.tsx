@@ -9,12 +9,14 @@ import { useAuthStore } from '@/app/login/store/useAuthStore';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postLogout } from '@/api/postLogout';
 import { deleteMyMenu } from '@/api/deleteMyMenu';
+import useHomeStore from '@/app/home/store/useHomeStore';
+import { deleteTeamMenu } from '@/api/deleteTeamMenu copy';
 
 interface NoticeModalProps {
 	setIsNoticeModalOpen: Dispatch<SetStateAction<boolean>>;
 	titleText: string;
 	isLogout?: boolean;
-	menuId?: number;
+	menuId: number;
 	setIsMoreModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -25,13 +27,21 @@ function NoticeModal({
 	menuId,
 	setIsMoreModalOpen,
 }: NoticeModalProps) {
+	const { tab } = useHomeStore();
 	const route = useRouter();
 	const createMyMenu = useSearchParams();
 	const defaultMenuId = createMyMenu.get('menuId');
 	const queryClient = useQueryClient();
+
 	const { mutate: deleteMenu } = useMutation({
-		mutationFn: (id: string | null) => deleteMyMenu(id),
-		mutationKey: ['DELETE_MY_MENU'],
+		mutationFn: (id: number) => {
+			if (tab === 'my') {
+				return deleteMyMenu(id);
+			} else {
+				return deleteTeamMenu(id);
+			}
+		},
+		mutationKey: ['DELETE_MENU_BOARD'],
 		onSuccess: () => {
 			setIsNoticeModalOpen(false);
 			setIsMoreModalOpen(false);
@@ -61,10 +71,10 @@ function NoticeModal({
 			return;
 		}
 		if (titleText === '') {
-			deleteMenu(defaultMenuId);
+			deleteMenu(Number(defaultMenuId));
 			return;
 		}
-		deleteMenu(String(menuId));
+		deleteMenu(menuId);
 	};
 
 	return ReactDOM.createPortal(

@@ -13,7 +13,7 @@ interface MoreModalProps {
 	menuTitle: string;
 	teamTitle: string;
 	teamNumber: number;
-	menuId?: number;
+	menuId: number;
 	setIsMoreModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 

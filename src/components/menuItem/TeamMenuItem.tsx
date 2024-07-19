@@ -5,14 +5,14 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 interface TeamMenuItemProps {
-	menuTitle: string;
+	menuName: string;
 	teamTitle: string;
 	teamNumber: number;
 	id: number;
 }
 
 function TeamMenuItem({
-	menuTitle,
+	menuName,
 	teamTitle,
 	teamNumber,
 	id,
@@ -21,7 +21,8 @@ function TeamMenuItem({
 	const [isMoreModalOpen, setIsMoreModalOpen] = useState<boolean>(false);
 
 	const handleMenuItemClick = () => {
-		router.push(`/menu?teamBoardId=${id}`);
+		//router.push(`/menu?teamBoardId=${id}&menuName=${menuName}`);
+		router.push(`/teamMenuPage?teamBoardId=${id}&menuName=${menuName}`);
 	};
 
 	return (
@@ -29,7 +30,7 @@ function TeamMenuItem({
 			<div className={styles.itemContainer} onClick={handleMenuItemClick}>
 				<div className={styles.titleSection}>
 					<p className={styles.teamTitle}>{teamTitle}</p>
-					<p className={styles.menuTitle}>{menuTitle}</p>
+					<p className={styles.menuTitle}>{menuName}</p>
 				</div>
 				<Image
 					alt='moreIcon'
@@ -54,10 +55,12 @@ function TeamMenuItem({
 							}}
 						>
 							<MoreModal
-								menuTitle={menuTitle}
+								menuTitle={menuName}
 								teamNumber={teamNumber}
 								teamTitle={teamTitle}
 								pageType='outsideTeamMenu'
+								menuId={id}
+								setIsMoreModalOpen={setIsMoreModalOpen}
 							/>
 						</div>
 					</>

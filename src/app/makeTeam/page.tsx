@@ -40,7 +40,7 @@ export default function MakeTeam() {
 			(item) => item.teamBoardName === `${teamName}의 메뉴판`,
 		);
 		if (teamBoardNames && teamBoardNames.length > 1) {
-			setMenuBoardName(`${teamName}의 메뉴판${teamBoardNames.length}`);
+			setMenuBoardName(`${teamName}의 메뉴판${teamBoardNames.length + 1}`);
 		} else {
 			setMenuBoardName(`${teamName}의 메뉴판`);
 		}

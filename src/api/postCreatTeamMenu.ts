@@ -1,5 +1,5 @@
 import { apiRoutes } from '@/_lib/apiRoutes';
-import { fetchData } from '@/_lib/axios';
+import api from '@/_lib/fetcher';
 import { useAuthStore } from '@/app/login/store/useAuthStore';
 
 export const postCreateTeamMenu = async (
@@ -8,10 +8,8 @@ export const postCreateTeamMenu = async (
 	teamBoardName: string,
 ) => {
 	const { accessToken } = useAuthStore.getState();
-	return await fetchData(
-		'POST',
-		`${apiRoutes.teamBoards}?teamName=${teamName}&teamMembersNum=${teamMembersNum}&teamBoardName=${teamBoardName}`,
-		undefined,
-		`${accessToken ? accessToken : process.env.NEXT_PUBLIC_ACCESS}`,
-	);
+	return await api.post({
+		endpoint: `${apiRoutes.teamBoards}?teamName=${teamName}&teamMembersNum=${teamMembersNum}&teamBoardName=${teamBoardName}`,
+		authorization: `${accessToken ? accessToken : process.env.NEXT_PUBLIC_ACCESS}`,
+	});
 };

@@ -34,7 +34,10 @@ const menus = [
 	},
 ];
 
-export default function AddMenu_BS({ onClick }: { onClick: () => void }) {
+interface IAddMenu {
+	onClick: () => void;
+}
+export default function AddMenu_BS({ onClick }: IAddMenu) {
 	const [isShowSelectBox, setIsShowSelectBox] = useState<boolean>(false);
 	const [selectedMyMenu, setSelectedMyMenu] = useState<string>('');
 	const [tags, setTags] = useState<string[]>([]);

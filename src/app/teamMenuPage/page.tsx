@@ -18,7 +18,6 @@ import useBottomSheet from '@/hooks/useBottomSheet';
 import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getTeamMenuList } from '@/api/getTeamMenuList';
-import { getTeamMenu } from '@/api/getTeamMenu';
 
 export default function TeamMenuPage() {
 	const { setIsOpen } = useBottomSheet();
@@ -26,7 +25,6 @@ export default function TeamMenuPage() {
 	const boardName = searchParams.get('name') as string;
 	const [menuBoardName, setMenuBoardName] = useState<string>(boardName);
 	const [isDone] = useState<boolean>(true);
-	const [hasMyMenu] = useState<boolean>(false);
 	const [currentUrl, setCurrentUrl] = useState<string>('');
 	const [teamBoardId, setTeamBoardId] = useState<number>(-1);
 
@@ -54,11 +52,6 @@ export default function TeamMenuPage() {
 			setTeamBoardId(item.teamBoardId);
 		});
 	}, [teamMenuList, boardName]);
-
-	const { data: teamMenuItem } = useQuery<IGetTeamMenuType>({
-		queryKey: ['TEAM_MENU_LIST'],
-		queryFn: getTeamMenu(teamBoardId),
-	});
 
 	const handleCopyClipBoard = async (text: string) => {
 		try {
@@ -135,13 +128,13 @@ export default function TeamMenuPage() {
 				</div>
 				<p className={styles.bottomComment}>위로 올려 옵션을 선택하세요.</p>
 
-				{hasMyMenu ? (
-					<BottomSheet size='small'>
-						<NoMenu_BS />
-					</BottomSheet>
-				) : (
+				{teamMenuList ? (
 					<BottomSheet>
 						<AddMenu_BS onClick={handleClickButton} />
+					</BottomSheet>
+				) : (
+					<BottomSheet size='small'>
+						<NoMenu_BS />
 					</BottomSheet>
 				)}
 			</div>

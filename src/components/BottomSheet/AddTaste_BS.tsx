@@ -5,7 +5,6 @@ import { categories } from '@/data/Categories';
 import Loading from '../Loading';
 import { UseQueryResult, useMutation } from '@tanstack/react-query';
 import { postRecommendMyMenu } from '@/api/postRecommendMyMenu';
-import { useRouter } from 'next/navigation';
 
 type RefetchType = UseQueryResult['refetch'];
 
@@ -13,7 +12,6 @@ interface AddTaste_BSProps {
 	menuId: number;
 	onClick?: () => void;
 	isEmptyModalOpen?: boolean;
-	menuName: string | null;
 	refetch?: RefetchType;
 }
 
@@ -33,11 +31,9 @@ function AddTaste_BS({
 	menuId,
 	onClick,
 	isEmptyModalOpen,
-	menuName,
 	refetch,
 }: AddTaste_BSProps) {
 	const [isAllTasteClicked, setIsAllTasteClicked] = useState<boolean>(false);
-	const route = useRouter();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [selectedOptions, setSelectedOptions] = useState<ISelctedOptionsType>({
 		tasteOptions: [],
@@ -67,7 +63,6 @@ function AddTaste_BS({
 			setIsLoading(false);
 			alert('필터 적용이 완료되었습니다.');
 			refetch && refetch();
-			route.push(`/menu?menuId=${menuId}&menuName=${menuName}`);
 		},
 	});
 

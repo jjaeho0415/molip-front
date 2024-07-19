@@ -82,7 +82,6 @@ function CreateMyMenu() {
 					<AddTaste_BS
 						onClick={handleClickButton}
 						menuId={Number(menuId)}
-						menuName={value}
 						isEmptyModalOpen={isEmptyModalOpen}
 					/>
 				</BottomSheet>

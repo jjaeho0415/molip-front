@@ -106,7 +106,6 @@ export default function Menu() {
 							<BottomSheet>
 								<AddTaste_BS
 									menuId={menuId}
-									menuName={menuName}
 									refetch={refetch}
 								/>
 							</BottomSheet>

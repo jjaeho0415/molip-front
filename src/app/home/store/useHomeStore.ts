@@ -9,7 +9,7 @@ interface HomeStore {
 const useHomeStore = create<HomeStore>(
 	persist(
 		(set) => ({
-			tab: 'team',
+			tab: 'my',
 			setTab: (selected: 'my' | 'team' | 'map') => set({ tab: selected }),
 		}),
 		{

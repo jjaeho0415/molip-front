@@ -7,11 +7,11 @@ type ErrorType = {
 	status: number;
 };
 
-const refreshAxios = axios.create({
-	baseURL: `${process.env.NEXT_PUBLIC_API}${apiRoutes.refresh}`,
-	withCredentials: true,
-	timeout: 5000,
-});
+// const refreshAxios = axios.create({
+// 	baseURL: `${process.env.NEXT_PUBLIC_API}${apiRoutes.refresh}`,
+// 	withCredentials: true,
+// 	timeout: 5000,
+// });
 
 const customAxios = (() =>
 	axios.create({
@@ -81,26 +81,26 @@ export const fetchData = async <ResponseType, RequestType = undefined>(
 };
 
 // refreshToken으로 accessToken 갱신하기
-customAxios.interceptors.response.use(
-	(response) => response,
-	async (error) => {
-		const originalRequest = error.config;
-		if (error.response.status === 401 || error.response.status === 400) {
-			try {
-				const response = await refreshAxios.post('');
-				const { isLogin } = useAuthStore.getState();
-				const newAccessToken = response.headers['access'];
-				useAuthStore.setState({
-					isLogin: isLogin,
-					accessToken: newAccessToken,
-				});
-				originalRequest.headers.access = `${newAccessToken}`;
-				return customAxios(originalRequest);
-			} catch (refreshError) {
-				console.error('Failed to refresh access token: ', refreshError);
-			}
-		} else {
-			console.error('Refresh token not found.');
-		}
-	},
-);
+// customAxios.interceptors.response.use(
+// 	(response) => response,
+// 	async (error) => {
+// 		const originalRequest = error.config;
+// 		if (error.response.status === 401 || error.response.status === 400) {
+// 			try {
+// 				const response = await refreshAxios.post('');
+// 				const { isLogin } = useAuthStore.getState();
+// 				const newAccessToken = response.headers['access'];
+// 				useAuthStore.setState({
+// 					isLogin: isLogin,
+// 					accessToken: newAccessToken,
+// 				});
+// 				originalRequest.headers.access = `${newAccessToken}`;
+// 				return customAxios(originalRequest);
+// 			} catch (refreshError) {
+// 				console.error('Failed to refresh access token: ', refreshError);
+// 			}
+// 		} else {
+// 			console.error('Refresh token not found.');
+// 		}
+// 	},
+// );

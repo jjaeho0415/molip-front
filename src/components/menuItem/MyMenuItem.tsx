@@ -6,9 +6,10 @@ import MoreModal from '../modals/MoreModal';
 interface MyMenuItemProps {
 	menuTitle: string;
 	handleClick: () => void;
+	menuId: number;
 }
 
-function MyMenuItem({ menuTitle, handleClick }: MyMenuItemProps) {
+function MyMenuItem({ menuTitle, handleClick, menuId }: MyMenuItemProps) {
 	const [isMoreModalOpen, setIsMoreModalOpen] = useState<boolean>(false);
 
 	return (
@@ -42,6 +43,8 @@ function MyMenuItem({ menuTitle, handleClick }: MyMenuItemProps) {
 								teamNumber={0}
 								teamTitle=''
 								pageType='outsideMyMenu'
+								menuId={menuId}
+								setIsMoreModalOpen={setIsMoreModalOpen}
 							/>
 						</div>
 					</>

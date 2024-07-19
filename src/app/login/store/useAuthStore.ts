@@ -18,7 +18,7 @@ export const useAuthStore = create<LoginState>(
 					isLogin,
 					accessToken,
 				}),
-			clearLoginState: () => set({ isLogin: false, accessToken: '' }),
+			clearLoginState: () => set({ isLogin: false, accessToken: null }),
 		}),
 		{ name: 'login-storage' },
 	) as (set: (fn: (state: LoginState) => LoginState) => void) => LoginState,

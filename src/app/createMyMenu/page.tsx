@@ -20,6 +20,8 @@ function CreateMyMenu() {
 	const route = useRouter();
 	const createMyMenu = useSearchParams();
 	const defaultName = createMyMenu.get('menuName');
+	const menuId = createMyMenu.get('id');
+
 	const [value, setValue] = useState<string>('');
 
 	useEffect(() => {
@@ -29,9 +31,11 @@ function CreateMyMenu() {
 	useEffect(() => {
 		if (value) {
 			setIsEmptyModalOpen(false);
+			
 			return;
 		}
 		setIsEmptyModalOpen(true);
+	
 	}, [value]);
 
 	const handleClickButton = () => {
@@ -55,6 +59,7 @@ function CreateMyMenu() {
 						placeholder={`${defaultName}`}
 						value={value}
 						setValue={setValue}
+						menuId={Number(menuId)}
 					/>
 					{isEmptyModalOpen && (
 						<div style={{ position: 'absolute', top: '70px', left: '20px' }}>

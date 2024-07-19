@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import React, { Dispatch, SetStateAction } from 'react';
 import styles from './styles/menuCardModal.module.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -37,7 +36,7 @@ export default function MenuCardModal({
 			>
 				<div className={styles.modal} onClick={(e) => e.stopPropagation()}>
 					<div className={styles.contentSection}>
-						<Image
+						<img
 							className={styles.image}
 							alt='menuImage'
 							src={menuImage}

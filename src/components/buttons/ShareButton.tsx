@@ -8,21 +8,26 @@ import Image from 'next/image';
 
 interface IShareIprops {
 	state?: 'default' | 'disabled';
-	onClick?: () => void;
+	handleRightClick: () => void;
+	handleLeftClick: () => void;
 	children: React.ReactNode;
 }
 
 export default function ShareButton({
 	state = 'default',
-	onClick,
+	handleRightClick,
+	handleLeftClick,
 	children,
 }: IShareIprops) {
 	return (
 		<div className={styles.Container}>
-			<Button size='medium' state={state} onClick={onClick}>
+			<Button size='medium' state={state} onClick={handleLeftClick}>
 				{children}
 			</Button>
-			<div className={`${styles[state]} ${styles.BtnBox}`} onClick={onClick}>
+			<div
+				className={`${styles[state]} ${styles.BtnBox}`}
+				onClick={handleRightClick}
+			>
 				<Image
 					src={state === 'default' ? Icon_download : Icon_disabled}
 					width={24}

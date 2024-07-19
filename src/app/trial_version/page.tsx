@@ -6,7 +6,7 @@ import RoundButton from '@/components/buttons/RoundButton';
 import React, { useEffect, useState } from 'react';
 import styles from './trialVersion.module.css';
 import useBottomSheet from '@/hooks/useBottomSheet';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import TabNavigation from '@/components/TabNavigation';
 import TopNavBar from '@/components/TopNavBar';
 import SmallInput from '@/components/InputBox/SmallInput';
@@ -18,6 +18,9 @@ function Trial_Version() {
 	const [isEmptyModalOpen, setIsEmptyModalOpen] = useState<boolean>(false);
 	const { setIsOpen } = useBottomSheet();
 	const route = useRouter();
+	const createMyMenu = useSearchParams();
+	const defaultName = createMyMenu.get('menuName');
+	const menuId = Number(createMyMenu.get('menuId'));
 
 	useEffect(() => {
 		if (value) {
@@ -44,6 +47,7 @@ function Trial_Version() {
 			<div className={styles.ContentsContainer}>
 				<div className={styles.inputBox}>
 					<SmallInput
+						menuId={menuId}
 						placeholder='OOO의 메뉴판'
 						value={value}
 						setValue={setValue}
@@ -71,7 +75,11 @@ function Trial_Version() {
 				</div>
 				<p className={styles.bottomComment}>위로 올려 옵션을 선택하세요.</p>
 				<BottomSheet>
-					<AddTaste_BS onClick={handleClickButton} />
+					<AddTaste_BS
+						onClick={handleClickButton}
+						menuId={menuId}
+						menuName={defaultName}
+					/>
 				</BottomSheet>
 			</div>
 		</div>

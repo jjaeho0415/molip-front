@@ -49,7 +49,9 @@ const food_category = [
 
 export default function MenuBoard({ menuList, type }: IMenuBoard) {
 	const [isMenuCardOpen, setIsMenuCardOpen] = useState<boolean>(false);
-	const [selectedMenuItem, setSelectedMenuItem] = useState<string | null>(null);
+	const [selectedMenuItem, setSelectedMenuItem] = useState<string>('');
+	const [selectedMenuImg, setSelectedMenuImg] = useState<string>('');
+	const [selectedMenuTags, setSelectedMenuTags] = useState<string[]>([]);
 	const [selectedImgCategory, setSelectedImgCategory] =
 		useState<string>('한식');
 	const categoryRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
@@ -77,8 +79,14 @@ export default function MenuBoard({ menuList, type }: IMenuBoard) {
 		return menuList.map((menu) => menu.category);
 	};
 
-	const handleMenuItemClick = (menuItem: string) => {
+	const handleMenuItemClick = (
+		menuItem: string,
+		menuImg: string,
+		menuTags: string[],
+	) => {
 		setSelectedMenuItem(menuItem);
+		setSelectedMenuImg(menuImg);
+		setSelectedMenuTags(menuTags);
 		setIsMenuCardOpen(true);
 	};
 
@@ -147,7 +155,13 @@ export default function MenuBoard({ menuList, type }: IMenuBoard) {
 									<div
 										key={index}
 										className={styles.ImageBox}
-										onClick={() => handleMenuItemClick(menuItem.menuName)}
+										onClick={() =>
+											handleMenuItemClick(
+												menuItem.menuName,
+												menuItem.imageUrl,
+												menuItem.tags,
+											)
+										}
 									>
 										<img
 											src={menuItem.imageUrl}
@@ -166,15 +180,8 @@ export default function MenuBoard({ menuList, type }: IMenuBoard) {
 			{isMenuCardOpen && selectedMenuItem && (
 				<MenuCardModal
 					menuTitle={selectedMenuItem}
-					menuImage=''
-					hashTags={[
-						'매콤한',
-						'국물있는',
-						'든든한',
-						'밥',
-						'추워요. 뜨끈한 걸로요!',
-						'한식',
-					]}
+					menuImage={selectedMenuImg}
+					hashTags={selectedMenuTags}
 					setIsMenuCardModalOpen={setIsMenuCardOpen}
 				/>
 			)}

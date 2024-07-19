@@ -3,15 +3,16 @@ import styles from './addTaste.module.css';
 import Button from '../buttons/Button';
 import { categories } from '@/data/Categories';
 import Loading from '../Loading';
-import { useMutation } from '@tanstack/react-query';
+import { UseQueryResult, useMutation } from '@tanstack/react-query';
 import { postRecommendMyMenu } from '@/api/postRecommendMyMenu';
-import { useRouter } from 'next/navigation';
+
+type RefetchType = UseQueryResult['refetch'];
 
 interface AddTaste_BSProps {
 	menuId: number;
 	onClick?: () => void;
 	isEmptyModalOpen?: boolean;
-	menuName: string | null;
+	refetch?: RefetchType;
 }
 
 type ISelctedOptionsType = {
@@ -30,10 +31,10 @@ function AddTaste_BS({
 	menuId,
 	onClick,
 	isEmptyModalOpen,
-	menuName,
+	refetch,
 }: AddTaste_BSProps) {
 	const [isAllTasteClicked, setIsAllTasteClicked] = useState<boolean>(false);
-	const route = useRouter();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [selectedOptions, setSelectedOptions] = useState<ISelctedOptionsType>({
 		tasteOptions: [],
 		carbOptions: [],
@@ -61,11 +62,9 @@ function AddTaste_BS({
 		onSuccess: () => {
 			setIsLoading(false);
 			alert('필터 적용이 완료되었습니다.');
-			route.push(`/menu?menuId=${menuId}&menuName=${menuName}`);
+			refetch && refetch();
 		},
 	});
-
-	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const handleSave = (): void => {
 		if (isAllTasteClicked) {
@@ -74,8 +73,22 @@ function AddTaste_BS({
 				return;
 			}
 			setIsLoading(true);
-			postRecommend({ menuId, selectedOptions });
+			const transformedOptions = transformOptions(selectedOptions);
+			console.log(transformedOptions);
+			postRecommend({ menuId, selectedOptions: transformedOptions });
 		}
+	};
+
+	const transformOptions = (
+		options: ISelctedOptionsType,
+	): ISelctedOptionsType => {
+		const transformed: ISelctedOptionsType = { ...options };
+		for (const category in transformed) {
+			transformed[category as keyof ISelctedOptionsType] = transformed[
+				category as keyof ISelctedOptionsType
+			].map((option) => (option === 'ALL(상관없음)' ? 'ALL' : option));
+		}
+		return transformed;
 	};
 
 	const handleOptionClick = (

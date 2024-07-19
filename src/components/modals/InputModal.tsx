@@ -4,6 +4,7 @@ import ModalButton from '../buttons/ModalButton';
 import ReactDOM from 'react-dom';
 import { useMutation } from '@tanstack/react-query';
 import { patchModifyMyMenu } from '@/api/patchModifyMyMenu';
+import { useRouter } from 'next/navigation';
 
 interface InputModalProps {
 	setIsInputModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -20,7 +21,7 @@ function InputModal({
 }: InputModalProps) {
 	const [value, setValue] = useState<string>(titleText);
 	const [isEmpty, setIsEmpty] = useState<boolean>(false);
-
+	const route = useRouter();
 	const inputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);
 	};
@@ -31,12 +32,12 @@ function InputModal({
 	const { mutate: modifyMenuName } = useMutation({
 		mutationFn: ({ menuId, newMenuName }: modifyMenuNameParams) =>
 			patchModifyMyMenu(menuId, newMenuName),
-		onSuccess: () => {
+		onSuccess: (data) => {
 			setIsEmpty(false);
 			setIsInputModalOpen(false);
 			setIsMoreModalOpen(false);
 			alert('메뉴판 이름 수정 성공!');
-			
+			route.push(`/menu?menuId${data.personalBoardId}&menuName=${data.name}`);
 		},
 	});
 

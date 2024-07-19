@@ -1,17 +1,11 @@
 import styles from './menuBoard.module.css';
 import Image from 'next/image';
-import square from '../../../public/svg/square.svg';
 import { useRef, useState } from 'react';
 import MenuCardModal from '../modals/MenuCardModal';
-
-interface IMenuType {
-	category: string;
-	menu: string[];
-}
+import { useSearchParams } from 'next/navigation';
 
 interface IMenuBoard {
-	teamName: string;
-	menuList: IMenuType[];
+	menuList: IGetMyCategoryMenuType[];
 	type: '메뉴판' | '메뉴이미지';
 }
 
@@ -53,12 +47,14 @@ const food_category = [
 	},
 ];
 
-export default function MenuBoard({ teamName, menuList, type }: IMenuBoard) {
+export default function MenuBoard({ menuList, type }: IMenuBoard) {
 	const [isMenuCardOpen, setIsMenuCardOpen] = useState<boolean>(false);
 	const [selectedMenuItem, setSelectedMenuItem] = useState<string | null>(null);
 	const [selectedImgCategory, setSelectedImgCategory] =
 		useState<string>('한식');
 	const categoryRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
+	const searchParams = useSearchParams();
+	const menuName = searchParams.get('menuName');
 
 	const handleCategoryClick = (category: string) => {
 		setSelectedImgCategory(category);
@@ -88,7 +84,7 @@ export default function MenuBoard({ teamName, menuList, type }: IMenuBoard) {
 
 	return (
 		<div className={styles.Container}>
-			<p className={styles.MenuTitle}>{teamName}의 메뉴판</p>
+			<p className={styles.MenuTitle}>{menuName}</p>
 			<div className={styles.MenuListBox}>
 				{type === '메뉴판' &&
 					menuList.map((menu, idx) => (
@@ -103,9 +99,9 @@ export default function MenuBoard({ teamName, menuList, type }: IMenuBoard) {
 								/>
 							</div>
 							<div className={styles.Bottom}>
-								{menu.menu.map((menuItem: string, index: number) => (
+								{menu.menu.map((menuItem, index) => (
 									<p className={styles.MenuItemP} key={index}>
-										{menuItem}
+										{menuItem.menuName}
 									</p>
 								))}
 							</div>
@@ -147,14 +143,19 @@ export default function MenuBoard({ teamName, menuList, type }: IMenuBoard) {
 								/>
 							</div>
 							<div className={styles.ImageBottom}>
-								{menu.menu.map((menuItem: string, index: number) => (
+								{menu.menu.map((menuItem, index) => (
 									<div
 										key={index}
 										className={styles.ImageBox}
-										onClick={() => handleMenuItemClick(menuItem)}
+										onClick={() => handleMenuItemClick(menuItem.menuName)}
 									>
-										<Image src={square} width={90} height={90} alt='menuItem' />
-										<p className={styles.MenuItemP}>{menuItem}</p>
+										<img
+											src={menuItem.imageUrl}
+											width={90}
+											height={90}
+											alt='menuItem'
+										/>
+										<p className={styles.MenuItemP}>{menuItem.menuName}</p>
 									</div>
 								))}
 							</div>

@@ -3,42 +3,78 @@ import styles from './addTaste.module.css';
 import Button from '../buttons/Button';
 import { categories } from '@/data/Categories';
 import Loading from '../Loading';
+import { useMutation } from '@tanstack/react-query';
+import { postRecommendMyMenu } from '@/api/postRecommendMyMenu';
+import { useRouter } from 'next/navigation';
 
 interface AddTaste_BSProps {
-	onClick: () => void;
+	menuId: number;
+	onClick?: () => void;
+	isEmptyModalOpen?: boolean;
+	menuName: string | null;
 }
 
-function AddTaste_BS({ onClick }: AddTaste_BSProps) {
+type ISelctedOptionsType = {
+	tasteOptions: string[];
+	carbOptions: string[];
+	weatherOptions: string[];
+	categoryOptions: string[];
+};
+
+export type IPostRecommend = {
+	menuId: number;
+	selectedOptions: ISelctedOptionsType;
+};
+
+function AddTaste_BS({
+	menuId,
+	onClick,
+	isEmptyModalOpen,
+	menuName,
+}: AddTaste_BSProps) {
 	const [isAllTasteClicked, setIsAllTasteClicked] = useState<boolean>(false);
+	const route = useRouter();
 	const [selectedOptions, setSelectedOptions] = useState<ISelctedOptionsType>({
-		todayCategory: [],
-		tansuCategory: [],
-		weatherCategory: [],
-		countryCategory: [],
+		tasteOptions: [],
+		carbOptions: [],
+		weatherOptions: [],
+		categoryOptions: [],
 	});
 
 	useEffect(() => {
-		if (
-			selectedOptions.countryCategory.length !== 0 &&
-			selectedOptions.tansuCategory.length !== 0 &&
-			selectedOptions.todayCategory.length !== 0 &&
-			selectedOptions.weatherCategory.length !== 0
-		) {
-			setIsAllTasteClicked(true);
-		} else {
-			setIsAllTasteClicked(false);
-		}
+		console.log(selectedOptions);
 	}, [selectedOptions]);
+
+	useEffect(() => {
+		const allCategoriesSelected =
+			selectedOptions.tasteOptions.length > 0 &&
+			selectedOptions.carbOptions.length > 0 &&
+			selectedOptions.weatherOptions.length > 0 &&
+			selectedOptions.categoryOptions.length > 0;
+
+		setIsAllTasteClicked(allCategoriesSelected);
+	}, [selectedOptions]);
+
+	const { mutate: postRecommend } = useMutation({
+		mutationFn: ({ menuId, selectedOptions }: IPostRecommend) =>
+			postRecommendMyMenu({ menuId, selectedOptions }),
+		onSuccess: () => {
+			setIsLoading(false);
+			alert('필터 적용이 완료되었습니다.');
+			route.push(`/menu?menuId=${menuId}&menuName=${menuName}`);
+		},
+	});
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const handleSave = (): void => {
 		if (isAllTasteClicked) {
+			if (isEmptyModalOpen) {
+				onClick?.();
+				return;
+			}
 			setIsLoading(true);
-			setTimeout(() => {
-				setIsLoading(false);
-				onClick();
-			}, 3000);
+			postRecommend({ menuId, selectedOptions });
 		}
 	};
 
@@ -47,9 +83,9 @@ function AddTaste_BS({ onClick }: AddTaste_BSProps) {
 		option: string,
 	) => {
 		setSelectedOptions((prevSelected) => {
+			const currentCategoryOptions = prevSelected[categoryName] || [];
 			const isAll = option === 'ALL(상관없음)';
-			const isSelected = prevSelected[categoryName].includes(option);
-
+			const isSelected = currentCategoryOptions.includes(option);
 			if (isAll) {
 				return {
 					...prevSelected,
@@ -60,14 +96,14 @@ function AddTaste_BS({ onClick }: AddTaste_BSProps) {
 			if (isSelected) {
 				return {
 					...prevSelected,
-					[categoryName]: prevSelected[categoryName].filter(
+					[categoryName]: currentCategoryOptions.filter(
 						(item) => item !== option,
 					),
 				};
 			} else {
 				const newSelection = isAll
 					? [option]
-					: [...prevSelected[categoryName], option];
+					: [...currentCategoryOptions, option];
 				return {
 					...prevSelected,
 					[categoryName]: newSelection.filter(
@@ -80,10 +116,10 @@ function AddTaste_BS({ onClick }: AddTaste_BSProps) {
 
 	const handleReset = () => {
 		setSelectedOptions({
-			todayCategory: [],
-			tansuCategory: [],
-			weatherCategory: [],
-			countryCategory: [],
+			tasteOptions: [],
+			carbOptions: [],
+			weatherOptions: [],
+			categoryOptions: [],
 		});
 	};
 
@@ -108,9 +144,11 @@ function AddTaste_BS({ onClick }: AddTaste_BSProps) {
 								<div
 									key={option}
 									className={`${styles.optionButton} ${
-										selectedOptions[
-											category.name as keyof ISelctedOptionsType
-										].includes(option)
+										(
+											selectedOptions[
+												category.name as keyof ISelctedOptionsType
+											] || []
+										).includes(option)
 											? styles.selected
 											: ''
 									}`}

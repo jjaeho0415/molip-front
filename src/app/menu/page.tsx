@@ -11,10 +11,29 @@ import BottomSheet from '@/components/BottomSheet/BottomSheet';
 import AddTaste_BS from '@/components/BottomSheet/AddTaste_BS';
 import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
-import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { getMyMenu } from '@/api/getMyMenu';
-import Loading from '@/components/Loading';
+import { getTeamMenuList } from '@/api/getTeamMenuList';
+import { useSearchParams } from 'next/navigation';
+
+const menuList: IGetMyCategoryMenuType[] = [
+	{
+		category: '한식',
+		menu: [
+			{
+				menuId: 1,
+				menuName: '김치찌개',
+				tags: ['따뜻한', '국물있는'],
+				imageUrl: '',
+			},
+			{
+				menuId: 1,
+				menuName: '라면',
+				tags: ['따뜻한', '국물있는'],
+				imageUrl: '',
+			},
+		],
+	},
+];
 
 export default function Menu() {
 	const [active, setActive] = useState<'메뉴판' | '메뉴이미지'>('메뉴판');
@@ -22,16 +41,15 @@ export default function Menu() {
 	const isLogin = true;
 	const canvasRef = useRef<HTMLDivElement>(null);
 	const searchParams = useSearchParams();
-	const menuId = Number(searchParams.get('menuId'));
-	const menuName = searchParams.get('menuName');
+	const teamBoardId = searchParams.get('teamBoardId');
 
-	const { data: menuList, isLoading } = useQuery<IGetMyCategoryMenuType[]>({
-		queryKey: ['MENU_LIST'],
-		queryFn: () => getMyMenu(menuId),
-	});
+	// const { data: menuList } = useQuery<IGetTeamMenuType[]>({
+	// 	queryKey: ['TEAM_MENU_LIST'],
+	// 	queryFn: getTeamMenuList,
+	// });
 
-	const handleShare = () => {
-		return;
+	const handleSave = () => {
+		alert('필터 적용이 완료되었습니다!');
 	};
 
 	const handleDownImage = async () => {
@@ -53,49 +71,33 @@ export default function Menu() {
 	};
 
 	return (
-		<>
-			{isLoading ? (
-				<div className={styles.loading}>
-					<Loading backgroundColor='white' />
+		<div className={styles.Container}>
+			{isLogin ? <Header /> : <TopNavBar title='체험중' />}
+			<TabNavigation isUser={isLogin ? 'user' : 'guest'} />
+			<TopNavBar
+				isLogin={isLogin}
+				menu={true}
+				active={active}
+				setActive={setActive}
+				pageType='insideMyMenu'
+				backRoute='/home'
+			/>
+			<div ref={canvasRef} className={styles.ContentContainer}>
+				<MenuBoard menuList={menuList} type={active} />
+			</div>
+			{active === '메뉴판' && (
+				<div className={styles.ButtonBox}>
+					{/* isLogin가 true면 옵션수정하기, false면 공유하기, onClick함수도 다르게 줘야함 */}
+					{isLogin ? (
+						<ShareButton onClick={handleDownImage}>옵션 수정하기</ShareButton>
+					) : (
+						<ShareButton onClick={handleDownImage}>공유하기</ShareButton>
+					)}
 				</div>
-			) : (
-				menuList && (
-					<>
-						<div className={styles.Container}>
-							{isLogin ? <Header /> : <TopNavBar title='체험중' />}
-							<TabNavigation isUser={isLogin ? 'user' : 'guest'} />
-							<TopNavBar
-								isLogin={isLogin}
-								menu={true}
-								active={active}
-								setActive={setActive}
-								pageType='insideMyMenu'
-								backRoute='/home'
-							/>
-							<div ref={canvasRef} className={styles.ContentContainer}>
-								<MenuBoard menuList={menuList} type={active} />
-							</div>
-							{active === '메뉴판' && (
-								<div className={styles.ButtonBox}>
-									{/* isLogin가 true면 옵션수정하기, false면 공유하기, onClick함수도 다르게 줘야함 */}
-									{isLogin ? (
-										<ShareButton onClick={handleShare}>
-											옵션 수정하기
-										</ShareButton>
-									) : (
-										<ShareButton onClick={handleDownImage}>
-											공유하기
-										</ShareButton>
-									)}
-								</div>
-							)}
-							<BottomSheet>
-								<AddTaste_BS menuId={menuId} menuName={menuName} />
-							</BottomSheet>
-						</div>
-					</>
-				)
 			)}
-		</>
+			<BottomSheet>
+				<AddTaste_BS onClick={handleSave} />
+			</BottomSheet>
+		</div>
 	);
 }

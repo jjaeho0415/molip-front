@@ -15,13 +15,20 @@ import RoundButton from '@/components/buttons/RoundButton';
 import NoMenu_BS from '@/components/BottomSheet/NoMenu_BS';
 import AddMenu_BS from '@/components/BottomSheet/AddMenu_BS';
 import useBottomSheet from '@/hooks/useBottomSheet';
+import { useSearchParams } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { getTeamMenuList } from '@/api/getTeamMenuList';
+import { getMyMenuList } from '@/api/getMyMenuList';
 
 export default function TeamMenuPage() {
 	const { setIsOpen } = useBottomSheet();
-	const [value, setValue] = useState<string>('스위프 10팀의 메뉴판');
+	const searchParams = useSearchParams();
+	const boardName = searchParams.get('menuName') as string;
+	const [menuBoardName, setMenuBoardName] = useState<string>(boardName);
 	const [isDone] = useState<boolean>(true);
-	const [hasMyMenu] = useState<boolean>(false);
+	const myMenuNum = Number(localStorage.getItem('myMenuNum'));
 	const [currentUrl, setCurrentUrl] = useState<string>('');
+	const [teamBoardId, setTeamBoardId] = useState<number>(-1);
 
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
@@ -33,6 +40,25 @@ export default function TeamMenuPage() {
 		setIsOpen(false);
 		alert('필터 적용이 완료되었습니다.');
 	};
+
+	const { data: myMenuList, isLoading } = useQuery<IGetMyMenuType[]>({
+		queryKey: ['MY_MENU_LIST'],
+		queryFn: getMyMenuList,
+	});
+
+	const { data: teamMenuList } = useQuery<IGetTeamMenuType[]>({
+		queryKey: ['TEAM_MENU_LIST'],
+		queryFn: getTeamMenuList,
+	});
+
+	useEffect(() => {
+		const sameName = teamMenuList?.filter(
+			(item) => item.teamBoardName === boardName,
+		);
+		sameName?.map((item) => {
+			setTeamBoardId(item.teamBoardId);
+		});
+	}, [teamMenuList, boardName]);
 
 	const handleCopyClipBoard = async (text: string) => {
 		try {
@@ -50,7 +76,11 @@ export default function TeamMenuPage() {
 			<TopNavBar backRoute='/home' />
 			<div className={styles.contentsContainer}>
 				<div className={styles.inputBox}>
-					<SmallInput value={value} setValue={setValue}></SmallInput>
+					<SmallInput
+						value={menuBoardName}
+						setValue={setMenuBoardName}
+						menuId={teamBoardId}
+					></SmallInput>
 					<Image src={Icon_pencile} width={36} height={36} alt='edit' />
 				</div>
 				<div className={styles.middleBox}>
@@ -106,13 +136,13 @@ export default function TeamMenuPage() {
 				</div>
 				<p className={styles.bottomComment}>위로 올려 옵션을 선택하세요.</p>
 
-				{hasMyMenu ? (
+				{myMenuNum === 0 ? (
 					<BottomSheet size='small'>
-						<NoMenu_BS />
+						<NoMenu_BS teamBoardId={teamBoardId} />
 					</BottomSheet>
 				) : (
 					<BottomSheet>
-						<AddMenu_BS onClick={handleClickButton} />
+						<AddMenu_BS onClick={handleClickButton} myMenuList={myMenuList} />
 					</BottomSheet>
 				)}
 			</div>

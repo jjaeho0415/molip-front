@@ -1,0 +1,10 @@
+.ListContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 350px;
+	height: calc(100vh - 185px);
+	overflow: auto;
+	margin: 10px 0;
+	padding-bottom: 30px;
+}

@@ -3,10 +3,13 @@
 import Header from '@/components/Header';
 import styles from './makeTeam.module.css';
 import TopNavBar from '@/components/TopNavBar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@/components/buttons/Button';
 import BigInput from '@/components/InputBox/BigInput';
 import { useRouter } from 'next/navigation';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { postCreateTeamMenu } from '@/api/postCreatTeamMenu';
+import { getTeamMenuList } from '@/api/getTeamMenuList';
 
 const numArr = [1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -14,6 +17,34 @@ export default function MakeTeam() {
 	const router = useRouter();
 	const [teamName, setTeamName] = useState<string>('');
 	const [selectedNum, setSelectedNum] = useState<number>(0);
+	const [menuBoardName, setMenuBoardName] = useState<string>(
+		`${teamName}의 메뉴판`,
+	);
+
+	const { mutate: createTeamMenu } = useMutation({
+		mutationFn: () => postCreateTeamMenu(teamName, selectedNum, menuBoardName),
+		mutationKey: ['CREATE_TEAM_MENU'],
+		onSuccess: () => {
+			router.push(`/teamMenuPage?name=${menuBoardName}`);
+		},
+		onError: (error) => console.error(error),
+	});
+
+	const { data: teamMenuList } = useQuery<IGetTeamMenuType[]>({
+		queryKey: ['TEAM_MENU_LIST'],
+		queryFn: getTeamMenuList,
+	});
+
+	useEffect(() => {
+		const teamBoardNames = teamMenuList?.filter(
+			(item) => item.teamBoardName === `${teamName}의 메뉴판`,
+		);
+		if (teamBoardNames && teamBoardNames.length > 1) {
+			setMenuBoardName(`${teamName}의 메뉴판${teamBoardNames.length + 1}`);
+		} else {
+			setMenuBoardName(`${teamName}의 메뉴판`);
+		}
+	}, [teamName, teamMenuList]);
 
 	const handleSelectNum = (num: number) => {
 		if (num === selectedNum) {
@@ -22,7 +53,7 @@ export default function MakeTeam() {
 	};
 
 	const handleOk = () => {
-		teamName && router.push('/teamMenuPage');
+		teamName && createTeamMenu();
 	};
 
 	return (

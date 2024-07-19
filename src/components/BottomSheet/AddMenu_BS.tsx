@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './addMenu.module.css';
 import Image from 'next/image';
 import Icon_down from '../../../public/icons/down.svg';
@@ -8,62 +8,57 @@ import Icon_unchecked from '../../../public/icons/checkBox/checkBox_unchecked.sv
 import Icon_checked from '../../../public/icons/checkBox/checkBox_checked.svg';
 import OptionButton from '../buttons/OptionButton';
 import Loading from '../Loading';
+import { useQuery } from '@tanstack/react-query';
+import { getMyMenu } from '@/api/getMyMenu';
 
-const options = [
-	'메뉴판1',
-	'메뉴판 2',
-	'나의 메뉴판',
-	'수현이의 메뉴판',
-	'내 메뉴판',
-	'스위프의 메뉴판',
-	'메뉴판입니다',
-];
-
-const menus = [
-	{
-		category: '한식',
-		menus: ['김치찌개', '김치찜', '물냉면', '닭갈비', '비빔밥'],
-	},
-	{
-		category: '중식',
-		menus: ['짜장면', '볶음밥', '깐풍기', '짬뽕', '팔보채', '마라탕', '탕수육'],
-	},
-	{
-		category: '일식',
-		menus: ['초밥', '우동', '오코노미야끼', '타코야끼', '라멘'],
-	},
-];
-
-export default function AddMenu_BS({ onClick }: { onClick: () => void }) {
+interface IAddMenu {
+	onClick: () => void;
+	myMenuList: IGetMyMenuType[] | undefined;
+}
+export default function AddMenu_BS({ onClick, myMenuList }: IAddMenu) {
 	const [isShowSelectBox, setIsShowSelectBox] = useState<boolean>(false);
 	const [selectedMyMenu, setSelectedMyMenu] = useState<string>('');
-	const [tags, setTags] = useState<string[]>([]);
+	const [selectedAddMenu, setSelectedAddMenu] = useState<number[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [selectedBoardId, setSelectedBoardId] = useState<number>(-1);
 
-	const handleSelectItem = (item: string) => {
-		if (tags.includes(item)) {
-			const newTagArr = tags.filter((menuItem) => menuItem !== item);
-			setTags(newTagArr);
+	const { data: menus, isLoading: isGetMyMenuLoading } = useQuery<
+		IGetMyCategoryMenuType[]
+	>({
+		queryKey: ['MY_MENU_LIST', selectedBoardId],
+		queryFn: () => getMyMenu(selectedBoardId),
+	});
+
+	const handleSelectItem = (item: number) => {
+		if (selectedAddMenu.includes(item)) {
+			const newTagArr = selectedAddMenu.filter((menuItem) => menuItem !== item);
+			setSelectedAddMenu(newTagArr);
 		} else {
-			setTags([...tags, item]);
+			setSelectedAddMenu([...selectedAddMenu, item]);
 		}
 	};
 
-	const handleDeleteItem = (tag: string) => {
-		if (tags.includes(tag)) {
-			const newTagArr = tags.filter((menuItem) => menuItem !== tag);
-			setTags(newTagArr);
+	const handleDeleteItem = (item: number) => {
+		if (selectedAddMenu.includes(item)) {
+			const newTagArr = selectedAddMenu.filter((menuItem) => menuItem !== item);
+			setSelectedAddMenu(newTagArr);
 		}
+	};
+
+	const handleMyBoardClick = (board: IGetMyMenuType) => {
+		setSelectedMyMenu(board.name);
+		setSelectedBoardId(board.personalBoardId);
+		setIsShowSelectBox(!isShowSelectBox);
 	};
 
 	return (
 		<>
 			<div className={styles.container}>
 				<div className={styles.menuBoard}>
-					{tags.length === 0 ? (
+					{selectedAddMenu.length === 0 ? (
 						<p className={styles.placeholder}>메뉴를 선택하세요.</p>
 					) : (
-						tags.map((tag, idx) => (
+						selectedAddMenu.map((tag, idx) => (
 							<div className={styles.menuTag} key={idx}>
 								<OptionButton
 									state='selected'
@@ -95,17 +90,14 @@ export default function AddMenu_BS({ onClick }: { onClick: () => void }) {
 					/>
 				</div>
 				<ul className={isShowSelectBox ? styles.ul : styles.disabled}>
-					{options.map((option, index) => (
+					{myMenuList?.map((board, index) => (
 						<li
 							className={styles.li}
 							key={index}
-							value={option}
-							onClick={() => {
-								setSelectedMyMenu(option);
-								setIsShowSelectBox(false);
-							}}
+							value={board.name}
+							onClick={() => handleMyBoardClick(board)}
 						>
-							{option}
+							{board.name}
 						</li>
 					))}
 				</ul>
@@ -115,26 +107,30 @@ export default function AddMenu_BS({ onClick }: { onClick: () => void }) {
 						<span className={styles.subSpan}>최대 10개</span>
 					</p>
 				)}
-				{selectedMyMenu !== '' && (
+				{selectedMyMenu !== '' && isGetMyMenuLoading ? (
+					<Loading backgroundColor='white' />
+				) : (
 					<div className={styles.menuList}>
-						{menus.map((menu, index) => {
+						{menus?.map((menuBoard, index) => {
 							return (
 								<>
-									<p className={styles.category}>{menu.category}</p>
+									<p className={styles.category}>{menuBoard.category}</p>
 									<div className={styles.categoryBox} key={index}>
-										{menu.menus.map((item, idx) => (
+										{menuBoard?.menu?.map((item, idx) => (
 											<div key={idx} className={styles.menuItemBox}>
 												<Image
 													className={styles.checkBox}
 													src={
-														tags.includes(item) ? Icon_checked : Icon_unchecked
+														selectedAddMenu.includes(item.menuId)
+															? Icon_checked
+															: Icon_unchecked
 													}
 													width={24}
 													height={24}
 													alt='checkBox'
-													onClick={() => handleSelectItem(item)}
+													onClick={() => handleSelectItem(item.menuId)}
 												/>
-												<p className={styles.menuItem}>{item}</p>
+												<p className={styles.menuItem}>{item.menuName}</p>
 											</div>
 										))}
 									</div>
@@ -152,7 +148,7 @@ export default function AddMenu_BS({ onClick }: { onClick: () => void }) {
 					</Button>
 				) : (
 					<Button
-						state={tags.length === 0 ? 'disabled' : 'default'}
+						state={selectedAddMenu.length === 0 ? 'disabled' : 'default'}
 						onClick={() => {
 							setIsLoading(true);
 							setTimeout(() => {

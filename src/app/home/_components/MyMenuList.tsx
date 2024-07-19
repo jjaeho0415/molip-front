@@ -1,6 +1,7 @@
 import React from 'react';
 import MyMenuItem from '@/components/menuItem/MyMenuItem';
 import { useRouter } from 'next/navigation';
+import styles from './styles/menuList.module.css';
 
 interface MyMenuListProps {
 	menuList: IGetMyMenuType[];
@@ -14,7 +15,7 @@ function MyMenuList({ menuList }: MyMenuListProps) {
 	};
 
 	return (
-		<>
+		<div className={styles.ListContainer}>
 			{menuList.map((myMenuItem, index) => (
 				<MyMenuItem
 					menuTitle={myMenuItem.name}
@@ -25,7 +26,7 @@ function MyMenuList({ menuList }: MyMenuListProps) {
 					}
 				/>
 			))}
-		</>
+		</div>
 	);
 }
 

@@ -17,7 +17,6 @@ import AddMenu_BS from '@/components/BottomSheet/AddMenu_BS';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { getTeamMenuList } from '@/api/getTeamMenuList';
 import { getMyMenuList } from '@/api/getMyMenuList';
 import { getTeamMenuItem } from '@/api/getTeamMenuItem';
 import { getHasMenuAddedMembers } from '@/api/getHasMenuAddedMembers';
@@ -26,10 +25,10 @@ export default function TeamMenuPage() {
 	const { setIsOpen } = useBottomSheet();
 	const searchParams = useSearchParams();
 	const boardName = searchParams.get('menuName') as string;
+	const teamBoardId = Number(searchParams.get('menuId'));
 	const [menuBoardName, setMenuBoardName] = useState<string>(boardName);
 	const myMenuNum = Number(localStorage.getItem('myMenuNum'));
 	const [currentUrl, setCurrentUrl] = useState<string>('');
-	const [teamBoardId, setTeamBoardId] = useState<number>(-1);
 
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
@@ -43,13 +42,7 @@ export default function TeamMenuPage() {
 
 	const { data: teamMenuItem } = useQuery<IGetTeamMenuType | null>({
 		queryKey: ['TEAM_MENU_ITEM', teamBoardId],
-		queryFn: async () => {
-			if (teamBoardId !== -1) {
-				return await getTeamMenuItem(teamBoardId);
-			} else {
-				return null;
-			}
-		},
+		queryFn: async () => getTeamMenuItem(teamBoardId),
 	});
 
 	const { data: addedMembers } = useQuery<IGetAddedUserInfo>({
@@ -57,31 +50,10 @@ export default function TeamMenuPage() {
 		queryFn: () => getHasMenuAddedMembers(teamBoardId),
 	});
 
-	useEffect(() => {
-		if (teamMenuItem) {
-			console.log('개개개ㅐ', teamMenuItem);
-		}
-	}, [teamMenuItem]);
-
 	const { data: myMenuList } = useQuery<IGetMyMenuType[]>({
 		queryKey: ['MY_MENU_LIST'],
 		queryFn: getMyMenuList,
 	});
-
-	const { data: teamMenuList } = useQuery<IGetTeamMenuType[]>({
-		queryKey: ['TEAM_MENU_LIST'],
-		queryFn: getTeamMenuList,
-	});
-
-	useEffect(() => {
-		if (teamMenuList) {
-			const sameName = teamMenuList?.filter(
-				(item) => item.teamBoardName === boardName,
-			);
-			console.log('같은 이름', sameName);
-			setTeamBoardId(sameName[0]?.teamBoardId);
-		}
-	}, [teamMenuList, boardName]);
 
 	const handleCopyClipBoard = async (text: string) => {
 		try {

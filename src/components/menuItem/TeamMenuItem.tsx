@@ -35,17 +35,15 @@ function TeamMenuItem({
 			setIsAllPeopleAdded(
 				addedMembers.addedMenuUserCount === addedMembers.teamMembersNum,
 			);
-		console.log(addedMembers);
 	}, [addedMembers]);
 
 	const handleMenuItemClick = () => {
 		if (addedMembers) {
 			if (hasUserAddedMenu)
 				router.push(`/menu?menuId=${id}&menuName=${menuName}`);
-		} else {
-			router.push(
-				`/teamMenuPage?menuId=${id}&menuName=${menuName}&menuAdded=${hasUserAddedMenu}`,
-			);
+			else {
+				router.push(`/teamMenuPage?menuId=${id}&menuName=${menuName}`);
+			}
 		}
 	};
 

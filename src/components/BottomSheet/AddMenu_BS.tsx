@@ -37,10 +37,16 @@ export default function AddMenu_BS({
 	const [selectedBoardId, setSelectedBoardId] = useState<number>(-1);
 
 	const { data: menus, isLoading: isGetMyMenuLoading } = useQuery<
-		IGetMyCategoryMenuType[]
+		IGetMyCategoryMenuType[] | undefined
 	>({
 		queryKey: ['MY_MENU_LIST', selectedBoardId],
-		queryFn: () => getMyMenu(selectedBoardId),
+		queryFn: () => {
+			if (selectedMyMenu !== '') {
+				return getMyMenu(selectedBoardId);
+			} else {
+				return;
+			}
+		},
 	});
 
 	const { mutate: addMenu } = useMutation({

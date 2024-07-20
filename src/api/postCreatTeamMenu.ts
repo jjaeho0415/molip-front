@@ -6,7 +6,7 @@ export const postCreateTeamMenu = async (
 	teamName: string,
 	teamMembersNum: number,
 	teamBoardName: string,
-) => {
+): Promise<IGetTeamMenuType> => {
 	const { accessToken } = useAuthStore.getState();
 	return await api.post({
 		endpoint: `${apiRoutes.teamBoards}?teamName=${teamName}&teamMembersNum=${teamMembersNum}&teamBoardName=${teamBoardName}`,

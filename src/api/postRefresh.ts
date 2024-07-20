@@ -7,10 +7,9 @@ export const getAccessToken = async () => {
 		const accessToken = response.headers.get('access');
 		if (accessToken === null) {
 			console.error('Access token not found in the response headers');
-    		throw new Error('Access token not found');
 		}
-		console.log(accessToken)
-		return accessToken
+		console.log(accessToken);
+		return accessToken;
 	} catch (error) {
 		console.error('Error fetching access token:', error);
 		throw error;

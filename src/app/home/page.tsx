@@ -19,8 +19,7 @@ import { postCreateMyMenu } from '@/api/postCreateMyMenu';
 import { getUserName } from '@/api/getUserName';
 import Loading from '@/components/Loading';
 import { useAuthStore } from '../login/store/useAuthStore';
-import { getAccessToken } from '@/api/postRefresh';
-import RefreshTokenExpired from '@/_lib/refreshTokenExpired';
+import { IRefreshType, getAccessToken } from '@/api/postRefresh';
 
 export default function Home() {
 	const { tab } = useHomeStore();
@@ -29,17 +28,15 @@ export default function Home() {
 	const [defaultMyMenuName, setDefaultMyMenuName] = useState<string>('');
 	const [user, setUser] = useState<string>('');
 
-	const { mutate: getAccess } = useMutation<string>({
+	const { mutate: getAccess } = useMutation<IRefreshType>({
 		mutationFn: getAccessToken,
 		mutationKey: ['refresh'],
-		onSuccess: (token:string) => {
-			useAuthStore.setState({ isLogin: true, accessToken: token });
+		onSuccess: (data: IRefreshType) => {
+			useAuthStore.setState({ isLogin: true, accessToken: data.access });
 		},
 		onError: (error) => {
 			console.error('Error fetching access token:', error);
-			console.log('refresh Token으로 accessToken 가져오기 실패');
-			RefreshTokenExpired();
-		}
+		},
 	});
 
 	const { data: userName } = useQuery<IGetUserNameType>({
@@ -56,7 +53,6 @@ export default function Home() {
 		const current = window.location.href;
 		const { accessToken } = useAuthStore.getState();
 		if (current.includes('molip.site') && accessToken === null) {
-			console.log("배포사이트에서 getAccess 되는지 확인")
 			getAccess();
 		}
 	}, []);
@@ -129,7 +125,6 @@ export default function Home() {
 				<div className={styles.loading}>
 					<Loading backgroundColor='white' />
 				</div>
-				
 			) : (
 				<>
 					<div className={styles.createContainer}>

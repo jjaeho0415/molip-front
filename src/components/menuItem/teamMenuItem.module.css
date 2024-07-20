@@ -10,6 +10,20 @@
 	cursor: pointer;
 }
 
+.hasAddedMenu {
+	border: 1px solid var(--main-50);
+}
+
+.isWaitingMenuAdd {
+	background-color: var(--gray-30);
+}
+
+.menuAddP {
+	color: var(--main-50);
+	font-size: 15px;
+	margin-bottom: 10px;
+}
+
 .titleSection {
 	color: var(--gray-60);
 }

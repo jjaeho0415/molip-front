@@ -28,10 +28,10 @@ export default function Home() {
 	const [defaultMyMenuName, setDefaultMyMenuName] = useState<string>('');
 	const [user, setUser] = useState<string>('');
 
-	const { mutate: getAccess } = useMutation<string | null>({
+	const { mutate: getAccess } = useMutation<string>({
 		mutationFn: getAccessToken,
 		mutationKey: ['refresh'],
-		onSuccess: (token) => {
+		onSuccess: (token:string) => {
 			useAuthStore.setState({ isLogin: true, accessToken: token });
 		},
 		onError: () => {
@@ -52,10 +52,6 @@ export default function Home() {
 	useEffect(() => {
 		const current = window.location.href;
 		const { accessToken } = useAuthStore.getState();
-		console.log(current);
-		console.log(accessToken);
-		console.log(current.includes('molip.site'))
-		console.log(accessToken === null)
 		if (current.includes('molip.site') && accessToken === null) {
 			console.log("배포사이트에서 getAccess 되는지 확인")
 			getAccess();
@@ -127,7 +123,10 @@ export default function Home() {
 			<Header />
 			<TabNavigation />
 			{isLoading ? (
-				<Loading backgroundColor='white' />
+				<div className={styles.loading}>
+					<Loading backgroundColor='white' />
+				</div>
+				
 			) : (
 				<>
 					<div className={styles.createContainer}>

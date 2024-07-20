@@ -35,6 +35,7 @@ const _fetch = async <T = unknown, R = unknown>({
 	const headers: HeadersInit = {
 		Accept: 'application/json',
 		'Content-Type': 'application/json',
+		
 	};
 
 	if (authorization) {
@@ -58,8 +59,9 @@ const _fetch = async <T = unknown, R = unknown>({
 		);
 
 		if (!res.ok) {
-			if (res.status === 401) {
-				const newToken = await getAccessToken();
+			if (res.status === 401 || res.status === 400) {
+				try {
+					const newToken = await getAccessToken();
 				if (newToken) {
 					useAuthStore.setState({
 						isLogin: true,
@@ -80,7 +82,8 @@ const _fetch = async <T = unknown, R = unknown>({
 						throw new Error(retryErrorData.message);
 					}
 					return await retryRes.json();
-				} else {
+				}
+				} catch (error) {
 					RefreshTokenExpired();
 					throw new Error('Session expired. Please log in again.');
 				}

@@ -12,6 +12,7 @@ import { useMutation } from '@tanstack/react-query';
 import { patchModifyMyMenu } from '@/api/patchModifyMyMenu';
 import useHomeStore from '@/app/home/store/useHomeStore';
 import { patchModifyTeamMenu } from '@/api/patchModifyTeamMenu';
+import { useRouter } from 'next/navigation';
 
 interface IInputProps {
 	placeholder?: string;
@@ -28,6 +29,7 @@ export default function SmallInput({
 }: IInputProps) {
 	const { tab } = useHomeStore();
 	const [debounceValue, setDebounceValue] = useState<string>(value);
+	const route = useRouter();
 	const inputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);
 	};
@@ -37,7 +39,12 @@ export default function SmallInput({
 			if (tab === 'my') {
 				return patchModifyMyMenu(menuId, newMenuName);
 			} else {
-				return patchModifyTeamMenu(menuId, newMenuName);
+				return patchModifyTeamMenu(menuId, { teamBoardName: newMenuName });
+			}
+		},
+		onSuccess: () => {
+			if (tab === 'my') {
+				route.push(`/createMyMenu?menuName=${debounceValue}&menuId=${menuId}`);
 			}
 		},
 	});

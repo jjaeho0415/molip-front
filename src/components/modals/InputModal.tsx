@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { patchModifyMyMenu } from '@/api/patchModifyMyMenu';
 import useHomeStore from '@/app/home/store/useHomeStore';
 import { patchModifyTeamMenu } from '@/api/patchModifyTeamMenu';
+import { useRouter } from 'next/navigation';
 
 interface InputModalProps {
 	setIsInputModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -25,6 +26,7 @@ function InputModal({
 	const [isEmpty, setIsEmpty] = useState<boolean>(false);
 	const { tab } = useHomeStore();
 	const current = window.location.href;
+	const route = useRouter();
 	const queryClient = useQueryClient();
 	const inputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);
@@ -59,7 +61,7 @@ function InputModal({
 					? queryClient.invalidateQueries({ queryKey: ['MY_MENU_LIST'] })
 					: queryClient.invalidateQueries({ queryKey: ['TEAM_MENU_LIST'] });
 			} else {
-				queryClient.invalidateQueries({ queryKey: ['MENU_LIST'] });
+				route.push(`menu?menuId=${menuId}&menuName=${value}`);
 			}
 		},
 		onError: (error) => console.error(error),

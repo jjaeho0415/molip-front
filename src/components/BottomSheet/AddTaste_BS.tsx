@@ -3,16 +3,14 @@ import styles from './addTaste.module.css';
 import Button from '../buttons/Button';
 import { categories } from '@/data/Categories';
 import Loading from '../Loading';
-import { UseQueryResult, useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postRecommendMyMenu } from '@/api/postRecommendMyMenu';
-
-type RefetchType = UseQueryResult['refetch'];
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface AddTaste_BSProps {
 	menuId: number;
 	onClick?: () => void;
 	isEmptyModalOpen?: boolean;
-	refetch?: RefetchType;
 }
 
 type ISelctedOptionsType = {
@@ -31,9 +29,9 @@ function AddTaste_BS({
 	menuId,
 	onClick,
 	isEmptyModalOpen,
-	refetch,
 }: AddTaste_BSProps) {
 	const [isAllTasteClicked, setIsAllTasteClicked] = useState<boolean>(false);
+	const route = useRouter();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [selectedOptions, setSelectedOptions] = useState<ISelctedOptionsType>({
 		tasteOptions: [],
@@ -41,6 +39,9 @@ function AddTaste_BS({
 		weatherOptions: [],
 		categoryOptions: [],
 	});
+	const param = useSearchParams();
+	const menuName = param.get('menuName');
+	const queryClient = useQueryClient();
 
 	useEffect(() => {
 		console.log(selectedOptions);
@@ -61,8 +62,13 @@ function AddTaste_BS({
 			postRecommendMyMenu({ menuId, selectedOptions }),
 		onSuccess: () => {
 			setIsLoading(false);
+			const current = window.location.href;
 			alert('필터 적용이 완료되었습니다.');
-			refetch && refetch();
+			queryClient.invalidateQueries({queryKey: ['MENU_LIST']})
+			if (current.includes('createMyMenu')) {
+				route.push(`/menu?menuId=${menuId}&menuName=${menuName}`);
+			}
+
 		},
 	});
 
@@ -74,7 +80,6 @@ function AddTaste_BS({
 			}
 			setIsLoading(true);
 			const transformedOptions = transformOptions(selectedOptions);
-			console.log(transformedOptions);
 			postRecommend({ menuId, selectedOptions: transformedOptions });
 		}
 	};

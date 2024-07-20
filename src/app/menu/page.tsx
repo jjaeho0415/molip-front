@@ -27,7 +27,6 @@ export default function Menu() {
 	const {
 		data: menuList,
 		isLoading,
-		refetch,
 	} = useQuery<IGetMyCategoryMenuType[]>({
 		queryKey: ['MENU_LIST'],
 		queryFn: () => getMyMenu(menuId),
@@ -105,7 +104,6 @@ export default function Menu() {
 							<BottomSheet>
 								<AddTaste_BS
 									menuId={menuId}
-									refetch={refetch}
 								/>
 							</BottomSheet>
 						</div>

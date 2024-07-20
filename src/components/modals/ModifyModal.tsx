@@ -2,45 +2,68 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import styles from './styles/modifyModal.module.css';
 import ModalButton from '../buttons/ModalButton';
 import ReactDOM from 'react-dom';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { patchModifyTeamMenu } from '@/api/patchModifyTeamMenu';
 
 interface ModifyModalProps {
-  setIsModifyModalOpen: Dispatch<SetStateAction<boolean>>;
-  teamName: string;
-  teamNumber: number;
+	setIsModifyModalOpen: Dispatch<SetStateAction<boolean>>;
+	setIsMoreModalOpen: Dispatch<SetStateAction<boolean>>;
+	teamName: string;
+	teamNumber: number;
+	teamBoardId: number;
 }
 
 function ModifyModal({
-  teamName,
-  teamNumber,
-  setIsModifyModalOpen,
+	teamName,
+	teamNumber,
+	setIsModifyModalOpen,
+	setIsMoreModalOpen,
+	teamBoardId,
 }: ModifyModalProps) {
-  const [name, setName] = useState<string>(teamName);
-  const [isEmpty, setIsEmpty] = useState<boolean>(false);
-  const [selectedNumber, setSelectedNumber] = useState<number>(teamNumber);
+	const queryClient = useQueryClient();
+	const [name, setName] = useState<string>(teamName);
+	const [isEmpty, setIsEmpty] = useState<boolean>(false);
+	const [selectedNumber, setSelectedNumber] = useState<number>(teamNumber);
 
-  const handleNumberSelect = (num: number) => {
-    setSelectedNumber(num);
-  };
+	const { mutate: editTeamInfo } = useMutation({
+		mutationFn: () =>
+			patchModifyTeamMenu(teamBoardId, {
+				teamName: name,
+				teamMembersNum: selectedNumber,
+			}),
+		mutationKey: ['EDIT_TEAM_MENU_INFO', teamBoardId, name, selectedNumber],
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['TEAM_MENU_LIST'] });
+			setIsModifyModalOpen(false);
+			setIsMoreModalOpen(false);
+			alert('메뉴판 이름 수정 성공!');
+		},
+		onError: (error) => console.error(error),
+	});
 
-  const handleSave = (): void => {
-    if (name === '') {
-      setIsEmpty(true);
-      return;
-    }
-    setIsEmpty(false);
-    setIsModifyModalOpen(false);
-  };
+	const handleNumberSelect = (num: number) => {
+		setSelectedNumber(num);
+	};
 
-  const closeModal = (): void => {
-    setIsModifyModalOpen(false);
-  };
+	const handleSave = (): void => {
+		if (name === '') {
+			setIsEmpty(true);
+			return;
+		}
+		editTeamInfo();
+		setIsEmpty(false);
+	};
 
-  const inputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-  const items = [1, 2, 3, 4, 5, 6, 7, 8];
+	const closeModal = (): void => {
+		setIsModifyModalOpen(false);
+	};
 
-  return ReactDOM.createPortal(
+	const inputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setName(e.target.value);
+	};
+	const items = [1, 2, 3, 4, 5, 6, 7, 8];
+
+	return ReactDOM.createPortal(
 		<>
 			<div
 				className={styles.overlay}

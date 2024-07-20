@@ -6,6 +6,7 @@ export const getAccessToken = async () => {
 		console.log('Requesting new access token...');
 		const response: Response = await api.post({ endpoint: apiRoutes.refresh });
 		console.log('Response Headers:', response.headers);
+		console.log('Response Headers access:', response.headers.get('access'));
 		const accessToken = response.headers.get('access');
 		if (!accessToken) {
 			throw new Error('No access token in response');

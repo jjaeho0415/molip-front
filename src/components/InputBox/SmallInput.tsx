@@ -37,7 +37,7 @@ export default function SmallInput({
 			if (tab === 'my') {
 				return patchModifyMyMenu(menuId, newMenuName);
 			} else {
-				return patchModifyTeamMenu(menuId, newMenuName);
+				return patchModifyTeamMenu(menuId, { teamBoardName: newMenuName });
 			}
 		},
 	});

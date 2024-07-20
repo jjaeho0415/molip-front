@@ -25,7 +25,7 @@ export default function MakeTeam() {
 		mutationFn: () => postCreateTeamMenu(teamName, selectedNum, menuBoardName),
 		mutationKey: ['CREATE_TEAM_MENU'],
 		onSuccess: () => {
-			router.push(`/teamMenuPage?name=${menuBoardName}`);
+			router.push(`/teamMenuPage?menuName=${menuBoardName}`);
 		},
 		onError: (error) => console.error(error),
 	});

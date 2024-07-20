@@ -8,4 +8,10 @@ type IGetTeamMenuType = {
 	userEmail: string;
 	createdDate: string;
 	modifiedData: string;
+	hasUserAddedMenu: boolean;
+};
+
+type IGetAddedUserInfo = {
+	addedMenuUserCount: number;
+	teamMembersNum: number;
 };

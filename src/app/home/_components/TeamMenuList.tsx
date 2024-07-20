@@ -16,6 +16,7 @@ function TeamMenuList({ menuList }: TeamMenuListProps) {
 					teamNumber={teamMenuItem.teamMembersNum}
 					key={index}
 					id={teamMenuItem.teamBoardId}
+					hasUserAddedMenu={teamMenuItem.hasUserAddedMenu}
 				/>
 			))}
 		</div>

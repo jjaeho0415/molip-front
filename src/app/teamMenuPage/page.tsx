@@ -19,13 +19,14 @@ import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getTeamMenuList } from '@/api/getTeamMenuList';
 import { getMyMenuList } from '@/api/getMyMenuList';
+import { getTeamMenuItem } from '@/api/getTeamMenuItem';
+import { getHasMenuAddedMembers } from '@/api/getHasMenuAddedMembers';
 
 export default function TeamMenuPage() {
 	const { setIsOpen } = useBottomSheet();
 	const searchParams = useSearchParams();
 	const boardName = searchParams.get('menuName') as string;
 	const [menuBoardName, setMenuBoardName] = useState<string>(boardName);
-	const [isDone] = useState<boolean>(true);
 	const myMenuNum = Number(localStorage.getItem('myMenuNum'));
 	const [currentUrl, setCurrentUrl] = useState<string>('');
 	const [teamBoardId, setTeamBoardId] = useState<number>(-1);
@@ -38,8 +39,29 @@ export default function TeamMenuPage() {
 
 	const handleClickButton = () => {
 		setIsOpen(false);
-		alert('필터 적용이 완료되었습니다.');
 	};
+
+	const { data: teamMenuItem } = useQuery<IGetTeamMenuType | null>({
+		queryKey: ['TEAM_MENU_ITEM', teamBoardId],
+		queryFn: async () => {
+			if (teamBoardId !== -1) {
+				return await getTeamMenuItem(teamBoardId);
+			} else {
+				return null;
+			}
+		},
+	});
+
+	const { data: addedMembers } = useQuery<IGetAddedUserInfo>({
+		queryKey: ['MENU_ADDED_MEMBERS_INFO'],
+		queryFn: () => getHasMenuAddedMembers(teamBoardId),
+	});
+
+	useEffect(() => {
+		if (teamMenuItem) {
+			console.log('개개개ㅐ', teamMenuItem);
+		}
+	}, [teamMenuItem]);
 
 	const { data: myMenuList } = useQuery<IGetMyMenuType[]>({
 		queryKey: ['MY_MENU_LIST'],
@@ -52,12 +74,13 @@ export default function TeamMenuPage() {
 	});
 
 	useEffect(() => {
-		const sameName = teamMenuList?.filter(
-			(item) => item.teamBoardName === boardName,
-		);
-		sameName?.map((item) => {
-			setTeamBoardId(item.teamBoardId);
-		});
+		if (teamMenuList) {
+			const sameName = teamMenuList?.filter(
+				(item) => item.teamBoardName === boardName,
+			);
+			console.log('같은 이름', sameName);
+			setTeamBoardId(sameName[0]?.teamBoardId);
+		}
 	}, [teamMenuList, boardName]);
 
 	const handleCopyClipBoard = async (text: string) => {
@@ -84,7 +107,7 @@ export default function TeamMenuPage() {
 					<Image src={Icon_pencile} width={36} height={36} alt='edit' />
 				</div>
 				<div className={styles.middleBox}>
-					{isDone ? (
+					{teamMenuItem?.hasUserAddedMenu ? (
 						<>
 							<p className={styles.comment}>
 								아직 팀원이 메뉴를 선택 중입니다.
@@ -142,7 +165,18 @@ export default function TeamMenuPage() {
 					</BottomSheet>
 				) : (
 					<BottomSheet>
-						<AddMenu_BS onClick={handleClickButton} myMenuList={myMenuList} />
+						<AddMenu_BS
+							onClick={handleClickButton}
+							myMenuList={myMenuList}
+							teamBoardId={teamBoardId}
+							boardName={boardName}
+							isAllPeopleAdded={
+								addedMembers?.addedMenuUserCount ===
+								addedMembers?.teamMembersNum
+									? true
+									: false
+							}
+						/>
 					</BottomSheet>
 				)}
 			</div>

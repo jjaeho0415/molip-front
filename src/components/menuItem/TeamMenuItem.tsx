@@ -3,12 +3,15 @@ import styles from './teamMenuItem.module.css';
 import MoreModal from '../modals/MoreModal';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { getHasMenuAddedMembers } from '@/api/getHasMenuAddedMembers';
+import { useQuery } from '@tanstack/react-query';
 
 interface TeamMenuItemProps {
 	menuName: string;
 	teamTitle: string;
 	teamNumber: number;
 	id: number;
+	hasUserAddedMenu: boolean;
 }
 
 function TeamMenuItem({
@@ -16,13 +19,25 @@ function TeamMenuItem({
 	teamTitle,
 	teamNumber,
 	id,
+	hasUserAddedMenu,
 }: TeamMenuItemProps) {
 	const router = useRouter();
 	const [isMoreModalOpen, setIsMoreModalOpen] = useState<boolean>(false);
 
+	const { data: addedMembers } = useQuery<IGetAddedUserInfo>({
+		queryKey: ['MENU_ADDED_MEMBERS_INFO'],
+		queryFn: () => getHasMenuAddedMembers(id),
+	});
+
 	const handleMenuItemClick = () => {
-		//router.push(`/menu?teamBoardId=${id}&menuName=${menuName}`);
-		router.push(`/teamMenuPage?teamBoardId=${id}&menuName=${menuName}`);
+		if (addedMembers) {
+			if (addedMembers.addedMenuUserCount === addedMembers.teamMembersNum)
+				router.push(`/menu?menuId=${id}&menuName=${menuName}`);
+		} else {
+			router.push(
+				`/teamMenuPage?menuId=${id}&menuName=${menuName}&menuAdded=${hasUserAddedMenu}`,
+			);
+		}
 	};
 
 	return (

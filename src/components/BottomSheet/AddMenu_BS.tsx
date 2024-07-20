@@ -8,19 +8,31 @@ import Icon_unchecked from '../../../public/icons/checkBox/checkBox_unchecked.sv
 import Icon_checked from '../../../public/icons/checkBox/checkBox_checked.svg';
 import OptionButton from '../buttons/OptionButton';
 import Loading from '../Loading';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { getMyMenu } from '@/api/getMyMenu';
+import { useRouter } from 'next/navigation';
+import { AddMenuToTeamMenu } from '@/api/addMenuToTeamMenu';
 
 interface IAddMenu {
 	onClick: () => void;
 	myMenuList: IGetMyMenuType[] | undefined;
+	teamBoardId: number;
+	boardName: string;
+	isAllPeopleAdded: boolean;
 }
-export default function AddMenu_BS({ onClick, myMenuList }: IAddMenu) {
+export default function AddMenu_BS({
+	onClick,
+	myMenuList,
+	teamBoardId,
+	boardName,
+	isAllPeopleAdded,
+}: IAddMenu) {
+	const router = useRouter();
 	const [isShowSelectBox, setIsShowSelectBox] = useState<boolean>(false);
 	const [selectedMyMenu, setSelectedMyMenu] = useState<string>('');
-	const [selectedPostAddMenu, setSelectedPostAddMenu] = useState<number[]>([]);
-	const [selectedAddMenu, setSelectedAddMenu] = useState<string[]>([]);
-
+	const [selectedAddMenu, setSelectedAddMenu] = useState<
+		{ menuName: string; menuId: number }[]
+	>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [selectedBoardId, setSelectedBoardId] = useState<number>(-1);
 
@@ -31,27 +43,72 @@ export default function AddMenu_BS({ onClick, myMenuList }: IAddMenu) {
 		queryFn: () => getMyMenu(selectedBoardId),
 	});
 
-	const handleSelectItem = (item: string) => {
-		if (selectedAddMenu.includes(item)) {
-			const newTagArr = selectedAddMenu.filter((menuItem) => menuItem !== item);
-			setSelectedAddMenu(newTagArr);
+	const { mutate: addMenu } = useMutation({
+		mutationFn: async (menuIdList: number[]) => {
+			await AddMenuToTeamMenu(teamBoardId, { menuIds: menuIdList });
+		},
+		mutationKey: ['ADD_MENU_TO_TEAM_MENU'],
+		onSuccess: () => {
+			alert('메뉴가 추가되었습니다.');
+			if (isAllPeopleAdded)
+				router.push(`/menu?menuId=${teamBoardId}&menuName=${boardName}`);
+			else
+				router.push(
+					`/teamMenuPage?menuId=${selectedBoardId}&menuName=${boardName}`,
+				);
+		},
+	});
+
+	const handleSelectItem = (item: IMenuItemType) => {
+		const isMenuExist = selectedAddMenu.some(
+			(menu) => menu.menuId === item.menuId,
+		);
+
+		if (!isMenuExist) {
+			setSelectedAddMenu([
+				...selectedAddMenu,
+				{ menuName: item.menuName, menuId: item.menuId },
+			]);
 		} else {
-			setSelectedAddMenu([...selectedAddMenu, item]);
+			setSelectedAddMenu(
+				selectedAddMenu.filter((menu) => menu.menuId !== item.menuId),
+			);
 		}
+		console.log(selectedAddMenu);
 	};
 
-	const handleDeleteItem = (item: string) => {
-		if (selectedAddMenu.includes(item)) {
-			const newTagArr = selectedAddMenu.filter((menuItem) => menuItem !== item);
-			setSelectedAddMenu(newTagArr);
+	const handleDeleteItem = (item: { menuName: string; menuId: number }) => {
+		const isMenuExist = selectedAddMenu.some(
+			(menu) => menu.menuName === item.menuName,
+		);
+		if (isMenuExist) {
+			const newSelectedArr = selectedAddMenu.filter(
+				(menuItem) => menuItem !== item,
+			);
+			setSelectedAddMenu(newSelectedArr);
 		}
 	};
 
 	const handleMyBoardClick = (board: IGetMyMenuType) => {
 		setSelectedMyMenu(board.name);
-		setSelectedPostAddMenu([...selectedPostAddMenu, board.personalBoardId]);
 		setSelectedBoardId(board.personalBoardId);
 		setIsShowSelectBox(!isShowSelectBox);
+	};
+
+	const handleAddMenu = () => {
+		if (selectedAddMenu.length === 0) {
+			return;
+		}
+		console.log(selectedAddMenu);
+		setIsLoading(true);
+
+		setTimeout(() => {
+			setIsLoading(false);
+			onClick();
+		}, 1000);
+		const menuIdList = selectedAddMenu.map((item) => item.menuId);
+		console.log(menuIdList);
+		addMenu(menuIdList);
 	};
 
 	return (
@@ -61,15 +118,15 @@ export default function AddMenu_BS({ onClick, myMenuList }: IAddMenu) {
 					{selectedAddMenu.length === 0 ? (
 						<p className={styles.placeholder}>메뉴를 선택하세요.</p>
 					) : (
-						selectedAddMenu.map((tag, idx) => (
+						selectedAddMenu.map((item, idx) => (
 							<div className={styles.menuTag} key={idx}>
 								<OptionButton
 									state='selected'
 									option={false}
 									close={true}
-									onClick={() => handleDeleteItem(tag)}
+									onClick={() => handleDeleteItem(item)}
 								>
-									{tag}
+									{item.menuName}
 								</OptionButton>
 							</div>
 						))
@@ -124,14 +181,16 @@ export default function AddMenu_BS({ onClick, myMenuList }: IAddMenu) {
 												<Image
 													className={styles.checkBox}
 													src={
-														selectedAddMenu.includes(item.menuName)
+														selectedAddMenu.some(
+															(menu) => menu.menuId === item.menuId,
+														)
 															? Icon_checked
 															: Icon_unchecked
 													}
 													width={24}
 													height={24}
 													alt='checkBox'
-													onClick={() => handleSelectItem(item.menuName)}
+													onClick={() => handleSelectItem(item)}
 												/>
 												<p className={styles.menuItem}>{item.menuName}</p>
 											</div>
@@ -152,13 +211,7 @@ export default function AddMenu_BS({ onClick, myMenuList }: IAddMenu) {
 				) : (
 					<Button
 						state={selectedAddMenu.length === 0 ? 'disabled' : 'default'}
-						onClick={() => {
-							setIsLoading(true);
-							setTimeout(() => {
-								setIsLoading(false);
-								onClick();
-							}, 3000);
-						}}
+						onClick={handleAddMenu}
 					>
 						적용하기
 					</Button>

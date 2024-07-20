@@ -46,6 +46,9 @@ export default function SmallInput({
 			if (tab === 'my') {
 				route.push(`/createMyMenu?menuName=${debounceValue}&menuId=${menuId}`);
 			}
+			else {
+				route.push(`/teamMenuPage?menuName=${debounceValue}&menuId=${menuId}`)
+			}
 		},
 	});
 

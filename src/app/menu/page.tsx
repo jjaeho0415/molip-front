@@ -15,10 +15,13 @@ import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getMyMenu } from '@/api/getMyMenu';
 import Loading from '@/components/Loading';
+import { getTeamMenus } from '@/api/getTeamMenus';
+import useHomeStore from '../home/store/useHomeStore';
 
 export default function Menu() {
 	const [active, setActive] = useState<'메뉴판' | '메뉴이미지'>('메뉴판');
 	// isLogin은 나중에 store의 isLogin으로 변경
+	const { tab } = useHomeStore();
 	const isLogin = true;
 	const canvasRef = useRef<HTMLDivElement>(null);
 	const searchParams = useSearchParams();
@@ -29,7 +32,13 @@ export default function Menu() {
 		isLoading,
 	} = useQuery<IGetMyCategoryMenuType[]>({
 		queryKey: ['MENU_LIST'],
-		queryFn: () => getMyMenu(menuId),
+		queryFn: () => {
+			if (tab === 'my') {
+				return getMyMenu(menuId);
+			} else {
+				return getTeamMenus(menuId);
+			}
+		},
 	});
 
 	const handleShare = () => {

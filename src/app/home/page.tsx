@@ -20,6 +20,7 @@ import { getUserName } from '@/api/getUserName';
 import Loading from '@/components/Loading';
 import { useAuthStore } from '../login/store/useAuthStore';
 import { getAccessToken } from '@/api/postRefresh';
+import RefreshTokenExpired from '@/_lib/refreshTokenExpired';
 
 export default function Home() {
 	const { tab } = useHomeStore();
@@ -34,8 +35,10 @@ export default function Home() {
 		onSuccess: (token:string) => {
 			useAuthStore.setState({ isLogin: true, accessToken: token });
 		},
-		onError: () => {
-			console.log("refresh Token으로 accessToken 가져오기 실패")
+		onError: (error) => {
+			console.error('Error fetching access token:', error);
+			console.log('refresh Token으로 accessToken 가져오기 실패');
+			RefreshTokenExpired();
 		}
 	});
 

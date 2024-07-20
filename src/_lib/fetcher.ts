@@ -35,7 +35,6 @@ const _fetch = async <T = unknown, R = unknown>({
 	const headers: HeadersInit = {
 		Accept: 'application/json',
 		'Content-Type': 'application/json',
-		
 	};
 
 	if (authorization) {
@@ -62,27 +61,27 @@ const _fetch = async <T = unknown, R = unknown>({
 			if (res.status === 401 || res.status === 400) {
 				try {
 					const newToken = await getAccessToken();
-				if (newToken) {
-					useAuthStore.setState({
-						isLogin: true,
-						accessToken: newToken,
-					});
-					headers.access = newToken;
-					const retryRequestOptions: RequestInit = {
-						...requestOptions,
-						headers,
-					};
-					const retryRes = await fetch(
-						`${process.env.NEXT_PUBLIC_API}${endpoint}`,
-						retryRequestOptions,
-					);
+					if (newToken) {
+						useAuthStore.setState({
+							isLogin: true,
+							accessToken: newToken.access,
+						});
+						headers.access = newToken.access;
+						const retryRequestOptions: RequestInit = {
+							...requestOptions,
+							headers,
+						};
+						const retryRes = await fetch(
+							`${process.env.NEXT_PUBLIC_API}${endpoint}`,
+							retryRequestOptions,
+						);
 
-					if (!retryRes.ok) {
-						const retryErrorData = await retryRes.json();
-						throw new Error(retryErrorData.message);
+						if (!retryRes.ok) {
+							const retryErrorData = await retryRes.json();
+							throw new Error(retryErrorData.message);
+						}
+						return await retryRes.json();
 					}
-					return await retryRes.json();
-				}
 				} catch (error) {
 					RefreshTokenExpired();
 					throw new Error('Session expired. Please log in again.');

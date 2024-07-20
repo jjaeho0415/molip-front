@@ -2,15 +2,16 @@ import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import styles from './styles/inputModal.module.css';
 import ModalButton from '../buttons/ModalButton';
 import ReactDOM from 'react-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { patchModifyMyMenu } from '@/api/patchModifyMyMenu';
-import { useRouter } from 'next/navigation';
+import { patchModifyTeamMenu } from '@/api/patchModifyTeamMenu';
+import useHomeStore from '@/app/home/store/useHomeStore';
 
 interface InputModalProps {
 	setIsInputModalOpen: Dispatch<SetStateAction<boolean>>;
 	setIsMoreModalOpen: Dispatch<SetStateAction<boolean>>;
 	titleText: string;
-	menuId: number | undefined;
+	menuId: number;
 }
 
 function InputModal({
@@ -19,9 +20,10 @@ function InputModal({
 	titleText,
 	menuId,
 }: InputModalProps) {
+	const { tab } = useHomeStore();
+	const queryClient = useQueryClient();
 	const [value, setValue] = useState<string>(titleText);
 	const [isEmpty, setIsEmpty] = useState<boolean>(false);
-	const route = useRouter();
 	const inputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);
 	};
@@ -29,16 +31,28 @@ function InputModal({
 		setIsInputModalOpen(false);
 	};
 
-	const { mutate: modifyMenuName } = useMutation({
-		mutationFn: ({ menuId, newMenuName }: modifyMenuNameParams) =>
-			patchModifyMyMenu(menuId, newMenuName),
-		onSuccess: (data) => {
+	const { mutate: editName } = useMutation({
+		mutationFn: () => {
+			if (tab === 'my') {
+				return patchModifyMyMenu(menuId, value);
+			} else {
+				return patchModifyTeamMenu(menuId, {
+					teamBoardName: value,
+				});
+			}
+		},
+		onSuccess: () => {
+			if (tab === 'my') {
+				queryClient.invalidateQueries({ queryKey: ['MY_MENU_LIST'] });
+			} else {
+				queryClient.invalidateQueries({ queryKey: ['TEAM_MENU_LIST'] });
+			}
 			setIsEmpty(false);
 			setIsInputModalOpen(false);
 			setIsMoreModalOpen(false);
 			alert('메뉴판 이름 수정 성공!');
-			route.push(`/menu?menuId${data.personalBoardId}&menuName=${data.name}`);
 		},
+		onError: (error) => console.error(error),
 	});
 
 	const handleSave = (): void => {
@@ -46,7 +60,7 @@ function InputModal({
 			setIsEmpty(true);
 			return;
 		}
-		menuId && modifyMenuName({ menuId, newMenuName: value });
+		editName();
 	};
 
 	return ReactDOM.createPortal(

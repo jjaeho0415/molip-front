@@ -72,6 +72,7 @@ function MoreModal({
 					menuId={menuId}
 					setIsInputModalOpen={setIsInputModalOpen}
 					titleText={menuTitle}
+					setIsMoreModalOpen={setIsMoreModalOpen}
 				/>
 			)}
 			{isNoticeModalOpen && (
@@ -87,6 +88,8 @@ function MoreModal({
 					setIsModifyModalOpen={setIsModifyModalOpen}
 					teamName={teamTitle}
 					teamNumber={teamNumber}
+					teamBoardId={menuId}
+					setIsMoreModalOpen={setIsMoreModalOpen}
 				/>
 			)}
 		</>

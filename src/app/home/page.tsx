@@ -34,6 +34,9 @@ export default function Home() {
 		onSuccess: (token) => {
 			useAuthStore.setState({ isLogin: true, accessToken: token });
 		},
+		onError: () => {
+			console.log("refresh Token으로 accessToken 가져오기 실패")
+		}
 	});
 
 	const { data: userName } = useQuery<IGetUserNameType>({
@@ -49,7 +52,12 @@ export default function Home() {
 	useEffect(() => {
 		const current = window.location.href;
 		const { accessToken } = useAuthStore.getState();
-		if (current && current.includes('molip.site') && accessToken === null) {
+		console.log(current);
+		console.log(accessToken);
+		console.log(current.includes('molip.site'))
+		console.log(accessToken === null)
+		if (current.includes('molip.site') && accessToken === null) {
+			console.log("배포사이트에서 getAccess 되는지 확인")
 			getAccess();
 		}
 	}, []);

@@ -4,9 +4,9 @@ import { useRouter } from 'next/navigation';
 
 const RefreshTokenExpired = () => {
 	const router = useRouter();
-	useAuthStore.setState({ isLogin: false, accessToken: '' });
+	useAuthStore.setState({ isLogin: false, accessToken: null });
 	localStorage.clear();
-	router.push('/login');
+	router.push('/');
 };
 
 export default RefreshTokenExpired;

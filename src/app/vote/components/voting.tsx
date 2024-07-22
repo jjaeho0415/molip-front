@@ -20,21 +20,6 @@ interface IVotingProps {
 	onNext: () => void;
 }
 
-const menus = [
-	{
-		category: '한식',
-		menus: ['김치찌개', '김치찜', '물냉면', '닭갈비', '비빔밥'],
-	},
-	{
-		category: '중식',
-		menus: ['짜장면', '볶음밥', '깐풍기', '짬뽕', '팔보채', '마라탕', '탕수육'],
-	},
-	{
-		category: '일식',
-		menus: ['초밥', '우동', '오코노미야끼', '타코야끼', '라멘'],
-	},
-];
-
 export default function Voting({ onNext }: IVotingProps) {
 	const searchParams = useSearchParams();
 	const boardId = Number(searchParams.get('menuId'));
@@ -45,11 +30,7 @@ export default function Voting({ onNext }: IVotingProps) {
 	});
 	const [isVoteLoading, setIsVoteLoading] = useState<boolean>(false);
 
-	const {
-		data: menuList,
-		isLoading,
-		refetch,
-	} = useQuery<IGetMyCategoryMenuType[]>({
+	const { data: menuList, isLoading } = useQuery<IGetMyCategoryMenuType[]>({
 		queryKey: ['MENU_LIST'],
 		queryFn: () => getTeamMenus(boardId),
 	});

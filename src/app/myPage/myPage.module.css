@@ -1,11 +1,11 @@
 .contentSection {
-	margin-top: 20px;
+	margin-top: 10px;
 	position: relative;
 	height: calc(100vh - 136px);
 	padding: 0 20px;
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
+	gap: 15px;
 }
 
 .title {
@@ -18,7 +18,8 @@
 .userInfoSection {
 	display: flex;
 	flex-direction: column;
-	gap: 16px;
+	gap: 10px;
+	margin-bottom: 10px;
 }
 
 .userNameSection {
@@ -56,4 +57,41 @@
 	transform: translateX(-50%);
 	border-bottom: 1px solid var(--gray-60);
 	cursor: pointer;
+}
+
+.voteResultContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.voteResultTopBox {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.voteResultP {
+	font-weight: 700;
+	font-size: 17px;
+}
+
+.voteResultBtn {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	line-height: 19.5px;
+	font-size: 13px;
+	color: var(--gray-60);
+	font-weight: 700;
+}
+
+.arrow {
+	margin-bottom: 2px;
+}
+
+.voteListBox {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 }

@@ -15,11 +15,15 @@ interface IVoteResultType {
 
 interface IVoteResultProps {
 	voteResult: IVoteResultType;
+	size?: 'small' | 'default';
 }
 
-export default function VoteResultCard({ voteResult }: IVoteResultProps) {
+export default function VoteResultCard({
+	voteResult,
+	size = 'default',
+}: IVoteResultProps) {
 	return (
-		<div className={styles.Container}>
+		<div className={`${styles.Container} ${styles[size]}`}>
 			<div className={styles.TopBox}>
 				<p className={styles.TeamName}>{voteResult.team}</p>
 				<p className={styles.Date}>{voteResult.date}</p>

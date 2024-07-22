@@ -77,10 +77,6 @@ export default function Home() {
 	});
 
 	useEffect(() => {
-		if (!isLogin) {
-			setDefaultMyMenuName('OOO의메뉴판');
-			return;
-		}
 		if (myMenuList && myMenuList.length > 0) {
 			let index = 1;
 			let newValue = `${user}의메뉴판(1)`;

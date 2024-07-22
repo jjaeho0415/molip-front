@@ -21,11 +21,13 @@ export default function MakeTeam() {
 		`${teamName}의 메뉴판`,
 	);
 
-	const { mutate: createTeamMenu } = useMutation({
+	const { mutate: createTeamMenu } = useMutation<IGetTeamMenuType>({
 		mutationFn: () => postCreateTeamMenu(teamName, selectedNum, menuBoardName),
 		mutationKey: ['CREATE_TEAM_MENU'],
-		onSuccess: () => {
-			router.push(`/teamMenuPage?menuName=${menuBoardName}`);
+		onSuccess: (data: IGetTeamMenuType) => {
+			router.push(
+				`/teamMenuPage?menuName=${data.teamBoardName}&menuId=${data.teamBoardId}`,
+			);
 		},
 		onError: (error) => console.error(error),
 	});

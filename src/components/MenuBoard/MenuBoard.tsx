@@ -95,26 +95,29 @@ export default function MenuBoard({ menuList, type }: IMenuBoard) {
 			<p className={styles.MenuTitle}>{menuName}</p>
 			<div className={styles.MenuListBox}>
 				{type === '메뉴판' &&
-					menuList.map((menu, idx) => (
-						<div className={styles.MenuBox} key={idx}>
-							<div className={styles.Top}>
-								<p className={styles.MenuP}>{menu.category}</p>
-								<Image
-									src={getImgSrc(menu.category)}
-									width={24}
-									height={24}
-									alt='category_img'
-								/>
-							</div>
-							<div className={styles.Bottom}>
-								{menu.menu.map((menuItem, index) => (
-									<p className={styles.MenuItemP} key={index}>
-										{menuItem.menuName}
-									</p>
-								))}
-							</div>
-						</div>
-					))}
+					menuList.map(
+						(menu, idx) =>
+							menu.menu.length !== 0 && (
+								<div className={styles.MenuBox} key={idx}>
+									<div className={styles.Top}>
+										<p className={styles.MenuP}>{menu.category}</p>
+										<Image
+											src={getImgSrc(menu.category)}
+											width={24}
+											height={24}
+											alt='category_img'
+										/>
+									</div>
+									<div className={styles.Bottom}>
+										{menu.menu.map((menuItem, index) => (
+											<p className={styles.MenuItemP} key={index}>
+												{menuItem.menuName}
+											</p>
+										))}
+									</div>
+								</div>
+							),
+					)}
 			</div>
 			{type === '메뉴이미지' && (
 				<div className={styles.MenuImageContainer}>

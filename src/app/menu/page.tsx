@@ -11,7 +11,7 @@ import BottomSheet from '@/components/BottomSheet/BottomSheet';
 import AddTaste_BS from '@/components/BottomSheet/AddTaste_BS';
 import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getMyMenu } from '@/api/getMyMenu';
 import Loading from '@/components/Loading';
@@ -22,6 +22,7 @@ export default function Menu() {
 	const [active, setActive] = useState<'메뉴판' | '메뉴이미지'>('메뉴판');
 	// isLogin은 나중에 store의 isLogin으로 변경
 	const { tab } = useHomeStore();
+	const router = useRouter();
 	const isLogin = true;
 	const canvasRef = useRef<HTMLDivElement>(null);
 	const searchParams = useSearchParams();
@@ -95,12 +96,23 @@ export default function Menu() {
 								<div className={styles.ButtonBox}>
 									{/* isLogin가 true면 옵션수정하기, false면 공유하기, onClick함수도 다르게 줘야함 */}
 									{isLogin ? (
-										<ShareButton
-											handleRightClick={handleDownImage}
-											handleLeftClick={handleModifyOption}
-										>
-											옵션 수정하기
-										</ShareButton>
+										tab === 'my' ? (
+											<ShareButton
+												handleRightClick={handleDownImage}
+												handleLeftClick={handleModifyOption}
+											>
+												옵션 수정하기
+											</ShareButton>
+										) : (
+											<ShareButton
+												handleRightClick={handleDownImage}
+												handleLeftClick={() =>
+													router.push(`/vote?menuId=${menuId}`)
+												}
+											>
+												투표하기
+											</ShareButton>
+										)
 									) : (
 										<ShareButton
 											handleLeftClick={handleShare}

@@ -15,9 +15,8 @@ import RoundButton from '@/components/buttons/RoundButton';
 import NoMenu_BS from '@/components/BottomSheet/NoMenu_BS';
 import AddMenu_BS from '@/components/BottomSheet/AddMenu_BS';
 import useBottomSheet from '@/hooks/useBottomSheet';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { getTeamMenuList } from '@/api/getTeamMenuList';
 import { getMyMenuList } from '@/api/getMyMenuList';
 import { getTeamMenuItem } from '@/api/getTeamMenuItem';
 import { getHasMenuAddedMembers } from '@/api/getHasMenuAddedMembers';
@@ -25,11 +24,14 @@ import { getHasMenuAddedMembers } from '@/api/getHasMenuAddedMembers';
 export default function TeamMenuPage() {
 	const { setIsOpen } = useBottomSheet();
 	const searchParams = useSearchParams();
+	const router = useRouter();
 	const boardName = searchParams.get('menuName') as string;
+	const teamBoardId = Number(searchParams.get('menuId'));
 	const [menuBoardName, setMenuBoardName] = useState<string>(boardName);
 	const myMenuNum = Number(localStorage.getItem('myMenuNum'));
 	const [currentUrl, setCurrentUrl] = useState<string>('');
-	const [teamBoardId, setTeamBoardId] = useState<number>(-1);
+	const [isAllPeopleAdded, setIsAllPeopleAdded] = useState<boolean>(false);
+	const [isUserAddedMenu, setIsUserAddedMenu] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
@@ -43,13 +45,7 @@ export default function TeamMenuPage() {
 
 	const { data: teamMenuItem } = useQuery<IGetTeamMenuType | null>({
 		queryKey: ['TEAM_MENU_ITEM', teamBoardId],
-		queryFn: async () => {
-			if (teamBoardId !== -1) {
-				return await getTeamMenuItem(teamBoardId);
-			} else {
-				return null;
-			}
-		},
+		queryFn: async () => getTeamMenuItem(teamBoardId),
 	});
 
 	const { data: addedMembers } = useQuery<IGetAddedUserInfo>({
@@ -57,31 +53,27 @@ export default function TeamMenuPage() {
 		queryFn: () => getHasMenuAddedMembers(teamBoardId),
 	});
 
-	useEffect(() => {
-		if (teamMenuItem) {
-			console.log('개개개ㅐ', teamMenuItem);
-		}
-	}, [teamMenuItem]);
-
 	const { data: myMenuList } = useQuery<IGetMyMenuType[]>({
 		queryKey: ['MY_MENU_LIST'],
 		queryFn: getMyMenuList,
 	});
 
-	const { data: teamMenuList } = useQuery<IGetTeamMenuType[]>({
-		queryKey: ['TEAM_MENU_LIST'],
-		queryFn: getTeamMenuList,
-	});
-
 	useEffect(() => {
-		if (teamMenuList) {
-			const sameName = teamMenuList?.filter(
-				(item) => item.teamBoardName === boardName,
-			);
-			console.log('같은 이름', sameName);
-			setTeamBoardId(sameName[0]?.teamBoardId);
+		if (addedMembers) {
+			if (addedMembers?.addedMenuUserCount === addedMembers?.teamMembersNum) {
+				router.push(`/menu?menuId=${teamBoardId}&menuName=${boardName}`);
+			} else {
+				setIsAllPeopleAdded(
+					addedMembers?.addedMenuUserCount === addedMembers?.teamMembersNum
+						? true
+						: false,
+				);
+			}
 		}
-	}, [teamMenuList, boardName]);
+		if (teamMenuItem) {
+			setIsUserAddedMenu(teamMenuItem.hasUserAddedMenu);
+		}
+	}, [addedMembers, teamMenuItem]);
 
 	const handleCopyClipBoard = async (text: string) => {
 		try {
@@ -107,7 +99,7 @@ export default function TeamMenuPage() {
 					<Image src={Icon_pencile} width={36} height={36} alt='edit' />
 				</div>
 				<div className={styles.middleBox}>
-					{teamMenuItem?.hasUserAddedMenu ? (
+					{!isAllPeopleAdded && isUserAddedMenu ? (
 						<>
 							<p className={styles.comment}>
 								아직 팀원이 메뉴를 선택 중입니다.
@@ -128,15 +120,17 @@ export default function TeamMenuPage() {
 							</div>
 						</>
 					) : (
-						<>
-							<p className={styles.comment}>아직 메뉴를 추가하지 않았어요.</p>
-							<RoundButton
-								property='메뉴'
-								onClick={() => {
-									return;
-								}}
-							/>
-						</>
+						!isAllPeopleAdded && (
+							<>
+								<p className={styles.comment}>아직 메뉴를 추가하지 않았어요.</p>
+								<RoundButton
+									property='메뉴'
+									onClick={() => {
+										return;
+									}}
+								/>
+							</>
+						)
 					)}
 				</div>
 
@@ -170,12 +164,8 @@ export default function TeamMenuPage() {
 							myMenuList={myMenuList}
 							teamBoardId={teamBoardId}
 							boardName={boardName}
-							isAllPeopleAdded={
-								addedMembers?.addedMenuUserCount ===
-								addedMembers?.teamMembersNum
-									? true
-									: false
-							}
+							isAllPeopleAdded={isAllPeopleAdded}
+							setIsUserAddedMenu={setIsUserAddedMenu}
 						/>
 					</BottomSheet>
 				)}

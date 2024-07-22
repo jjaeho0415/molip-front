@@ -73,6 +73,10 @@ export default function AddMenu_BS({
 					`/teamMenuPage?menuId=${selectedBoardId}&menuName=${boardName}`,
 				);
 		},
+		onSettled: () => {
+			setIsLoading(false);
+			onClick();
+		},
 	});
 
 	const handleSelectItem = (item: IMenuItemType) => {
@@ -118,10 +122,6 @@ export default function AddMenu_BS({
 		console.log(selectedAddMenu);
 		setIsLoading(true);
 
-		setTimeout(() => {
-			setIsLoading(false);
-			onClick();
-		}, 1000);
 		const menuIdList = selectedAddMenu.map((item) => item.menuId);
 		console.log(menuIdList);
 		addMenu(menuIdList);

@@ -27,7 +27,7 @@ export default function Vote() {
 					/>
 				</Step>
 				<Step name='투표결과'>
-					<VoteResult onBefore={() => setStep('투표완료')} />
+					<VoteResult onBefore={() => setStep('투표중')} />
 				</Step>
 			</Funnel>
 		</>

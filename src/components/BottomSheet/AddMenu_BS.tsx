@@ -100,7 +100,6 @@ export default function AddMenu_BS({
 				selectedAddMenu.filter((menu) => menu.menuId !== item.menuId),
 			);
 		}
-		console.log(selectedAddMenu);
 	};
 
 	const handleDeleteItem = (item: { menuName: string; menuId: number }) => {
@@ -125,11 +124,9 @@ export default function AddMenu_BS({
 		if (selectedAddMenu.length === 0) {
 			return;
 		}
-		console.log(selectedAddMenu);
 		setIsLoading(true);
 
 		const menuIdList = selectedAddMenu.map((item) => item.menuId);
-		console.log(menuIdList);
 		addMenu(menuIdList);
 	};
 

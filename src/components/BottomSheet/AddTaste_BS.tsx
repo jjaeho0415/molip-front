@@ -43,10 +43,6 @@ function AddTaste_BS({
 	});
 
 	useEffect(() => {
-		console.log(selectedOptions);
-	}, [selectedOptions]);
-
-	useEffect(() => {
 		const allCategoriesSelected =
 			selectedOptions.tasteOptions.length > 0 &&
 			selectedOptions.carbOptions.length > 0 &&
@@ -74,7 +70,6 @@ function AddTaste_BS({
 			}
 			setIsLoading(true);
 			const transformedOptions = transformOptions(selectedOptions);
-			console.log(transformedOptions);
 			postRecommend({ menuId, selectedOptions: transformedOptions });
 		}
 	};

@@ -38,7 +38,7 @@ export default function TopNavBar({
 }: ITopNavBarProps) {
 	// const { isLogin } = useAuthStore.getState();
 	const isLogin = true;
-	const [isModalOpen, setIsModalOpen] = useState<number>(-1);
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 	const [isNoticeModalOpen, setIsNoticeModalOpen] = useState<boolean>(false);
 	const route = useRouter();
 	const searchParams = useSearchParams();
@@ -75,11 +75,7 @@ export default function TopNavBar({
 						src='/svg/moreIcon.svg'
 						width={24}
 						height={24}
-						onClick={() =>
-							isModalOpen === teamNumber
-								? setIsModalOpen(-1)
-								: setIsModalOpen(teamNumber)
-						}
+						onClick={() => setIsModalOpen(!isModalOpen)}
 					/>
 				)}
 			</div>

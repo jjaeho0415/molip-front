@@ -1,12 +1,15 @@
 import TeamMenuItem from '@/components/menuItem/TeamMenuItem';
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './styles/menuList.module.css';
+import MoreModal from '@/components/modals/MoreModal';
 
 interface TeamMenuListProps {
 	menuList: IGetTeamMenuType[];
 }
 
 function TeamMenuList({ menuList }: TeamMenuListProps) {
+	const [isMoreModalOpen, setIsMoreModalOpen] = useState<number>(-1);
+
 	return (
 		<div className={styles.ListContainer}>
 			{menuList.map((teamMenuItem, index) => (
@@ -14,11 +17,31 @@ function TeamMenuList({ menuList }: TeamMenuListProps) {
 					<TeamMenuItem
 						teamTitle={teamMenuItem.teamName}
 						menuName={teamMenuItem.teamBoardName}
-						teamNumber={teamMenuItem.teamMembersNum}
 						key={index}
+						index={index}
 						id={teamMenuItem.teamBoardId}
 						hasUserAddedMenu={teamMenuItem.hasUserAddedMenu}
+						isMoreModalOpen={isMoreModalOpen}
+						setIsMoreModalOpen={setIsMoreModalOpen}
 					/>
+					{isMoreModalOpen === index && (
+						<div
+							style={{
+								position: 'relative',
+								transform: 'translate(191.5px, 0px)',
+								zIndex: '6',
+							}}
+						>
+							<MoreModal
+								menuTitle={teamMenuItem.teamBoardName}
+								teamNumber={teamMenuItem.teamMembersNum}
+								teamTitle={teamMenuItem.teamBoardName}
+								pageType='outsideTeamMenu'
+								menuId={teamMenuItem.teamBoardId}
+								setIsMoreModalOpen={setIsMoreModalOpen}
+							/>
+						</div>
+					)}
 				</React.Fragment>
 			))}
 		</div>

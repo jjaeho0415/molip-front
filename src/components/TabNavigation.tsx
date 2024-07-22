@@ -3,18 +3,24 @@
 import styles from './tabNav.module.css';
 import { useRouter } from 'next/navigation';
 import useHomeStore from '@/app/home/store/useHomeStore';
+import { RefObject, useState } from 'react';
+import TrialViewModal from './modals/TrialViewModal';
+import { useAuthStore } from '@/app/login/store/useAuthStore';
 
 interface TabNavigationProps {
-	// isUser는 props가 아닌 isLogin으로 바꿔야함
-	isUser?: 'user' | 'guest';
+	canvasRef?: RefObject<HTMLDivElement>;
 }
 
-export default function TabNavigation({ isUser = 'user' }: TabNavigationProps) {
+export default function TabNavigation({ canvasRef }: TabNavigationProps) {
 	const { tab, setTab } = useHomeStore();
+	const isLogin = true;
+	// const { isLogin } = useAuthStore.getState();
 	const router = useRouter();
+	const [isTrialViewModalOpen, setIsTrialViewModalOpen] =
+		useState<boolean>(false);
 
 	const handleMyTab = () => {
-		if (isUser === 'guest') {
+		if (!isLogin) {
 			if (confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?')) {
 				router.push('/login');
 			}
@@ -25,10 +31,8 @@ export default function TabNavigation({ isUser = 'user' }: TabNavigationProps) {
 	};
 
 	const handleTeamTab = () => {
-		if (isUser === 'guest') {
-			if (confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?')) {
-				router.push('/login');
-			}
+		if (!isLogin) {
+			setIsTrialViewModalOpen(true);
 		} else {
 			setTab('team');
 			router.push('/home');
@@ -36,7 +40,7 @@ export default function TabNavigation({ isUser = 'user' }: TabNavigationProps) {
 	};
 
 	const handleMapTab = () => {
-		if (isUser === 'guest') {
+		if (!isLogin) {
 			if (confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?')) {
 				router.push('/login');
 			}
@@ -66,6 +70,12 @@ export default function TabNavigation({ isUser = 'user' }: TabNavigationProps) {
 			>
 				지도 검색
 			</p>
+			{isTrialViewModalOpen && (
+				<TrialViewModal
+					setIsTrialModalOpen={setIsTrialViewModalOpen}
+					canvasRef={canvasRef}
+				/>
+			)}
 		</div>
 	);
 }

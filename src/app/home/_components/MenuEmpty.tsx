@@ -5,9 +5,10 @@ import useHomeStore from '../store/useHomeStore';
 
 interface MenuEmptyProps {
 	myMenuIsEmpty: boolean;
+	handleCreateMyMenu?: () => void;
 }
 
-function MenuEmpty({ myMenuIsEmpty }: MenuEmptyProps) {
+function MenuEmpty({ myMenuIsEmpty, handleCreateMyMenu }: MenuEmptyProps) {
 	const { tab, setTab } = useHomeStore();
 
 	return (
@@ -18,7 +19,9 @@ function MenuEmpty({ myMenuIsEmpty }: MenuEmptyProps) {
 						<p>오늘의 입맛은 어떤가요?</p>
 						<p>당신만의 메뉴판을 생성해보세요.</p>
 					</div>
-					<div className={styles.createButton}>+ 새로만들기</div>
+					<div className={styles.createButton} onClick={handleCreateMyMenu}>
+						+ 새로만들기
+					</div>
 				</div>
 			) : (
 				<>

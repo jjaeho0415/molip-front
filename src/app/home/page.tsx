@@ -27,6 +27,8 @@ export default function Home() {
 	const route = useRouter();
 	const [defaultMyMenuName, setDefaultMyMenuName] = useState<string>('');
 	const [user, setUser] = useState<string>('');
+	// const { isLogin } = useAuthStore.getState();
+	const isLogin = true;
 
 	const { mutate: getAccess } = useMutation<IRefreshType>({
 		mutationFn: getAccessToken,
@@ -49,6 +51,7 @@ export default function Home() {
 			setUser(userName.username);
 		}
 	}, [userName]);
+
 	useEffect(() => {
 		const current = window.location.href;
 		const { accessToken } = useAuthStore.getState();
@@ -86,7 +89,7 @@ export default function Home() {
 			}
 			setDefaultMyMenuName(newValue);
 		} else {
-			setDefaultMyMenuName('OOO의메뉴판');
+			setDefaultMyMenuName(`${user}의메뉴판(1)`);
 		}
 	}, [myMenuList, user]);
 
@@ -165,7 +168,10 @@ export default function Home() {
 							<>
 								{tab === 'my' ? (
 									myMenuList.length === 0 ? (
-										<MenuEmpty myMenuIsEmpty={true} />
+										<MenuEmpty
+											myMenuIsEmpty={true}
+											handleCreateMyMenu={handleCreateMenuBoard}
+										/>
 									) : (
 										<MyMenuList menuList={myMenuList} />
 									)

@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import styles from './styles/alertModal.module.css';
 import Image from 'next/image';
 import ModalButton from '../buttons/ModalButton';
+import ReactDOM from 'react-dom';
 
 interface AlertModalProps {
 	setIsAlertModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -9,7 +10,7 @@ interface AlertModalProps {
 }
 
 function AlertModal({ setIsAlertModalOpen, max }: AlertModalProps) {
-	return (
+	return ReactDOM.createPortal(
 		<>
 			<div
 				className={styles.overlay}
@@ -39,7 +40,8 @@ function AlertModal({ setIsAlertModalOpen, max }: AlertModalProps) {
 					</div>
 				</div>
 			</div>
-		</>
+		</>,
+		document.body,
 	);
 }
 

@@ -6,7 +6,6 @@ import RoundButton from '@/components/buttons/RoundButton';
 import React, { useEffect, useState } from 'react';
 import styles from './trialVersion.module.css';
 import useBottomSheet from '@/hooks/useBottomSheet';
-import { useRouter, useSearchParams } from 'next/navigation';
 import TabNavigation from '@/components/TabNavigation';
 import TopNavBar from '@/components/TopNavBar';
 import SmallInput from '@/components/InputBox/SmallInput';
@@ -14,14 +13,13 @@ import IsEmptyModal from '../createMyMenu/_components/IsEmptyModal';
 import Image from 'next/image';
 
 function Trial_Version() {
-	const [value, setValue] = useState<string>('');
+	const [value, setValue] = useState<string>('나의메뉴판');
+
 	const [isEmptyModalOpen, setIsEmptyModalOpen] = useState<boolean>(false);
 	const { setIsOpen } = useBottomSheet();
-	const route = useRouter();
-	const createMyMenu = useSearchParams();
-	const menuId = Number(createMyMenu.get('menuId'));
 
 	useEffect(() => {
+		sessionStorage.setItem('guestMenuName', value);
 		if (value) {
 			setIsEmptyModalOpen(false);
 			return;
@@ -34,20 +32,18 @@ function Trial_Version() {
 			alert('메뉴판 이름을 지어주세요!');
 			return;
 		}
+
 		setIsOpen(false);
-		alert('필터 적용이 완료되었습니다.');
-		route.push('/menu');
 	};
 
 	return (
 		<div className={styles.Container}>
 			<TopNavBar title='체험중' backRoute='/login' />
-			<TabNavigation isUser='guest' />
+			<TabNavigation/>
 			<div className={styles.ContentsContainer}>
 				<div className={styles.inputBox}>
 					<SmallInput
-						menuId={menuId}
-						placeholder='OOO의 메뉴판'
+						placeholder='나의메뉴판'
 						value={value}
 						setValue={setValue}
 					/>
@@ -74,10 +70,7 @@ function Trial_Version() {
 				</div>
 				<p className={styles.bottomComment}>위로 올려 옵션을 선택하세요.</p>
 				<BottomSheet>
-					<AddTaste_BS
-						onClick={handleClickButton}
-						menuId={menuId}
-					/>
+					<AddTaste_BS onClick={handleClickButton} />
 				</BottomSheet>
 			</div>
 		</div>

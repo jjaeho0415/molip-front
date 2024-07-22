@@ -42,7 +42,12 @@ export default function VoteResult() {
 		<div className={styles.Container}>
 			<Header />
 			<TabNavigation />
-			<TopNavBar title='지난 결과 보기' active={active} setActive={setActive} />
+			<TopNavBar
+				title='지난 결과 보기'
+				active={active}
+				setActive={setActive}
+				backRoute='/home'
+			/>
 			<div className={styles.ContentContainer}>
 				{voteResults ? (
 					<>

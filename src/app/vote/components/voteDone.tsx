@@ -6,15 +6,15 @@ import TopNavBar from '@/components/TopNavBar';
 import Image from 'next/image';
 import Icon from '../../../../public/icons/checkOrange.svg';
 import OptionButton from '@/components/buttons/OptionButton';
+import useVoteStore from '../store/useVoteStore';
 
 interface IVoteDoneProps {
 	onNext: () => void;
 	onBefore: () => void;
 }
 
-const votes = ['김치찜', '물냉면', '짬뽕'];
-
 export default function VoteDone({ onNext, onBefore }: IVoteDoneProps) {
+	const { voteArr } = useVoteStore();
 	return (
 		<>
 			<TopNavBar />
@@ -23,10 +23,10 @@ export default function VoteDone({ onNext, onBefore }: IVoteDoneProps) {
 					<Image src={Icon} width={48} height={48} alt='check' />
 					<p className={styles.DoneP}>투표를 완료했습니다.</p>
 					<div className={styles.DoneOptionBox}>
-						{votes.map((item, idx) => (
+						{voteArr.map((item, idx) => (
 							<div key={idx}>
 								<OptionButton state='selected' option={false}>
-									{item}
+									{item.menuName}
 								</OptionButton>
 							</div>
 						))}

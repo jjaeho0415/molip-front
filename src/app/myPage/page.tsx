@@ -5,11 +5,32 @@ import styles from './myPage.module.css';
 import Header from '@/components/Header';
 import TopNavBar from '@/components/TopNavBar';
 import NoticeModal from '@/components/modals/NoticeModal';
+import Arrow_Icon from '../../../public/icons/buttons/rignt.svg';
+import Image from 'next/image';
+import VoteResultCard from '../vote/voteResult/components/voteResultCard';
+import { useRouter } from 'next/navigation';
+
+const voteResults = [
+	{
+		team: '스위프 10팀',
+		date: '2024.07.07(일)',
+		menu: ['물냉면', '비빔냉면', '짬뽕', '쫄면', '짜장면'],
+	},
+	{
+		team: '맛집 동아리',
+		date: '2024.06.21(금)',
+		menu: ['물냉면', '비빔밥', '짬뽕', '쫄면', '짜장면'],
+	},
+	{
+		team: '맛집 동아리',
+		date: '2024.06.21(금)',
+		menu: ['물냉면', '비빔밥', '짬뽕', '쫄면', '짜장면'],
+	},
+];
 
 function MyPage() {
 	const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
-	const [isMoreModalOpen, setIsMoreModalOpen] = useState<boolean>(false);
-	isMoreModalOpen && console.log(isMoreModalOpen);
+	const router = useRouter();
 
 	return (
 		<>
@@ -27,6 +48,31 @@ function MyPage() {
 						<p className={styles.rightText}>molip@gmail.com</p>
 					</div>
 				</div>
+				<div className={styles.voteResultContainer}>
+					<div className={styles.voteResultTopBox}>
+						<p className={styles.voteResultP}>지난 투표 결과</p>
+						<div
+							className={styles.voteResultBtn}
+							onClick={() => router.push('/vote/voteResult')}
+						>
+							더보기
+							<Image
+								className={styles.arrow}
+								src={Arrow_Icon}
+								width={18}
+								height={18}
+								alt='더보기'
+							/>
+						</div>
+					</div>
+					<div className={styles.voteListBox}>
+						{voteResults.map((item, idx) => (
+							<div key={idx}>
+								<VoteResultCard size='small' voteResult={item} />
+							</div>
+						))}
+					</div>
+				</div>
 				<p
 					className={styles.logoutSection}
 					onClick={() => setIsLogoutModalOpen(true)}
@@ -38,7 +84,6 @@ function MyPage() {
 						setIsNoticeModalOpen={setIsLogoutModalOpen}
 						titleText=''
 						isLogout={true}
-						setIsMoreModalOpen={setIsMoreModalOpen}
 					/>
 				)}
 			</div>

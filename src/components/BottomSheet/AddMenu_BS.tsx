@@ -12,6 +12,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getMyMenu } from '@/api/getMyMenu';
 import { useRouter } from 'next/navigation';
 import { AddMenuToTeamMenu } from '@/api/addMenuToTeamMenu';
+import AlertModal from '../modals/AlertModal';
 
 interface IAddMenu {
 	onClick: () => void;
@@ -38,6 +39,7 @@ export default function AddMenu_BS({
 	>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [selectedBoardId, setSelectedBoardId] = useState<number>(-1);
+	const [isAlertModalOpen, setIsAlertModalOpen] = useState<boolean>(false);
 
 	const { data: menus, isLoading: isGetMyMenuLoading } = useQuery<
 		IGetMyCategoryMenuType[] | undefined
@@ -85,6 +87,10 @@ export default function AddMenu_BS({
 		);
 
 		if (!isMenuExist) {
+			if (selectedAddMenu.length >= 10) {
+				setIsAlertModalOpen(true);
+				return;
+			}
 			setSelectedAddMenu([
 				...selectedAddMenu,
 				{ menuName: item.menuName, menuId: item.menuId },
@@ -233,6 +239,9 @@ export default function AddMenu_BS({
 					</Button>
 				)}
 			</div>
+			{isAlertModalOpen && (
+				<AlertModal setIsAlertModalOpen={setIsAlertModalOpen} max={10} />
+			)}
 		</>
 	);
 }

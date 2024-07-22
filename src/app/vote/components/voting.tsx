@@ -5,7 +5,6 @@ import styles from './voteComponents.module.css';
 import TopNavBar from '@/components/TopNavBar';
 import { useState } from 'react';
 import Image from 'next/image';
-
 import Icon_unchecked from '../../../../public/icons/checkBox/checkBox_unchecked.svg';
 import Icon_checked from '../../../../public/icons/checkBox/checkBox_checked.svg';
 import { getTeamMenus } from '@/api/getTeamMenus';
@@ -15,25 +14,11 @@ import { getTeamMenuItem } from '@/api/getTeamMenuItem';
 import { postVote } from '@/api/postVote';
 import useVoteStore from '../store/useVoteStore';
 import Loading from '@/components/Loading';
+import AlertModal from '@/components/modals/AlertModal';
 
 interface IVotingProps {
 	onNext: () => void;
 }
-
-const menus = [
-	{
-		category: '한식',
-		menus: ['김치찌개', '김치찜', '물냉면', '닭갈비', '비빔밥'],
-	},
-	{
-		category: '중식',
-		menus: ['짜장면', '볶음밥', '깐풍기', '짬뽕', '팔보채', '마라탕', '탕수육'],
-	},
-	{
-		category: '일식',
-		menus: ['초밥', '우동', '오코노미야끼', '타코야끼', '라멘'],
-	},
-];
 
 export default function Voting({ onNext }: IVotingProps) {
 	const searchParams = useSearchParams();
@@ -44,12 +29,9 @@ export default function Voting({ onNext }: IVotingProps) {
 		queryFn: async () => getTeamMenuItem(boardId),
 	});
 	const [isVoteLoading, setIsVoteLoading] = useState<boolean>(false);
+	const [isAlertModalOpen, setIsAlertModalOpen] = useState<boolean>(false);
 
-	const {
-		data: menuList,
-		isLoading,
-		refetch,
-	} = useQuery<IGetMyCategoryMenuType[]>({
+	const { data: menuList, isLoading } = useQuery<IGetMyCategoryMenuType[]>({
 		queryKey: ['MENU_LIST'],
 		queryFn: () => getTeamMenus(boardId),
 	});
@@ -67,6 +49,10 @@ export default function Voting({ onNext }: IVotingProps) {
 		const isMenuExist = voteArr.some((menu) => menu.menuId === item.menuId);
 
 		if (!isMenuExist) {
+			if (voteArr.length >= 3) {
+				setIsAlertModalOpen(true);
+				return;
+			}
 			setVoteArr([
 				...voteArr,
 				{ menuName: item.menuName, menuId: item.menuId },
@@ -100,7 +86,7 @@ export default function Voting({ onNext }: IVotingProps) {
 							<div className={styles.VotingMenuList}>
 								{menuList?.map((menu, index) => {
 									return (
-										<>
+										<div key={index}>
 											<p className={styles.VotingCategory}>{menu.category}</p>
 											<div className={styles.VotingCategoryBox} key={index}>
 												{menu.menu.map((item, idx) => (
@@ -125,7 +111,7 @@ export default function Voting({ onNext }: IVotingProps) {
 													</div>
 												))}
 											</div>
-										</>
+										</div>
 									);
 								})}
 							</div>
@@ -145,6 +131,9 @@ export default function Voting({ onNext }: IVotingProps) {
 						</Button>
 					</div>
 				</>
+			)}
+			{isAlertModalOpen && (
+				<AlertModal setIsAlertModalOpen={setIsAlertModalOpen} max={3} />
 			)}
 		</>
 	);

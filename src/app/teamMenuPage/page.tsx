@@ -28,7 +28,7 @@ export default function TeamMenuPage() {
 	const boardName = searchParams.get('menuName') as string;
 	const teamBoardId = Number(searchParams.get('menuId'));
 	const [menuBoardName, setMenuBoardName] = useState<string>(boardName);
-	const myMenuNum = Number(localStorage.getItem('myMenuNum'));
+	const [myMenuNum, setMyMenu] = useState<number>();
 	const [currentUrl, setCurrentUrl] = useState<string>('');
 	const [isAllPeopleAdded, setIsAllPeopleAdded] = useState<boolean>(false);
 	const [isUserAddedMenu, setIsUserAddedMenu] = useState<boolean>(false);
@@ -36,6 +36,7 @@ export default function TeamMenuPage() {
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
 			setCurrentUrl(window.location.href);
+			setMyMenu(Number(localStorage.getItem('myMenuNum')));
 		}
 	}, []);
 

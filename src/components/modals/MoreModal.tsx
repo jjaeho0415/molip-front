@@ -72,7 +72,6 @@ function MoreModal({
 					menuId={menuId}
 					setIsInputModalOpen={setIsInputModalOpen}
 					titleText={menuTitle}
-					setIsMoreModalOpen={setIsMoreModalOpen}
 				/>
 			)}
 			{isNoticeModalOpen && (

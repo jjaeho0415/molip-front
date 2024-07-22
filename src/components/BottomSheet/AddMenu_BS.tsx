@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import styles from './addMenu.module.css';
 import Image from 'next/image';
 import Icon_down from '../../../public/icons/down.svg';
@@ -8,7 +8,7 @@ import Icon_unchecked from '../../../public/icons/checkBox/checkBox_unchecked.sv
 import Icon_checked from '../../../public/icons/checkBox/checkBox_checked.svg';
 import OptionButton from '../buttons/OptionButton';
 import Loading from '../Loading';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getMyMenu } from '@/api/getMyMenu';
 import { useRouter } from 'next/navigation';
 import { AddMenuToTeamMenu } from '@/api/addMenuToTeamMenu';
@@ -19,6 +19,7 @@ interface IAddMenu {
 	teamBoardId: number;
 	boardName: string;
 	isAllPeopleAdded: boolean;
+	setIsUserAddedMenu: Dispatch<SetStateAction<boolean>>;
 }
 export default function AddMenu_BS({
 	onClick,
@@ -26,8 +27,10 @@ export default function AddMenu_BS({
 	teamBoardId,
 	boardName,
 	isAllPeopleAdded,
+	setIsUserAddedMenu,
 }: IAddMenu) {
 	const router = useRouter();
+	const queryClient = useQueryClient();
 	const [isShowSelectBox, setIsShowSelectBox] = useState<boolean>(false);
 	const [selectedMyMenu, setSelectedMyMenu] = useState<string>('');
 	const [selectedAddMenu, setSelectedAddMenu] = useState<
@@ -55,6 +58,13 @@ export default function AddMenu_BS({
 		},
 		mutationKey: ['ADD_MENU_TO_TEAM_MENU'],
 		onSuccess: () => {
+			setIsUserAddedMenu(true);
+			queryClient.invalidateQueries({
+				queryKey: ['TEAM_MENU_ITEM', teamBoardId],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ['MENU_ADDED_MEMBERS_INFO'],
+			});
 			alert('메뉴가 추가되었습니다.');
 			if (isAllPeopleAdded)
 				router.push(`/menu?menuId=${teamBoardId}&menuName=${boardName}`);

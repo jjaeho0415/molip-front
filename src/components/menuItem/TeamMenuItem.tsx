@@ -33,13 +33,15 @@ function TeamMenuItem({
 	useEffect(() => {
 		if (addedMembers)
 			setIsAllPeopleAdded(
-				addedMembers.addedMenuUserCount === addedMembers.teamMembersNum,
+				addedMembers.addedMenuUserCount === addedMembers.teamMembersNum
+					? true
+					: false,
 			);
 	}, [addedMembers]);
 
 	const handleMenuItemClick = () => {
 		if (addedMembers) {
-			if (hasUserAddedMenu)
+			if (isAllPeopleAdded)
 				router.push(`/menu?menuId=${id}&menuName=${menuName}`);
 			else {
 				router.push(`/teamMenuPage?menuId=${id}&menuName=${menuName}`);

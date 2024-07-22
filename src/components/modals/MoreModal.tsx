@@ -14,7 +14,7 @@ interface MoreModalProps {
 	teamTitle: string;
 	teamNumber: number;
 	menuId: number;
-	setIsMoreModalOpen: Dispatch<SetStateAction<boolean>>;
+	setIsMoreModalOpen: Dispatch<SetStateAction<number>>;
 }
 
 function MoreModal({

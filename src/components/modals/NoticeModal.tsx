@@ -17,7 +17,7 @@ interface NoticeModalProps {
 	titleText: string;
 	isLogout?: boolean;
 	menuId?: number;
-	setIsMoreModalOpen?: Dispatch<SetStateAction<boolean>>;
+	setIsMoreModalOpen?: Dispatch<SetStateAction<number>>;
 }
 
 function NoticeModal({
@@ -44,7 +44,7 @@ function NoticeModal({
 		mutationKey: ['DELETE_MENU_BOARD'],
 		onSuccess: () => {
 			setIsNoticeModalOpen(false);
-			setIsMoreModalOpen && setIsMoreModalOpen(false);
+			setIsMoreModalOpen && setIsMoreModalOpen(-1);
 			alert('메뉴판이 성공적으로 삭제되었습니다.');
 			queryClient.invalidateQueries();
 			route.push('/home');
@@ -74,7 +74,7 @@ function NoticeModal({
 			deleteMenu(Number(defaultMenuId));
 			return;
 		}
-		menuId && deleteMenu(menuId);
+		deleteMenu(menuId ?? -1);
 	};
 
 	return ReactDOM.createPortal(

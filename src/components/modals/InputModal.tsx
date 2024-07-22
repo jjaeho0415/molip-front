@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 
 interface InputModalProps {
 	setIsInputModalOpen: Dispatch<SetStateAction<boolean>>;
-	setIsMoreModalOpen: Dispatch<SetStateAction<boolean>>;
+	setIsMoreModalOpen: Dispatch<SetStateAction<number>>;
 	titleText: string;
 	menuId: number;
 }
@@ -54,7 +54,7 @@ function InputModal({
 			}
 			setIsEmpty(false);
 			setIsInputModalOpen(false);
-			setIsMoreModalOpen(false);
+			setIsMoreModalOpen(-1);
 			alert('메뉴판 이름 수정 성공!');
 			if (current.includes('home')) {
 				tab === 'my'

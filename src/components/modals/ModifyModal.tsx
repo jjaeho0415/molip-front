@@ -7,7 +7,7 @@ import { patchModifyTeamMenu } from '@/api/patchModifyTeamMenu';
 
 interface ModifyModalProps {
 	setIsModifyModalOpen: Dispatch<SetStateAction<boolean>>;
-	setIsMoreModalOpen: Dispatch<SetStateAction<boolean>>;
+	setIsMoreModalOpen: Dispatch<SetStateAction<number>>;
 	teamName: string;
 	teamNumber: number;
 	teamBoardId: number;
@@ -35,7 +35,7 @@ function ModifyModal({
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['TEAM_MENU_LIST'] });
 			setIsModifyModalOpen(false);
-			setIsMoreModalOpen(false);
+			setIsMoreModalOpen(-1);
 			alert('메뉴판 이름 수정 성공!');
 		},
 		onError: (error) => console.error(error),

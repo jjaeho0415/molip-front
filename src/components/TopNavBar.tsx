@@ -8,7 +8,6 @@ import MoreModal from './modals/MoreModal';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import NoticeModal from './modals/NoticeModal';
-import { useAuthStore } from '@/app/login/store/useAuthStore';
 
 interface ITopNavBarProps {
 	menu?: boolean;
@@ -39,7 +38,7 @@ export default function TopNavBar({
 }: ITopNavBarProps) {
 	// const { isLogin } = useAuthStore.getState();
 	const isLogin = true;
-	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+	const [isModalOpen, setIsModalOpen] = useState<number>(-1);
 	const [isNoticeModalOpen, setIsNoticeModalOpen] = useState<boolean>(false);
 	const route = useRouter();
 	const searchParams = useSearchParams();
@@ -77,7 +76,9 @@ export default function TopNavBar({
 						width={24}
 						height={24}
 						onClick={() =>
-							isModalOpen ? setIsModalOpen(false) : setIsModalOpen(true)
+							isModalOpen === teamNumber
+								? setIsModalOpen(-1)
+								: setIsModalOpen(teamNumber)
 						}
 					/>
 				)}

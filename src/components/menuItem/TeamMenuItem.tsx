@@ -22,8 +22,8 @@ function TeamMenuItem({
 	hasUserAddedMenu,
 }: TeamMenuItemProps) {
 	const router = useRouter();
-	const [isMoreModalOpen, setIsMoreModalOpen] = useState<boolean>(false);
 	const [isAllPeopleAdded, setIsAllPeopleAdded] = useState<boolean>(false);
+	const [isMoreModalOpen, setIsMoreModalOpen] = useState<number>(-1);
 
 	const { data: addedMembers } = useQuery<IGetAddedUserInfo>({
 		queryKey: ['MENU_ADDED_MEMBERS_INFO', id],
@@ -66,31 +66,30 @@ function TeamMenuItem({
 					height={24}
 					onClick={(e) => {
 						e.stopPropagation();
-						isMoreModalOpen
-							? setIsMoreModalOpen(false)
-							: setIsMoreModalOpen(true);
+						console.log('더보기', isMoreModalOpen);
+						isMoreModalOpen === -1
+							? setIsMoreModalOpen(id)
+							: setIsMoreModalOpen(-1);
 					}}
 					style={{ position: 'relative', cursor: 'pointer', zIndex: '1' }}
 				/>
-				{isMoreModalOpen && (
-					<>
-						<div
-							style={{
-								position: 'absolute',
-								transform: 'translate(191.5px, 100px)',
-								zIndex: '6',
-							}}
-						>
-							<MoreModal
-								menuTitle={menuName}
-								teamNumber={teamNumber}
-								teamTitle={teamTitle}
-								pageType='outsideTeamMenu'
-								menuId={id}
-								setIsMoreModalOpen={setIsMoreModalOpen}
-							/>
-						</div>
-					</>
+				{isMoreModalOpen === id && (
+					<div
+						style={{
+							position: 'absolute',
+							transform: 'translate(191.5px, 100px)',
+							zIndex: '6',
+						}}
+					>
+						<MoreModal
+							menuTitle={menuName}
+							teamNumber={teamNumber}
+							teamTitle={teamTitle}
+							pageType='outsideTeamMenu'
+							menuId={id}
+							setIsMoreModalOpen={setIsMoreModalOpen}
+						/>
+					</div>
 				)}
 			</div>
 			{!hasUserAddedMenu && !isAllPeopleAdded && (

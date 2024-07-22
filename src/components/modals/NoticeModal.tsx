@@ -44,7 +44,7 @@ function NoticeModal({
 		mutationKey: ['DELETE_MENU_BOARD'],
 		onSuccess: () => {
 			setIsNoticeModalOpen(false);
-			setIsMoreModalOpen(false);
+			setIsMoreModalOpen && setIsMoreModalOpen(false);
 			alert('메뉴판이 성공적으로 삭제되었습니다.');
 			queryClient.invalidateQueries();
 			route.push('/home');
@@ -74,7 +74,7 @@ function NoticeModal({
 			deleteMenu(Number(defaultMenuId));
 			return;
 		}
-		deleteMenu(menuId);
+		menuId && deleteMenu(menuId);
 	};
 
 	return ReactDOM.createPortal(

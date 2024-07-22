@@ -7,6 +7,9 @@ export type IRefreshType = {
 };
 
 export const getAccessToken = async (): Promise<IRefreshType> => {
-	console.log('Requesting new access token...');
-	return await api.post({ endpoint: apiRoutes.refresh });
+	
+	const response: IRefreshType = await api.post({
+		endpoint: apiRoutes.refresh,
+	});
+	return response;
 };

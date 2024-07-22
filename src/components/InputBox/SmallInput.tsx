@@ -12,12 +12,13 @@ import { useMutation } from '@tanstack/react-query';
 import { patchModifyMyMenu } from '@/api/patchModifyMyMenu';
 import useHomeStore from '@/app/home/store/useHomeStore';
 import { patchModifyTeamMenu } from '@/api/patchModifyTeamMenu';
+import { useRouter } from 'next/navigation';
 
 interface IInputProps {
 	placeholder?: string;
 	value: string;
 	setValue: Dispatch<SetStateAction<string>>;
-	menuId: number;
+	menuId?: number;
 }
 
 export default function SmallInput({
@@ -28,8 +29,10 @@ export default function SmallInput({
 }: IInputProps) {
 	const { tab } = useHomeStore();
 	const [debounceValue, setDebounceValue] = useState<string>(value);
+	const route = useRouter();
 	const inputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);
+		sessionStorage.setItem('guestMenuName', e.target.value);
 	};
 
 	const { mutate: modifyName } = useMutation({
@@ -40,6 +43,13 @@ export default function SmallInput({
 				return patchModifyTeamMenu(menuId, { teamBoardName: newMenuName });
 			}
 		},
+		onSuccess: () => {
+			if (tab === 'my') {
+				route.push(`/createMyMenu?menuName=${debounceValue}&menuId=${menuId}`);
+			} else {
+				route.push(`/teamMenuPage?menuName=${debounceValue}&menuId=${menuId}`);
+			}
+		},
 	});
 
 	useEffect(() => {
@@ -48,7 +58,7 @@ export default function SmallInput({
 
 	useEffect(() => {
 		const handler = setTimeout(() => {
-			if (debounceValue !== '') {
+			if (debounceValue !== '' && menuId) {
 				modifyName({ menuId, newMenuName: debounceValue });
 			}
 		}, 500);

@@ -4,7 +4,7 @@ import Header from '@/components/Header';
 import styles from './menu.module.css';
 import TabNavigation from '@/components/TabNavigation';
 import TopNavBar from '@/components/TopNavBar';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import MenuBoard from '@/components/MenuBoard/MenuBoard';
 import ShareButton from '@/components/buttons/ShareButton';
 import BottomSheet from '@/components/BottomSheet/BottomSheet';
@@ -17,22 +17,31 @@ import { getMyMenu } from '@/api/getMyMenu';
 import Loading from '@/components/Loading';
 import { getTeamMenus } from '@/api/getTeamMenus';
 import useHomeStore from '../home/store/useHomeStore';
+import { useAuthStore } from '../login/store/useAuthStore';
 
 export default function Menu() {
 	const [active, setActive] = useState<'메뉴판' | '메뉴이미지'>('메뉴판');
-	// isLogin은 나중에 store의 isLogin으로 변경
 	const { tab } = useHomeStore();
 	const router = useRouter();
+	// const { isLogin } = useAuthStore.getState();
 	const isLogin = true;
 	const canvasRef = useRef<HTMLDivElement>(null);
 	const searchParams = useSearchParams();
 	const menuId = Number(searchParams.get('menuId'));
+	const [menuList, setMenuList] = useState<IGetMyCategoryMenuType[]>([]);
 
-	const {
-		data: menuList,
-		isLoading,
-		refetch,
-	} = useQuery<IGetMyCategoryMenuType[]>({
+	useEffect(() => {
+		if (!menuId) {
+			if (typeof window !== 'undefined') {
+				const data = sessionStorage.getItem('guest_menu');
+				if (data) {
+					setMenuList(JSON.parse(data));
+				}
+			}
+		}
+	}, []);
+
+	const { data: menu, isLoading } = useQuery<IGetMyCategoryMenuType[]>({
 		queryKey: ['MENU_LIST'],
 		queryFn: () => {
 			if (tab === 'my') {
@@ -42,6 +51,10 @@ export default function Menu() {
 			}
 		},
 	});
+
+	useEffect(() => {
+		menu && setMenuList(menu);
+	}, [menu]);
 
 	const handleShare = () => {
 		return;
@@ -80,9 +93,8 @@ export default function Menu() {
 					<>
 						<div className={styles.Container}>
 							{isLogin ? <Header /> : <TopNavBar title='체험중' />}
-							<TabNavigation isUser={isLogin ? 'user' : 'guest'} />
+							<TabNavigation canvasRef={canvasRef} />
 							<TopNavBar
-								isLogin={isLogin}
 								menu={true}
 								active={active}
 								setActive={setActive}
@@ -94,7 +106,6 @@ export default function Menu() {
 							</div>
 							{active === '메뉴판' && (
 								<div className={styles.ButtonBox}>
-									{/* isLogin가 true면 옵션수정하기, false면 공유하기, onClick함수도 다르게 줘야함 */}
 									{isLogin ? (
 										tab === 'my' ? (
 											<ShareButton
@@ -124,7 +135,7 @@ export default function Menu() {
 								</div>
 							)}
 							<BottomSheet>
-								<AddTaste_BS menuId={menuId} refetch={refetch} />
+								<AddTaste_BS menuId={menuId} />
 							</BottomSheet>
 						</div>
 					</>

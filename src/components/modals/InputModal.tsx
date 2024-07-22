@@ -1,11 +1,13 @@
+'use client';
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import styles from './styles/inputModal.module.css';
 import ModalButton from '../buttons/ModalButton';
 import ReactDOM from 'react-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { patchModifyMyMenu } from '@/api/patchModifyMyMenu';
-import { patchModifyTeamMenu } from '@/api/patchModifyTeamMenu';
 import useHomeStore from '@/app/home/store/useHomeStore';
+import { patchModifyTeamMenu } from '@/api/patchModifyTeamMenu';
+import { useRouter } from 'next/navigation';
 
 interface InputModalProps {
 	setIsInputModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -20,13 +22,16 @@ function InputModal({
 	titleText,
 	menuId,
 }: InputModalProps) {
-	const { tab } = useHomeStore();
-	const queryClient = useQueryClient();
 	const [value, setValue] = useState<string>(titleText);
 	const [isEmpty, setIsEmpty] = useState<boolean>(false);
+	const { tab } = useHomeStore();
+	const current = window.location.href;
+	const route = useRouter();
+	const queryClient = useQueryClient();
 	const inputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);
 	};
+
 	const closeModal = (): void => {
 		setIsInputModalOpen(false);
 	};
@@ -51,6 +56,13 @@ function InputModal({
 			setIsInputModalOpen(false);
 			setIsMoreModalOpen(false);
 			alert('메뉴판 이름 수정 성공!');
+			if (current.includes('home')) {
+				tab === 'my'
+					? queryClient.invalidateQueries({ queryKey: ['MY_MENU_LIST'] })
+					: queryClient.invalidateQueries({ queryKey: ['TEAM_MENU_LIST'] });
+			} else {
+				route.push(`menu?menuId=${menuId}&menuName=${value}`);
+			}
 		},
 		onError: (error) => console.error(error),
 	});

@@ -5,7 +5,6 @@ import styles from './voteComponents.module.css';
 import TopNavBar from '@/components/TopNavBar';
 import { useState } from 'react';
 import Image from 'next/image';
-
 import Icon_unchecked from '../../../../public/icons/checkBox/checkBox_unchecked.svg';
 import Icon_checked from '../../../../public/icons/checkBox/checkBox_checked.svg';
 import { getTeamMenus } from '@/api/getTeamMenus';
@@ -15,6 +14,7 @@ import { getTeamMenuItem } from '@/api/getTeamMenuItem';
 import { postVote } from '@/api/postVote';
 import useVoteStore from '../store/useVoteStore';
 import Loading from '@/components/Loading';
+import AlertModal from '@/components/modals/AlertModal';
 
 interface IVotingProps {
 	onNext: () => void;
@@ -29,6 +29,7 @@ export default function Voting({ onNext }: IVotingProps) {
 		queryFn: async () => getTeamMenuItem(boardId),
 	});
 	const [isVoteLoading, setIsVoteLoading] = useState<boolean>(false);
+	const [isAlertModalOpen, setIsAlertModalOpen] = useState<boolean>(false);
 
 	const { data: menuList, isLoading } = useQuery<IGetMyCategoryMenuType[]>({
 		queryKey: ['MENU_LIST'],
@@ -48,6 +49,10 @@ export default function Voting({ onNext }: IVotingProps) {
 		const isMenuExist = voteArr.some((menu) => menu.menuId === item.menuId);
 
 		if (!isMenuExist) {
+			if (voteArr.length >= 3) {
+				setIsAlertModalOpen(true);
+				return;
+			}
 			setVoteArr([
 				...voteArr,
 				{ menuName: item.menuName, menuId: item.menuId },
@@ -81,7 +86,7 @@ export default function Voting({ onNext }: IVotingProps) {
 							<div className={styles.VotingMenuList}>
 								{menuList?.map((menu, index) => {
 									return (
-										<>
+										<div key={index}>
 											<p className={styles.VotingCategory}>{menu.category}</p>
 											<div className={styles.VotingCategoryBox} key={index}>
 												{menu.menu.map((item, idx) => (
@@ -106,7 +111,7 @@ export default function Voting({ onNext }: IVotingProps) {
 													</div>
 												))}
 											</div>
-										</>
+										</div>
 									);
 								})}
 							</div>
@@ -126,6 +131,9 @@ export default function Voting({ onNext }: IVotingProps) {
 						</Button>
 					</div>
 				</>
+			)}
+			{isAlertModalOpen && (
+				<AlertModal setIsAlertModalOpen={setIsAlertModalOpen} max={3} />
 			)}
 		</>
 	);

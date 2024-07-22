@@ -1,22 +1,52 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, RefObject, SetStateAction, useState } from 'react';
 import styles from './styles/trialViewModal.module.css';
 import ModalButton from '../buttons/ModalButton';
+import ReactDOM from 'react-dom';
+import { useRouter } from 'next/navigation';
+import html2canvas from 'html2canvas';
+import saveAs from 'file-saver';
+
 
 interface TrialViewModalProps {
 	setIsTrialModalOpen: Dispatch<SetStateAction<boolean>>;
+	canvasRef?: RefObject<HTMLDivElement>;
 }
 
-function TrialViewModal({ setIsTrialModalOpen }: TrialViewModalProps) {
+function TrialViewModal({ setIsTrialModalOpen,canvasRef }: TrialViewModalProps) {
 	const [isImageSaveBtnShow, setIsImageSaveBtnShow] = useState<boolean>(true);
+	const route = useRouter();
+
 	const closeModal = (): void => {
 		setIsTrialModalOpen(false);
 	};
 
-	const handleImageSave = (): void => {
-		setIsImageSaveBtnShow(false);
-	};
 
-	return (
+		const handleImageSave = async () => {
+			if (!canvasRef?.current) {
+				return;
+			}
+			try {
+				const div = canvasRef.current;
+				const canvas = await html2canvas(div, { scale: 2 });
+				canvas.toBlob((blob) => {
+					if (blob !== null) {
+						saveAs(blob, 'menuBoard.png');
+					}
+				});
+				setIsImageSaveBtnShow(false);
+			} catch (error) {
+				alert('이미지 저장에 실패하였습니다.');
+				console.error('Error converting div to image: ', error);
+			}
+		};
+		
+	
+
+	const handleLogin = () => {
+		route.push('/login')
+	}
+
+	return ReactDOM.createPortal(
 		<>
 			<div
 				className={styles.overlay}
@@ -36,7 +66,9 @@ function TrialViewModal({ setIsTrialModalOpen }: TrialViewModalProps) {
 						<p>동료들과 메뉴 도장깨기 어떤가요?😆</p>
 					</div>
 					<div className={styles.loginSection}>
-						<button className={styles.loginButton}>로그인</button>
+						<button className={styles.loginButton} onClick={handleLogin}>
+							로그인
+						</button>
 						<p className={styles.loginDescription}>
 							팀 메뉴판은 로그인 후 이용 가능해요.
 						</p>
@@ -57,7 +89,8 @@ function TrialViewModal({ setIsTrialModalOpen }: TrialViewModalProps) {
 					</div>
 				</div>
 			</div>
-		</>
+		</>,
+		document.body,
 	);
 }
 

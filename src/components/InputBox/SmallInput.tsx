@@ -18,7 +18,7 @@ interface IInputProps {
 	placeholder?: string;
 	value: string;
 	setValue: Dispatch<SetStateAction<string>>;
-	menuId: number;
+	menuId?: number;
 }
 
 export default function SmallInput({
@@ -32,6 +32,7 @@ export default function SmallInput({
 	const route = useRouter();
 	const inputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);
+		sessionStorage.setItem('guestMenuName', e.target.value);
 	};
 
 	const { mutate: modifyName } = useMutation({
@@ -45,9 +46,8 @@ export default function SmallInput({
 		onSuccess: () => {
 			if (tab === 'my') {
 				route.push(`/createMyMenu?menuName=${debounceValue}&menuId=${menuId}`);
-			}
-			else {
-				route.push(`/teamMenuPage?menuName=${debounceValue}&menuId=${menuId}`)
+			} else {
+				route.push(`/teamMenuPage?menuName=${debounceValue}&menuId=${menuId}`);
 			}
 		},
 	});
@@ -58,7 +58,7 @@ export default function SmallInput({
 
 	useEffect(() => {
 		const handler = setTimeout(() => {
-			if (debounceValue !== '') {
+			if (debounceValue !== '' && menuId) {
 				modifyName({ menuId, newMenuName: debounceValue });
 			}
 		}, 500);

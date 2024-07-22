@@ -27,7 +27,8 @@ export default function Home() {
 	const route = useRouter();
 	const [defaultMyMenuName, setDefaultMyMenuName] = useState<string>('');
 	const [user, setUser] = useState<string>('');
-	const { isLogin } = useAuthStore.getState();
+	// const { isLogin } = useAuthStore.getState();
+	const isLogin = true;
 
 	const { mutate: getAccess } = useMutation<IRefreshType>({
 		mutationFn: getAccessToken,

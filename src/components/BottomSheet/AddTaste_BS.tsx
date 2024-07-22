@@ -6,9 +6,11 @@ import Loading from '../Loading';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postRecommendMyMenu } from '@/api/postRecommendMyMenu';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useAuthStore } from '@/app/login/store/useAuthStore';
+import { postGuestRecommend } from '@/api/postGuestRecommend';
 
 interface AddTaste_BSProps {
-	menuId: number;
+	menuId?: number;
 	onClick?: () => void;
 	isEmptyModalOpen?: boolean;
 }
@@ -25,11 +27,7 @@ export type IPostRecommend = {
 	selectedOptions: ISelctedOptionsType;
 };
 
-function AddTaste_BS({
-	menuId,
-	onClick,
-	isEmptyModalOpen,
-}: AddTaste_BSProps) {
+function AddTaste_BS({ menuId, onClick, isEmptyModalOpen }: AddTaste_BSProps) {
 	const [isAllTasteClicked, setIsAllTasteClicked] = useState<boolean>(false);
 	const route = useRouter();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -42,6 +40,10 @@ function AddTaste_BS({
 	const param = useSearchParams();
 	const menuName = param.get('menuName');
 	const queryClient = useQueryClient();
+	let guestMenuName: string | null;
+	if (typeof window !== undefined) {
+		guestMenuName = sessionStorage.getItem('guestMenuName');
+	}
 
 	useEffect(() => {
 		console.log(selectedOptions);
@@ -64,11 +66,24 @@ function AddTaste_BS({
 			setIsLoading(false);
 			const current = window.location.href;
 			alert('필터 적용이 완료되었습니다.');
-			queryClient.invalidateQueries({queryKey: ['MENU_LIST']})
+			queryClient.invalidateQueries({ queryKey: ['MENU_LIST'] });
 			if (current.includes('createMyMenu')) {
 				route.push(`/menu?menuId=${menuId}&menuName=${menuName}`);
 			}
+		},
+	});
 
+	const { mutate: postGuestRecommended } = useMutation({
+		mutationFn: (options: ISelctedOptionsType) => postGuestRecommend(options),
+		onSuccess: (data: IGetMyCategoryMenuType[]) => {
+			if (typeof window !== 'undefined') {
+				sessionStorage.setItem('guest_menu', JSON.stringify(data));
+			}
+			setIsLoading(false);
+			alert('필터 적용이 완료되었습니다.');
+			if (!menuId) {
+				route.push(`/menu?menuName=${guestMenuName}`);
+			}
 		},
 	});
 
@@ -79,8 +94,13 @@ function AddTaste_BS({
 				return;
 			}
 			setIsLoading(true);
-			const transformedOptions = transformOptions(selectedOptions);
-			postRecommend({ menuId, selectedOptions: transformedOptions });
+			const transformedOptions: ISelctedOptionsType =
+				transformOptions(selectedOptions);
+			if (menuId) {
+				postRecommend({ menuId, selectedOptions: transformedOptions });
+			} else {
+				postGuestRecommended(transformedOptions);
+			}
 		}
 	};
 

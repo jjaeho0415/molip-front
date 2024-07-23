@@ -13,7 +13,7 @@ function TeamMenuList({ menuList }: TeamMenuListProps) {
 	return (
 		<div className={styles.ListContainer}>
 			{menuList.map((teamMenuItem, index) => (
-				<React.Fragment key={teamMenuItem.teamBoardId}>
+				<div key={teamMenuItem.teamBoardId} className={styles.itemContainer}>
 					<TeamMenuItem
 						teamTitle={teamMenuItem.teamName}
 						menuName={teamMenuItem.teamBoardName}
@@ -27,8 +27,8 @@ function TeamMenuList({ menuList }: TeamMenuListProps) {
 					{isMoreModalOpen === index && (
 						<div
 							style={{
-								position: 'relative',
-								transform: 'translate(191.5px, 0px)',
+								position: 'absolute',
+								transform: 'translate(191.5px, -25px)',
 								zIndex: '6',
 							}}
 						>
@@ -42,7 +42,7 @@ function TeamMenuList({ menuList }: TeamMenuListProps) {
 							/>
 						</div>
 					)}
-				</React.Fragment>
+				</div>
 			))}
 		</div>
 	);

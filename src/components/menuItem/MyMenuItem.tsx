@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import styles from './myMenuItem.module.css';
 import Image from 'next/image';
 import MoreModal from '../modals/MoreModal';
@@ -7,11 +7,19 @@ interface MyMenuItemProps {
 	menuTitle: string;
 	handleClick: () => void;
 	menuId: number;
+	index: number;
+	isMoreModalOpen: number;
+	setIsMoreModalOpen: React.Dispatch<React.SetStateAction<number>>;
 }
 
-function MyMenuItem({ menuTitle, handleClick, menuId }: MyMenuItemProps) {
-	const [isMoreModalOpen, setIsMoreModalOpen] = useState<boolean>(false);
-
+function MyMenuItem({
+	menuTitle,
+	handleClick,
+	menuId,
+	index,
+	isMoreModalOpen,
+	setIsMoreModalOpen,
+}: MyMenuItemProps) {
 	return (
 		<>
 			<div className={styles.itemContainer} onClick={handleClick}>
@@ -23,32 +31,12 @@ function MyMenuItem({ menuTitle, handleClick, menuId }: MyMenuItemProps) {
 					height={24}
 					onClick={(e) => {
 						e.stopPropagation();
-						isMoreModalOpen
-							? setIsMoreModalOpen(false)
-							: setIsMoreModalOpen(true);
+						isMoreModalOpen !== index
+							? setIsMoreModalOpen(index)
+							: setIsMoreModalOpen(-1);
 					}}
 					style={{ position: 'relative', cursor: 'pointer', zIndex: '1' }}
-				/>
-				{isMoreModalOpen && (
-					<>
-						<div
-							style={{
-								position: 'absolute',
-								transform: 'translate(191.5px, 65px)',
-								zIndex: '6',
-							}}
-						>
-							<MoreModal
-								menuTitle={menuTitle}
-								teamNumber={0}
-								teamTitle=''
-								pageType='outsideMyMenu'
-								menuId={menuId}
-								setIsMoreModalOpen={setIsMoreModalOpen}
-							/>
-						</div>
-					</>
-				)}
+				/>	
 			</div>
 		</>
 	);

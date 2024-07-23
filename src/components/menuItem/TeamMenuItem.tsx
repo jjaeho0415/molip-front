@@ -68,7 +68,6 @@ function TeamMenuItem({
 					height={24}
 					onClick={(e) => {
 						e.stopPropagation();
-						console.log('더보기', isMoreModalOpen);
 						isMoreModalOpen !== index
 							? setIsMoreModalOpen(index)
 							: setIsMoreModalOpen(-1);

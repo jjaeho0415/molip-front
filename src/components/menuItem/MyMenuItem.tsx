@@ -1,21 +1,18 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import styles from './myMenuItem.module.css';
 import Image from 'next/image';
-import MoreModal from '../modals/MoreModal';
 
 interface MyMenuItemProps {
 	menuTitle: string;
 	handleClick: () => void;
-	menuId: number;
 	index: number;
 	isMoreModalOpen: number;
-	setIsMoreModalOpen: React.Dispatch<React.SetStateAction<number>>;
+	setIsMoreModalOpen: Dispatch<SetStateAction<number>>;
 }
 
 function MyMenuItem({
 	menuTitle,
 	handleClick,
-	menuId,
 	index,
 	isMoreModalOpen,
 	setIsMoreModalOpen,

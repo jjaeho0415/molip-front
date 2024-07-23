@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import useHomeStore from '@/app/home/store/useHomeStore';
 import { RefObject, useState } from 'react';
 import TrialViewModal from './modals/TrialViewModal';
-import { useAuthStore } from '@/app/login/store/useAuthStore';
 
 interface TabNavigationProps {
 	canvasRef?: RefObject<HTMLDivElement>;

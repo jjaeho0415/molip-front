@@ -7,14 +7,8 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { FreeMode } from 'swiper/modules';
 
-interface IVoteResultType {
-	team: string;
-	date: string;
-	menu: string[];
-}
-
 interface IVoteResultProps {
-	voteResult: IVoteResultType;
+	voteResult: IUserVotes;
 	size?: 'small' | 'default';
 }
 
@@ -25,8 +19,8 @@ export default function VoteResultCard({
 	return (
 		<div className={`${styles.Container} ${styles[size]}`}>
 			<div className={styles.TopBox}>
-				<p className={styles.TeamName}>{voteResult.team}</p>
-				<p className={styles.Date}>{voteResult.date}</p>
+				<p className={styles.TeamName}>{voteResult.teamName}</p>
+				<p className={styles.Date}>{voteResult.voteDate}</p>
 			</div>
 			<Swiper
 				spaceBetween={5}
@@ -35,7 +29,7 @@ export default function VoteResultCard({
 				modules={[FreeMode]}
 				className={styles.BottomBox}
 			>
-				{voteResult.menu.map((item: string, idx: number) => (
+				{voteResult?.voteItems?.map((item: string, idx: number) => (
 					<SwiperSlide className={styles.Option} key={idx}>
 						<OptionButton
 							option={false}

@@ -6,5 +6,6 @@ export const apiRoutes = {
 	teamBoards: '/teamboards',
 	users: '/users',
 	userName: '/user/username',
-	guest: '/guest/recommend'
+	guest: '/guest/recommend',
+	myPage: '/mypage'
 };

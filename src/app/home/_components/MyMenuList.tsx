@@ -22,7 +22,6 @@ function MyMenuList({ menuList }: MyMenuListProps) {
 				<div key={myMenuItem.personalBoardId} className={styles.itemContainer}>
 					<MyMenuItem
 						menuTitle={myMenuItem.name}
-						menuId={myMenuItem.personalBoardId}
 						key={index}
 						index={index}
 						isMoreModalOpen={isMoreModalOpen}

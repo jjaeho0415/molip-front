@@ -4,7 +4,6 @@
 .ContentContainer {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	align-items: center;
 	height: calc(100vh - 173px);
 	overflow: auto;
@@ -32,4 +31,11 @@
 	font-size: 17px;
 	color: var(--gray-60);
 	font-weight: 700;
+}
+
+.loading {
+	display: flex;
+	height: calc(100vh - 162.2px);
+	justify-content: center;
+	align-items: center;
 }

@@ -98,7 +98,7 @@
 
 .loading {
 	display: flex;
-	height: 100vh;
+	height: calc(100vh - 116px);
 	justify-content: center;
 	align-items: center;
 }

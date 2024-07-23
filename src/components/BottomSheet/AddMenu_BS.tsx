@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styles from './addMenu.module.css';
 import Image from 'next/image';
 import Icon_down from '../../../public/icons/down.svg';
@@ -117,7 +117,7 @@ export default function AddMenu_BS({
 	const handleMyBoardClick = (board: IGetMyMenuType) => {
 		setSelectedMyMenu(board.name);
 		setSelectedBoardId(board.personalBoardId);
-		setIsShowSelectBox(!isShowSelectBox);
+		setIsShowSelectBox(false);
 	};
 
 	const handleAddMenu = () => {

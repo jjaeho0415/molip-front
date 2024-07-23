@@ -6,7 +6,6 @@ import Loading from '../Loading';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postRecommendMyMenu } from '@/api/postRecommendMyMenu';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useAuthStore } from '@/app/login/store/useAuthStore';
 import { postGuestRecommend } from '@/api/postGuestRecommend';
 
 interface AddTaste_BSProps {
@@ -41,7 +40,7 @@ function AddTaste_BS({ menuId, onClick, isEmptyModalOpen }: AddTaste_BSProps) {
 	const menuName = param.get('menuName');
 	const queryClient = useQueryClient();
 	let guestMenuName: string | null;
-	if (typeof window !== undefined) {
+	if (typeof window !== 'undefined') {
 		guestMenuName = sessionStorage.getItem('guestMenuName');
 	}
 

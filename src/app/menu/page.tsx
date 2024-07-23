@@ -17,7 +17,6 @@ import { getMyMenu } from '@/api/getMyMenu';
 import Loading from '@/components/Loading';
 import { getTeamMenus } from '@/api/getTeamMenus';
 import useHomeStore from '../home/store/useHomeStore';
-import { useAuthStore } from '../login/store/useAuthStore';
 
 export default function Menu() {
 	const [active, setActive] = useState<'메뉴판' | '메뉴이미지'>('메뉴판');

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import styles from './addMenu.module.css';
 import Image from 'next/image';
 import Icon_down from '../../../public/icons/down.svg';

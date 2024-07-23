@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from './teamMenuItem.module.css';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';

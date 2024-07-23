@@ -9,6 +9,7 @@ interface TeamMenuListProps {
 
 function TeamMenuList({ menuList }: TeamMenuListProps) {
 	const [isMoreModalOpen, setIsMoreModalOpen] = useState<number>(-1);
+	const [isAllPeopleAdded, setIsAllPeopleAdded] = useState<boolean>(false);
 
 	return (
 		<div className={styles.ListContainer}>
@@ -23,12 +24,14 @@ function TeamMenuList({ menuList }: TeamMenuListProps) {
 						hasUserAddedMenu={teamMenuItem.hasUserAddedMenu}
 						isMoreModalOpen={isMoreModalOpen}
 						setIsMoreModalOpen={setIsMoreModalOpen}
+						isAllPeopleAdded={isAllPeopleAdded}
+						setIsAllPeopleAdded={setIsAllPeopleAdded}
 					/>
 					{isMoreModalOpen === index && (
 						<div
 							style={{
 								position: 'absolute',
-								transform: 'translate(191.5px, -25px)',
+								transform: `${!isAllPeopleAdded ? 'translate(191.5px, -60px)' : 'translate(191.5px, -25px)'}`,
 								zIndex: '6',
 							}}
 						>

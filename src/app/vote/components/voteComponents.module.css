@@ -164,8 +164,6 @@
 	margin-top: 20px;
 }
 
-.ResultMenuItemBox {
-}
 
 .ResultMenuItemTextBox {
 	display: flex;
@@ -183,9 +181,6 @@
 .ResultMenuVoteValue {
 	font-size: 15px;
 	color: var(--gray-60);
-}
-
-.ResultProgressBox {
 }
 
 .LoadingBox {

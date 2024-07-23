@@ -13,6 +13,8 @@ interface TeamMenuItemProps {
 	index: number;
 	isMoreModalOpen: number;
 	setIsMoreModalOpen: React.Dispatch<React.SetStateAction<number>>;
+	setIsAllPeopleAdded: React.Dispatch<React.SetStateAction<boolean>>;
+	isAllPeopleAdded: boolean;
 }
 
 function TeamMenuItem({
@@ -23,9 +25,10 @@ function TeamMenuItem({
 	hasUserAddedMenu,
 	index,
 	setIsMoreModalOpen,
+	setIsAllPeopleAdded,
+	isAllPeopleAdded,
 }: TeamMenuItemProps) {
 	const router = useRouter();
-	const [isAllPeopleAdded, setIsAllPeopleAdded] = useState<boolean>(false);
 
 	const { data: addedMembers } = useQuery<IGetAddedUserInfo>({
 		queryKey: ['MENU_ADDED_MEMBERS_INFO', id],
@@ -68,7 +71,6 @@ function TeamMenuItem({
 					height={24}
 					onClick={(e) => {
 						e.stopPropagation();
-						console.log('더보기', isMoreModalOpen);
 						isMoreModalOpen !== index
 							? setIsMoreModalOpen(index)
 							: setIsMoreModalOpen(-1);

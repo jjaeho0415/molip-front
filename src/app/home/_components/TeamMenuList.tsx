@@ -9,11 +9,12 @@ interface TeamMenuListProps {
 
 function TeamMenuList({ menuList }: TeamMenuListProps) {
 	const [isMoreModalOpen, setIsMoreModalOpen] = useState<number>(-1);
+	const [isAllPeopleAdded, setIsAllPeopleAdded] = useState<boolean>(false);
 
 	return (
 		<div className={styles.ListContainer}>
 			{menuList.map((teamMenuItem, index) => (
-				<React.Fragment key={teamMenuItem.teamBoardId}>
+				<div key={teamMenuItem.teamBoardId} className={styles.itemContainer}>
 					<TeamMenuItem
 						teamTitle={teamMenuItem.teamName}
 						menuName={teamMenuItem.teamBoardName}
@@ -23,12 +24,14 @@ function TeamMenuList({ menuList }: TeamMenuListProps) {
 						hasUserAddedMenu={teamMenuItem.hasUserAddedMenu}
 						isMoreModalOpen={isMoreModalOpen}
 						setIsMoreModalOpen={setIsMoreModalOpen}
+						isAllPeopleAdded={isAllPeopleAdded}
+						setIsAllPeopleAdded={setIsAllPeopleAdded}
 					/>
 					{isMoreModalOpen === index && (
 						<div
 							style={{
-								position: 'relative',
-								transform: 'translate(191.5px, 0px)',
+								position: 'absolute',
+								transform: `${!isAllPeopleAdded ? 'translate(191.5px, -60px)' : 'translate(191.5px, -25px)'}`,
 								zIndex: '6',
 							}}
 						>
@@ -42,7 +45,7 @@ function TeamMenuList({ menuList }: TeamMenuListProps) {
 							/>
 						</div>
 					)}
-				</React.Fragment>
+				</div>
 			))}
 		</div>
 	);

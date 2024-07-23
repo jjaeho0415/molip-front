@@ -21,6 +21,7 @@
 .menuAddP {
 	color: var(--main-50);
 	font-size: 15px;
+	margin-top: 5px;
 	margin-bottom: 10px;
 }
 

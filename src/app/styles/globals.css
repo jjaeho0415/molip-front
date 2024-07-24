@@ -5,12 +5,12 @@ body {
 	::-webkit-scrollbar {
 		width: 0;
 	}
-	background-color: var(--gray-10);
-}
-
-.backgroundImg {
-	z-index: -100;
-	object-fit: cover;
+	background-image: url('/svg/backgroundImg.svg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	margin: 0;
+	padding: 0;
 }
 
 .root_container {

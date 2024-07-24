@@ -41,14 +41,9 @@ export default function RootLayout({
 			<body>
 				<RQProvider>
 					<Suspense>
-						<Image
-							className='backgroundImg'
-							src='/svg/backgroundImg.svg'
-							alt='img'
-							fill
-						/>
+						
 						<div className='root_container'>{children}</div>
-						<Script src={API} strategy='beforeInteractive' />
+						<Script src={API} strategy='afterInteractive' />
 					</Suspense>
 				</RQProvider>
 				<div id='portal' />

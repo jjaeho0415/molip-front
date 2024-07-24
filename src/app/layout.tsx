@@ -4,6 +4,7 @@ import RQProvider from '@/components/RQProvider';
 import { constant } from '@/utils/constant';
 import Script from 'next/script';
 import { Metadata } from 'next';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
 	title: '모두의 입맛 - molip',
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
 	// },
 };
 
-const API:string = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${constant.kakaoKey}&libraries=services,clusterer&autoload=false`;
+const API: string = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${constant.kakaoKey}&libraries=services,clusterer&autoload=false`;
 
 export default function RootLayout({
 	children,
@@ -40,6 +41,12 @@ export default function RootLayout({
 			<body>
 				<RQProvider>
 					<Suspense>
+						<Image
+							className='backgroundImg'
+							src='/svg/backgroundImg.svg'
+							alt='img'
+							fill
+						/>
 						<div className='root_container'>{children}</div>
 						<Script src={API} strategy='beforeInteractive' />
 					</Suspense>

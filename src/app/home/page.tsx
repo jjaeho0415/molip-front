@@ -28,12 +28,14 @@ export default function Home() {
 	const [defaultMyMenuName, setDefaultMyMenuName] = useState<string>('');
 	const [user, setUser] = useState<string>('');
 	const { accessToken } = useAuthStore.getState();
+	const { isLogin } = useAuthStore.getState();
 
 	const { mutate: getAccess } = useMutation<IRefreshType>({
 		mutationFn: getAccessToken,
 		mutationKey: ['refresh'],
 		onSuccess: (data: IRefreshType) => {
 			useAuthStore.setState({ isLogin: true, accessToken: data.access });
+			window.location.reload();
 		},
 		onError: (error) => {
 			console.error('Error fetching access token:', error);
@@ -43,6 +45,7 @@ export default function Home() {
 	const { data: userName } = useQuery<IGetUserNameType>({
 		queryKey: ['USER_NAME'],
 		queryFn: getUserName,
+		enabled: isLogin,
 	});
 
 	useEffect(() => {
@@ -57,11 +60,12 @@ export default function Home() {
 		if (current.includes('molip') && accessToken === null) {
 			getAccess();
 		}
-	}, [accessToken]);
+	}, [getAccess]);
 
 	const { data: myMenuList, isLoading } = useQuery<IGetMyMenuType[]>({
 		queryKey: ['MY_MENU_LIST'],
 		queryFn: getMyMenuList,
+		enabled: isLogin,
 	});
 
 	useEffect(() => {
@@ -73,6 +77,7 @@ export default function Home() {
 	const { data: teamMenuList } = useQuery<IGetTeamMenuType[]>({
 		queryKey: ['TEAM_MENU_LIST'],
 		queryFn: getTeamMenuList,
+		enabled: isLogin,
 	});
 
 	useEffect(() => {

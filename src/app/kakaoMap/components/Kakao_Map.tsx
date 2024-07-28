@@ -12,9 +12,10 @@ import styles from './map.module.css';
 
 interface IKakaoMap {
 	keyword: string;
+	onLoad: () => void;
 }
 
-export default function Kakao_Map({ keyword }: IKakaoMap) {
+export default function Kakao_Map({ keyword, onLoad }: IKakaoMap) {
 	useKakaoLoader();
 	const mapRef = useRef<kakao.maps.Map>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -52,7 +53,7 @@ export default function Kakao_Map({ keyword }: IKakaoMap) {
 				console.error(err);
 			},
 		);
-
+		onLoad();
 		return () => {
 			navigator.geolocation.clearWatch(watchId);
 		};

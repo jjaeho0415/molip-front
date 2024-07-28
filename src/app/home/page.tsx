@@ -154,7 +154,7 @@ export default function Home() {
 													style={{
 														position: 'absolute',
 														transform: 'translate(13%, 80%)',
-														zIndex: '20'
+														zIndex: '20',
 													}}
 												>
 													<InformationModal />
@@ -163,11 +163,13 @@ export default function Home() {
 										</>
 									)}
 						</p>
-						<Button state='new' onClick={handleCreateMenuBoard}>
-							+ 새로만들기
-						</Button>
+						{tab === 'my' ||
+							(tab === 'team' && (
+								<Button state='new' onClick={handleCreateMenuBoard}>
+									+ 새로만들기
+								</Button>
+							))}
 					</div>
-
 					<div className={styles.Container}>
 						{myMenuList && teamMenuList && (
 							<>

@@ -8,10 +8,12 @@ import Image from 'next/image';
 import Icon_option from '../../../public/icons/buttons/option.svg';
 import Icon_search from '../../../public/icons/Icon_search.svg';
 import { useState } from 'react';
+import Loading from '@/components/Loading';
 
 export default function KakaoMap() {
 	const [keyword, setKeyword] = useState<string>('');
 	const [searchKeyword, setSearchKeyword] = useState<string>('');
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (
@@ -32,6 +34,10 @@ export default function KakaoMap() {
 		if (keyword.trim() !== '') {
 			setSearchKeyword(keyword);
 		}
+	};
+
+	const handleMapLoad = () => {
+		setIsLoading(false);
 	};
 
 	return (
@@ -59,7 +65,13 @@ export default function KakaoMap() {
 					<Image src={Icon_option} width={24} height={24} alt='option' />
 				</div>
 			</div>
-			<Kakao_Map keyword={searchKeyword} />
+			{isLoading ? (
+				<div className={styles.loading}>
+					<Loading backgroundColor='white' />
+				</div>
+			) : (
+				<Kakao_Map keyword={searchKeyword} onLoad={handleMapLoad} />
+			)}
 		</>
 	);
 }

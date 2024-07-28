@@ -3,9 +3,9 @@ import './styles/globals.css';
 import RQProvider from '@/components/RQProvider';
 import { constant } from '@/utils/constant';
 import Script from 'next/script';
-import Head from 'next/head';
+import { Metadata } from 'next';
 
-export const metadata: MetaDataType = {
+export const metadata: Metadata = {
 	title: '모두의 입맛 - molip',
 	description: '직장인 메뉴 선정 서비스',
 	icons: {
@@ -37,35 +37,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='ko'>
-			<Head>
-				<title>{metadata.title}</title>
-				<meta name='description' content={metadata.description} />
-				<link rel='icon' href={metadata.icons.icon} sizes='any' />
-				<meta property='og:title' content={metadata.openGraph.title} />
-				<meta
-					property='og:description'
-					content={metadata.openGraph.description}
-				/>
-				<meta property='og:image' content={metadata.openGraph.images[0].url} />
-				<meta
-					property='og:image:width'
-					content={`${metadata.openGraph.images[0].width}`}
-				/>
-				<meta
-					property='og:image:height'
-					content={`${metadata.openGraph.images[0].height}`}
-				/>
-				<meta property='og:site_name' content={metadata.openGraph.siteName} />
-				<meta property='og:type' content={metadata.openGraph.type} />
-				{/* <link
-					rel='apple-touch-icon'
-					href=''
-				/>
-				<link
-					rel='shortcut icon'
-					href=''
-				/> */}
-			</Head>
+			
 			<body>
 				<RQProvider>
 					<Suspense>

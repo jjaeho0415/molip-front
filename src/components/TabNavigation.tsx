@@ -13,7 +13,6 @@ interface TabNavigationProps {
 
 export default function TabNavigation({ canvasRef }: TabNavigationProps) {
 	const { tab, setTab } = useHomeStore();
-	// const isLogin = true;
 	const { isLogin } = useAuthStore.getState();
 	const router = useRouter();
 	const [isTrialViewModalOpen, setIsTrialViewModalOpen] =

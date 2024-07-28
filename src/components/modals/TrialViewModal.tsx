@@ -1,4 +1,4 @@
-import React, { Dispatch, RefObject, SetStateAction, useState } from 'react';
+import React, { Dispatch, RefObject, SetStateAction, useEffect, useState } from 'react';
 import styles from './styles/trialViewModal.module.css';
 import ModalButton from '../buttons/ModalButton';
 import ReactDOM from 'react-dom';
@@ -15,6 +15,13 @@ interface TrialViewModalProps {
 function TrialViewModal({ setIsTrialModalOpen,canvasRef }: TrialViewModalProps) {
 	const [isImageSaveBtnShow, setIsImageSaveBtnShow] = useState<boolean>(true);
 	const route = useRouter();
+	const current = window.location.href;
+
+	useEffect(() => {
+		if (current.includes('trial')) {
+			setIsImageSaveBtnShow(false);
+		}
+	},[])
 
 	const closeModal = (): void => {
 		setIsTrialModalOpen(false);

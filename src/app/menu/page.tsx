@@ -25,7 +25,6 @@ export default function Menu() {
 	const { tab } = useHomeStore();
 	const router = useRouter();
 	const { isLogin } = useAuthStore.getState();
-	// const isLogin = true;
 	const canvasRef = useRef<HTMLDivElement>(null);
 	const searchParams = useSearchParams();
 	const menuId = Number(searchParams.get('menuId'));

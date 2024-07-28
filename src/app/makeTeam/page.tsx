@@ -11,7 +11,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { postCreateTeamMenu } from '@/api/postCreatTeamMenu';
 import { getTeamMenuList } from '@/api/getTeamMenuList';
 
-const numArr = [1, 2, 3, 4, 5, 6, 7, 8];
+const numArr = [2, 3, 4, 5, 6, 7, 8];
 
 export default function MakeTeam() {
 	const router = useRouter();

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import styles from './styles/modifyModal.module.css';
 import ModalButton from '../buttons/ModalButton';
@@ -36,13 +38,15 @@ function ModifyModal({
 			queryClient.invalidateQueries({ queryKey: ['TEAM_MENU_LIST'] });
 			setIsModifyModalOpen(false);
 			setIsMoreModalOpen(-1);
-			alert('메뉴판 이름 수정 성공!');
+			alert('팀 정보 수정 성공!');
 		},
 		onError: (error) => console.error(error),
 	});
 
 	const handleNumberSelect = (num: number) => {
-		setSelectedNumber(num);
+		if (teamNumber <= num) {
+			setSelectedNumber(num);
+		}
 	};
 
 	const handleSave = (): void => {
@@ -61,7 +65,7 @@ function ModifyModal({
 	const inputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setName(e.target.value);
 	};
-	const items = [1, 2, 3, 4, 5, 6, 7, 8];
+	const items = [2, 3, 4, 5, 6, 7, 8];
 
 	return ReactDOM.createPortal(
 		<>

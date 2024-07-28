@@ -38,7 +38,7 @@ function TeamMenuList({ menuList }: TeamMenuListProps) {
 							<MoreModal
 								menuTitle={teamMenuItem.teamBoardName}
 								teamNumber={teamMenuItem.teamMembersNum}
-								teamTitle={teamMenuItem.teamBoardName}
+								teamTitle={teamMenuItem.teamName}
 								pageType='outsideTeamMenu'
 								menuId={teamMenuItem.teamBoardId}
 								setIsMoreModalOpen={setIsMoreModalOpen}

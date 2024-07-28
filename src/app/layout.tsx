@@ -71,7 +71,7 @@ export default function RootLayout({
 					<Suspense>
 						<div className='root_container'>{children}</div>
 						<Script src={API} strategy='afterInteractive' />
-						<script src='https://developers.kakao.com/sdk/js/kakao.js' />
+						<Script src='https://developers.kakao.com/sdk/js/kakao.js' />
 						<Script
 							src='https://cdn.swygbro.com/public/widget/swyg-widget.js'
 							strategy='afterInteractive'

@@ -4,6 +4,7 @@ import InputModal from './InputModal';
 import NoticeModal from './NoticeModal';
 import ModifyModal from './ModifyModal';
 import useKakaoShare from '@/hooks/useKakaoShare';
+import InviteModal from './InviteModal';
 
 interface MoreModalProps {
 	pageType:
@@ -31,6 +32,7 @@ function MoreModal({
 	const [isInputModalOpen, setIsInputModalOpen] = useState<boolean>(false);
 	const [isNoticeModalOpen, setIsNoticeModalOpen] = useState<boolean>(false);
 	const [isModifyModalOpen, setIsModifyModalOpen] = useState<boolean>(false);
+	const [isInviteModalOpen, setIsInviteModalOpen] = useState<boolean>(false);
 	const items =
 		pageType === 'insideTeamMenu'
 			? ['팀명/인원수 수정', '메뉴판 이름 변경', '메뉴판 삭제', '공유하기']
@@ -54,7 +56,7 @@ function MoreModal({
 		} else if (item === '메뉴판 삭제') {
 			setIsNoticeModalOpen(true);
 		} else if (item === '팀원 추가(초대)') {
-			return;
+			setIsInviteModalOpen(true);
 		} else {
 			handleShare();
 		}
@@ -82,6 +84,13 @@ function MoreModal({
 					menuId={menuId}
 					setIsInputModalOpen={setIsInputModalOpen}
 					titleText={menuTitle}
+				/>
+			)}
+			{isInviteModalOpen && (
+				<InviteModal
+					setIsInviteModalOpen={setIsInviteModalOpen}
+					menuId={menuId}
+					menuName={menuTitle}
 				/>
 			)}
 			{isNoticeModalOpen && (

@@ -1,4 +1,6 @@
-import React, { Dispatch, SetStateAction } from 'react';
+'use client';
+
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styles from './styles/inviteModal.module.css';
 import ModalButton from '../buttons/ModalButton';
 import ReactDOM from 'react-dom';
@@ -18,8 +20,16 @@ function InviteModal({
 	menuId,
 	menuName,
 }: InviteModalProps) {
-	const currentUrl = `${window.location.origin}/teamMenuPage?menuName=${menuName}&menuId=${menuId}`;
+	const [currentUrl, setCurrentUrl] = useState<string>('');
 	const { handleKakaoInvite } = useKakaoInvite(currentUrl);
+
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			setCurrentUrl(
+				`${window.location.origin}/teamMenuPage?menuName=${menuName}&menuId=${menuId}`,
+			);
+		}
+	}, [menuId, menuName]);
 
 	const handleClose = () => {
 		setIsInviteModalOpen(false);

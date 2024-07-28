@@ -49,8 +49,27 @@ function TutorialStep({ step }: TutorialStepProps) {
 						</>
 					)}
 					<div>
-						<p>다양한 옵션으로</p>
-						<p>맞춤 입맛 설정</p>
+						{step === 1 ? (
+							<>
+								<p>다양한 옵션으로</p>
+								<p>맞춤 입맛 설정</p>
+							</>
+						) : step === 2 ? (
+							<>
+								<p>다양한 상황별</p>
+								<p>맞춤 입맛 저장</p>
+							</>
+						) : step === 3 ? (
+							<>
+								<p style={{ whiteSpace: 'nowrap' }}>서로의 입맛을 맞출</p>
+								<p>투표 기능</p>
+							</>
+						) : (
+							<>
+								<p>지난 결과 보기로</p>
+								<p>놓쳤던 입맛 찾기</p>
+							</>
+						)}
 					</div>
 				</div>
 				<div className={styles.imageContainer}>

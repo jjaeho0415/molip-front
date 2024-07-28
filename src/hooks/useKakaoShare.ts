@@ -66,8 +66,8 @@ const useKakaoShare = ({ canvasRef }: useKakaoShareProps) => {
 				objectType: 'feed',
 				content: {
 					title: '모입 : 모두의 입맛을 충족해 줄 메뉴판',
-					description: '이미지 공유',
-					imageUrl: imageUrl,
+					description: '메뉴판 이미지 공유',
+					imageUrl: `${imageUrl}?timestamp=` + new Date().getTime(),
 					link: {
 						mobileWebUrl: shareUrl,
 						webUrl: shareUrl,

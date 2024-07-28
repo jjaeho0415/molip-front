@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 		icon: '/logo/Logo_noBg_orange.svg',
 	},
 	openGraph: {
-		title: '모두의 입맛 - molip',
-		description: '직장인 메뉴 선정 서비스',
+		title: '모입: 모두의 입맛을 충족해줄 메뉴판',
+		// description: '직장인 메뉴 선정 서비스',
 		images: [
 			{
 				url: '/image/openGraphImg.png',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 			},
 		],
 
-		siteName: '모두의 입맛 - molip',
+		siteName: '모입: 모두의 입맛을 충족해줄 메뉴판',
 		type: 'website',
 	},
 	metadataBase: new URL('https://molip.swygbro.com'),

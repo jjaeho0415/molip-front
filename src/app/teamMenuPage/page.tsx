@@ -20,6 +20,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getMyMenuList } from '@/api/getMyMenuList';
 import { getTeamMenuItem } from '@/api/getTeamMenuItem';
 import { getHasMenuAddedMembers } from '@/api/getHasMenuAddedMembers';
+import { useKakaoInvite } from '@/hooks/useKakaoInvite';
 
 export default function TeamMenuPage() {
 	const { setIsOpen } = useBottomSheet();
@@ -32,7 +33,7 @@ export default function TeamMenuPage() {
 	const [currentUrl, setCurrentUrl] = useState<string>('');
 	const [isAllPeopleAdded, setIsAllPeopleAdded] = useState<boolean>(false);
 	const [isUserAddedMenu, setIsUserAddedMenu] = useState<boolean>(false);
-
+	const { handleKakaoInvite } = useKakaoInvite(currentUrl);
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
 			setCurrentUrl(window.location.href);
@@ -139,7 +140,7 @@ export default function TeamMenuPage() {
 					<p className={styles.comment}>팀원 초대하기</p>
 
 					<div className={styles.iconsBox}>
-						<div className={styles.icon}>
+						<div className={styles.icon} onClick={() => handleKakaoInvite()}>
 							<Image src={Icon_kakao} width={50} height={50} alt='kakao' />
 							<p className={styles.iconName}>카카오톡</p>
 						</div>

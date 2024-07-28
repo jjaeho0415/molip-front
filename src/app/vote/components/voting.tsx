@@ -40,7 +40,7 @@ export default function Voting({ onNext }: IVotingProps) {
 		mutationFn: (postVoteArr: number[]) => postVote(boardId, postVoteArr),
 		onSuccess: () => {
 			alert('투표 완료');
-			onNext;
+			onNext();
 		},
 		onSettled: () => setIsVoteLoading(false),
 	});

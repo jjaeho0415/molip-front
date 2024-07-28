@@ -40,7 +40,6 @@ export default function TopNavBar({
 	setActive,
 }: ITopNavBarProps) {
 	const { isLogin } = useAuthStore.getState();
-	// const isLogin = true;
 	const [isModalOpen, setIsModalOpen] = useState<number>(-1);
 	const [isNoticeModalOpen, setIsNoticeModalOpen] = useState<boolean>(false);
 	const route = useRouter();

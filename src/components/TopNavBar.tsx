@@ -8,6 +8,7 @@ import MoreModal from './modals/MoreModal';
 import { Dispatch, RefObject, SetStateAction, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import NoticeModal from './modals/NoticeModal';
+import { useAuthStore } from '@/app/login/store/useAuthStore';
 
 interface ITopNavBarProps {
 	menu?: boolean;
@@ -38,8 +39,8 @@ export default function TopNavBar({
 	active,
 	setActive,
 }: ITopNavBarProps) {
-	// const { isLogin } = useAuthStore.getState();
-	const isLogin = true;
+	const { isLogin } = useAuthStore.getState();
+	// const isLogin = true;
 	const [isModalOpen, setIsModalOpen] = useState<number>(-1);
 	const [isNoticeModalOpen, setIsNoticeModalOpen] = useState<boolean>(false);
 	const route = useRouter();

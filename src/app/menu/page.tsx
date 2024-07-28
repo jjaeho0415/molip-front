@@ -18,13 +18,14 @@ import Loading from '@/components/Loading';
 import { getTeamMenus } from '@/api/getTeamMenus';
 import useHomeStore from '../home/store/useHomeStore';
 import useKakaoShare from '@/hooks/useKakaoShare';
+import { useAuthStore } from '../login/store/useAuthStore';
 
 export default function Menu() {
 	const [active, setActive] = useState<'메뉴판' | '메뉴이미지'>('메뉴판');
 	const { tab } = useHomeStore();
 	const router = useRouter();
-	// const { isLogin } = useAuthStore.getState();
-	const isLogin = true;
+	const { isLogin } = useAuthStore.getState();
+	// const isLogin = true;
 	const canvasRef = useRef<HTMLDivElement>(null);
 	const searchParams = useSearchParams();
 	const menuId = Number(searchParams.get('menuId'));

@@ -89,7 +89,11 @@ export default function Menu() {
 				menuList && (
 					<>
 						<div className={styles.Container}>
-							{isLogin ? <Header /> : <TopNavBar title='체험중' />}
+							{isLogin ? (
+								<Header />
+							) : (
+								<TopNavBar title='체험중' backRoute='/login' />
+							)}
 							<TabNavigation canvasRef={canvasRef} />
 							<TopNavBar
 								canvasRef={canvasRef}

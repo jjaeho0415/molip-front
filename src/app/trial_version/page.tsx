@@ -13,9 +13,9 @@ import IsEmptyModal from '../createMyMenu/_components/IsEmptyModal';
 import Image from 'next/image';
 
 function Trial_Version() {
-	const [value, setValue] = useState<string>('나의메뉴판');
+	const [value, setValue] = useState<string>('');
 
-	const [isEmptyModalOpen, setIsEmptyModalOpen] = useState<boolean>(false);
+	const [isEmptyModalOpen, setIsEmptyModalOpen] = useState<boolean>(true);
 	const { setIsOpen } = useBottomSheet();
 
 	useEffect(() => {
@@ -28,7 +28,7 @@ function Trial_Version() {
 	}, [value]);
 
 	const handleClickButton = () => {
-		if (isEmptyModalOpen) {
+		if (value === '') {
 			alert('메뉴판 이름을 지어주세요!');
 			return;
 		}
@@ -39,7 +39,7 @@ function Trial_Version() {
 	return (
 		<div className={styles.Container}>
 			<TopNavBar title='체험중' backRoute='/login' />
-			<TabNavigation/>
+			<TabNavigation />
 			<div className={styles.ContentsContainer}>
 				<div className={styles.inputBox}>
 					<SmallInput
@@ -70,7 +70,10 @@ function Trial_Version() {
 				</div>
 				<p className={styles.bottomComment}>위로 올려 옵션을 선택하세요.</p>
 				<BottomSheet>
-					<AddTaste_BS onClick={handleClickButton} />
+					<AddTaste_BS
+						onClick={handleClickButton}
+						isEmptyModalOpen={isEmptyModalOpen}
+					/>
 				</BottomSheet>
 			</div>
 		</div>

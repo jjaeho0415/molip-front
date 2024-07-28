@@ -14,5 +14,6 @@ type MetaDataType = {
 		}[];
 		siteName: string;
 		type: string;
-	};
+    };
+    metadataBase: Url;
 };

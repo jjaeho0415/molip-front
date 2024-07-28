@@ -30,9 +30,7 @@ export default function Menu() {
 	const searchParams = useSearchParams();
 	const menuId = Number(searchParams.get('menuId'));
 	const [menuList, setMenuList] = useState<IGetMyCategoryMenuType[]>([]);
-	const { handleShare } = canvasRef
-		? useKakaoShare({ canvasRef })
-		: { handleShare: () => {} };
+	const { handleShare } = useKakaoShare({ canvasRef });
 
 	useEffect(() => {
 		if (!menuId) {

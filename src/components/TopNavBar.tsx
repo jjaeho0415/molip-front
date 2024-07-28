@@ -5,9 +5,10 @@ import styles from './topNavBar.module.css';
 import Icon_Back from '../../public/icons/Icon_back.svg';
 import TopMenuButton from './buttons/TopMenuButton';
 import MoreModal from './modals/MoreModal';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, RefObject, SetStateAction, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import NoticeModal from './modals/NoticeModal';
+import { useAuthStore } from '@/app/login/store/useAuthStore';
 
 interface ITopNavBarProps {
 	menu?: boolean;
@@ -23,11 +24,13 @@ interface ITopNavBarProps {
 	backRoute?: string;
 	active?: '메뉴판' | '메뉴이미지';
 	setActive?: Dispatch<SetStateAction<'메뉴판' | '메뉴이미지'>>;
+	canvasRef?: RefObject<HTMLDivElement>;
 }
 
 export default function TopNavBar({
 	menu = false,
 	title,
+	canvasRef,
 	pageType = 'insideTeamMenu',
 	menuTitle = '',
 	teamTitle = '',
@@ -36,8 +39,8 @@ export default function TopNavBar({
 	active,
 	setActive,
 }: ITopNavBarProps) {
-	// const { isLogin } = useAuthStore.getState();
-	const isLogin = true;
+	const { isLogin } = useAuthStore.getState();
+	// const isLogin = true;
 	const [isModalOpen, setIsModalOpen] = useState<number>(-1);
 	const [isNoticeModalOpen, setIsNoticeModalOpen] = useState<boolean>(false);
 	const route = useRouter();
@@ -100,6 +103,7 @@ export default function TopNavBar({
 						teamNumber={teamNumber}
 						menuId={menuId}
 						setIsMoreModalOpen={setIsModalOpen}
+						canvasRef={canvasRef}
 					/>
 				</div>
 			)}

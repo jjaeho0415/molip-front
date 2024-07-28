@@ -4,7 +4,6 @@ import RQProvider from '@/components/RQProvider';
 import { constant } from '@/utils/constant';
 import Script from 'next/script';
 import { Metadata } from 'next';
-import Image from 'next/image';
 
 export const metadata: Metadata = {
 	title: '모두의 입맛 - molip',
@@ -12,20 +11,20 @@ export const metadata: Metadata = {
 	icons: {
 		icon: '/logo/Logo_noBg_orange.svg',
 	},
-	// openGraph: {
-	//   title: '',
-	//   description: '',
-	//   images: [
-	//     {
-	//       url: 'https://raw.githubusercontent.com/SWYP-LUCKY-SEVEN/front-end/develop/public/Icon_Logo.png',
-	//       width: 1900,
-	//       height: 600,
-	//     },
-	//   ],
+	openGraph: {
+		title: '모두의 입맛 - molip',
+		description: '직장인 메뉴 선정 서비스',
+		images: [
+			{
+				url: '/image/openGraphImg.png',
+				width: 800,
+				height: 400,
+			},
+		],
 
-	// siteName: '모두의 입맛 - molip',
-	// type: 'website',
-	// },
+		siteName: '모두의 입맛 - molip',
+		type: 'website',
+	},
 };
 
 const API: string = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${constant.kakaoKey}&libraries=services,clusterer&autoload=false`;
@@ -41,14 +40,13 @@ export default function RootLayout({
 			<body>
 				<RQProvider>
 					<Suspense>
-						<Image
-							className='backgroundImg'
-							src='/svg/backgroundImg.svg'
-							alt='img'
-							fill
-						/>
 						<div className='root_container'>{children}</div>
-						<Script src={API} strategy='beforeInteractive' />
+						<Script src={API} strategy='afterInteractive' />
+						<script src='https://developers.kakao.com/sdk/js/kakao.js' />
+						<Script
+							src='https://cdn.swygbro.com/public/widget/swyg-widget.js'
+							strategy='afterInteractive'
+						/>
 					</Suspense>
 				</RQProvider>
 				<div id='portal' />

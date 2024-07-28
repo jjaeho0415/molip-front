@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import useHomeStore from '@/app/home/store/useHomeStore';
 import { RefObject, useState } from 'react';
 import TrialViewModal from './modals/TrialViewModal';
+import { useAuthStore } from '@/app/login/store/useAuthStore';
 
 interface TabNavigationProps {
 	canvasRef?: RefObject<HTMLDivElement>;
@@ -12,8 +13,8 @@ interface TabNavigationProps {
 
 export default function TabNavigation({ canvasRef }: TabNavigationProps) {
 	const { tab, setTab } = useHomeStore();
-	const isLogin = true;
-	// const { isLogin } = useAuthStore.getState();
+	// const isLogin = true;
+	const { isLogin } = useAuthStore.getState();
 	const router = useRouter();
 	const [isTrialViewModalOpen, setIsTrialViewModalOpen] =
 		useState<boolean>(false);

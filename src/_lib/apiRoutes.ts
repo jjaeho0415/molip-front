@@ -7,5 +7,6 @@ export const apiRoutes = {
 	users: '/users',
 	userName: '/user/username',
 	guest: '/guest/recommend',
-	myPage: '/mypage'
+	myPage: '/mypage',
+	uploadImg: '/upload',
 };

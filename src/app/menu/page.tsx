@@ -17,17 +17,20 @@ import { getMyMenu } from '@/api/getMyMenu';
 import Loading from '@/components/Loading';
 import { getTeamMenus } from '@/api/getTeamMenus';
 import useHomeStore from '../home/store/useHomeStore';
+import useKakaoShare from '@/hooks/useKakaoShare';
+import { useAuthStore } from '../login/store/useAuthStore';
 
 export default function Menu() {
 	const [active, setActive] = useState<'메뉴판' | '메뉴이미지'>('메뉴판');
 	const { tab } = useHomeStore();
 	const router = useRouter();
-	// const { isLogin } = useAuthStore.getState();
-	const isLogin = true;
+	const { isLogin } = useAuthStore.getState();
+	// const isLogin = true;
 	const canvasRef = useRef<HTMLDivElement>(null);
 	const searchParams = useSearchParams();
 	const menuId = Number(searchParams.get('menuId'));
 	const [menuList, setMenuList] = useState<IGetMyCategoryMenuType[]>([]);
+	const { handleShare } = useKakaoShare({ canvasRef });
 
 	useEffect(() => {
 		if (!menuId) {
@@ -54,10 +57,6 @@ export default function Menu() {
 	useEffect(() => {
 		menu && setMenuList(menu);
 	}, [menu]);
-
-	const handleShare = () => {
-		return;
-	};
 
 	const handleModifyOption = () => {
 		return;
@@ -94,6 +93,7 @@ export default function Menu() {
 							{isLogin ? <Header /> : <TopNavBar title='체험중' />}
 							<TabNavigation canvasRef={canvasRef} />
 							<TopNavBar
+								canvasRef={canvasRef}
 								menu={true}
 								active={active}
 								setActive={setActive}
@@ -125,7 +125,7 @@ export default function Menu() {
 										)
 									) : (
 										<ShareButton
-											handleLeftClick={handleShare}
+											handleLeftClick={() => handleShare}
 											handleRightClick={handleDownImage}
 										>
 											공유하기

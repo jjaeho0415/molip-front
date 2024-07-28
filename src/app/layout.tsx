@@ -4,7 +4,6 @@ import RQProvider from '@/components/RQProvider';
 import { constant } from '@/utils/constant';
 import Script from 'next/script';
 import { Metadata } from 'next';
-import Image from 'next/image';
 
 export const metadata: Metadata = {
 	title: '모두의 입맛 - molip',
@@ -41,9 +40,13 @@ export default function RootLayout({
 			<body>
 				<RQProvider>
 					<Suspense>
-						
 						<div className='root_container'>{children}</div>
 						<Script src={API} strategy='afterInteractive' />
+						<script src='https://developers.kakao.com/sdk/js/kakao.js' />
+						<Script
+							src='https://cdn.swygbro.com/public/widget/swyg-widget.js'
+							strategy='afterInteractive'
+						/>
 					</Suspense>
 				</RQProvider>
 				<div id='portal' />

@@ -1,8 +1,9 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, RefObject, SetStateAction, useState } from 'react';
 import styles from './styles/moreModal.module.css';
 import InputModal from './InputModal';
 import NoticeModal from './NoticeModal';
 import ModifyModal from './ModifyModal';
+import useKakaoShare from '@/hooks/useKakaoShare';
 
 interface MoreModalProps {
 	pageType:
@@ -15,6 +16,7 @@ interface MoreModalProps {
 	teamNumber: number;
 	menuId: number;
 	setIsMoreModalOpen: Dispatch<SetStateAction<number>>;
+	canvasRef?: RefObject<HTMLDivElement>;
 }
 
 function MoreModal({
@@ -23,6 +25,7 @@ function MoreModal({
 	teamTitle,
 	teamNumber,
 	menuId,
+	canvasRef,
 	setIsMoreModalOpen,
 }: MoreModalProps) {
 	const [isInputModalOpen, setIsInputModalOpen] = useState<boolean>(false);
@@ -41,6 +44,7 @@ function MoreModal({
 				: pageType === 'insideMyMenu'
 					? ['메뉴판 이름 변경', '메뉴판 삭제', '공유하기']
 					: ['메뉴판 이름 변경', '메뉴판 삭제'];
+	const { handleShare } = useKakaoShare({ canvasRef });
 
 	const handleClick = (item: string) => {
 		if (item === '팀명/인원수 수정') {
@@ -49,9 +53,10 @@ function MoreModal({
 			setIsInputModalOpen(true);
 		} else if (item === '메뉴판 삭제') {
 			setIsNoticeModalOpen(true);
-		} else {
-			// 공유하기
+		} else if (item === '팀원 추가(초대)') {
 			return;
+		} else {
+			handleShare();
 		}
 	};
 

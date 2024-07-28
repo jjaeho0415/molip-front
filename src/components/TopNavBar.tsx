@@ -5,7 +5,7 @@ import styles from './topNavBar.module.css';
 import Icon_Back from '../../public/icons/Icon_back.svg';
 import TopMenuButton from './buttons/TopMenuButton';
 import MoreModal from './modals/MoreModal';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, RefObject, SetStateAction, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import NoticeModal from './modals/NoticeModal';
 
@@ -23,11 +23,13 @@ interface ITopNavBarProps {
 	backRoute?: string;
 	active?: '메뉴판' | '메뉴이미지';
 	setActive?: Dispatch<SetStateAction<'메뉴판' | '메뉴이미지'>>;
+	canvasRef?: RefObject<HTMLDivElement>;
 }
 
 export default function TopNavBar({
 	menu = false,
 	title,
+	canvasRef,
 	pageType = 'insideTeamMenu',
 	menuTitle = '',
 	teamTitle = '',
@@ -100,6 +102,7 @@ export default function TopNavBar({
 						teamNumber={teamNumber}
 						menuId={menuId}
 						setIsMoreModalOpen={setIsModalOpen}
+						canvasRef={canvasRef}
 					/>
 				</div>
 			)}

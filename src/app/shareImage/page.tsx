@@ -2,6 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import styles from './shareImage.module.css';
 
 export default function ShareImage() {
 	const searchParams = useSearchParams();
@@ -14,5 +15,11 @@ export default function ShareImage() {
 		}
 	}, [image]);
 
-	return <div>{imageSrc && <img src={imageSrc} alt='Shared Image' />}</div>;
+	return (
+		<div>
+			{imageSrc && (
+				<img className={styles.imageBox} src={imageSrc} alt='Shared Image' />
+			)}
+		</div>
+	);
 }

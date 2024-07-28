@@ -1,6 +1,7 @@
 'use client';
 
 import Splash from '@/components/Splash';
+import KakaoInitializer from '@/utils/KakaoInitializer';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -16,6 +17,7 @@ export default function Home() {
 
 	return (
 		<>
+			<KakaoInitializer />
 			<Splash />
 		</>
 	);

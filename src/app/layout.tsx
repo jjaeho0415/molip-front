@@ -37,13 +37,15 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='ko'>
-			
 			<body>
 				<RQProvider>
 					<Suspense>
 						<div className='root_container'>{children}</div>
 						<Script src={API} strategy='afterInteractive' />
-						<Script src='https://developers.kakao.com/sdk/js/kakao.js' />
+						<Script
+							src='https://developers.kakao.com/sdk/js/kakao.js'
+							strategy='afterInteractive'
+						/>
 						<Script
 							src='https://cdn.swygbro.com/public/widget/swyg-widget.js'
 							strategy='afterInteractive'

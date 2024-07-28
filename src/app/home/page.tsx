@@ -154,6 +154,7 @@ export default function Home() {
 													style={{
 														position: 'absolute',
 														transform: 'translate(13%, 80%)',
+														zIndex: '20'
 													}}
 												>
 													<InformationModal />

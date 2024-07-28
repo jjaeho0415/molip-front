@@ -9,12 +9,18 @@ interface useKakaoShareProps {
 
 const useKakaoShare = ({ canvasRef }: useKakaoShareProps) => {
 	useEffect(() => {
-		if (typeof window !== 'undefined') {
-			const { Kakao } = window;
-
-			if (Kakao && !Kakao.isInitialized()) {
-				Kakao.init(constant.kakaoKey);
+		const initializeKakao = () => {
+			if (window.Kakao && !window.Kakao.isInitialized()) {
+				window.Kakao.init(constant.kakaoKey);
 			}
+		};
+
+		// Kakao SDK가 이미 로드되었는지 확인
+		if (document.readyState === 'complete') {
+			initializeKakao();
+		} else {
+			window.addEventListener('load', initializeKakao);
+			return () => window.removeEventListener('load', initializeKakao);
 		}
 	}, []);
 
@@ -52,7 +58,9 @@ const useKakaoShare = ({ canvasRef }: useKakaoShareProps) => {
 				alert('Failed to generate the image');
 				return;
 			}
-			const imageUrl = await uploadImageToS3(dataURL);
+			const response = await uploadImageToS3(dataURL);
+			const imageUrl = response.s3ImageUrl;
+			console.log(imageUrl);
 			const shareUrl = `${window.location.origin}/shareImage?image=${imageUrl}`;
 			Kakao.Share.sendDefault({
 				objectType: 'feed',

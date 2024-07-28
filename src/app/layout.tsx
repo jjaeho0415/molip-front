@@ -11,20 +11,20 @@ export const metadata: Metadata = {
 	icons: {
 		icon: '/logo/Logo_noBg_orange.svg',
 	},
-	// openGraph: {
-	//   title: '',
-	//   description: '',
-	//   images: [
-	//     {
-	//       url: 'https://raw.githubusercontent.com/SWYP-LUCKY-SEVEN/front-end/develop/public/Icon_Logo.png',
-	//       width: 1900,
-	//       height: 600,
-	//     },
-	//   ],
+	openGraph: {
+		title: '모두의 입맛 - molip',
+		description: '직장인 메뉴 선정 서비스',
+		images: [
+			{
+				url: '/image/openGraphImg.png',
+				width: 800,
+				height: 400,
+			},
+		],
 
-	// siteName: '모두의 입맛 - molip',
-	// type: 'website',
-	// },
+		siteName: '모두의 입맛 - molip',
+		type: 'website',
+	},
 };
 
 const API: string = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${constant.kakaoKey}&libraries=services,clusterer&autoload=false`;

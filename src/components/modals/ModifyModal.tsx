@@ -36,6 +36,7 @@ function ModifyModal({
 		mutationKey: ['EDIT_TEAM_MENU_INFO', teamBoardId, name, selectedNumber],
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['TEAM_MENU_LIST'] });
+			queryClient.invalidateQueries({ queryKey: ['MENU_ADDED_MEMBERS_INFO'] });
 			setIsModifyModalOpen(false);
 			setIsMoreModalOpen(-1);
 			alert('팀 정보 수정 성공!');
@@ -96,7 +97,13 @@ function ModifyModal({
 						/>
 					</div>
 					<div className={styles.bottomSection}>
-						<p className={styles.bottomTitle}>인원수를 선택하세요.</p>
+						<div>
+							<p className={styles.bottomTitle}>인원수를 선택하세요.</p>
+							<p className={styles.bottomNotice}>
+								현재 인원보다 적은 인원은 선택할 수 없습니다.
+							</p>
+						</div>
+
 						<div className={styles.teamNumberSelect}>
 							{items.map((item, index) => (
 								<div

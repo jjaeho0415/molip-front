@@ -1,110 +1,117 @@
 .overlay {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 60;
+	position: fixed;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 60;
 }
 
 .modal {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  background-color: var(--white);
-  border-radius: 20px;
-  padding: 40px 30px 24px 30px;
-  width: 300px;
-  height: 422px;
+	display: flex;
+	position: relative;
+	flex-direction: column;
+	background-color: var(--white);
+	border-radius: 20px;
+	padding: 40px 30px 24px 30px;
+	width: 300px;
+	height: 422px;
 }
 
 .topSection {
-  font-weight: 700;
-  font-size: 17px;
-  line-height: 25.5px;
-  text-align: center;
-  margin-bottom: 32px;
-  color: var(--gray-60);
+	font-weight: 700;
+	font-size: 17px;
+	line-height: 25.5px;
+	text-align: center;
+	margin-bottom: 32px;
+	color: var(--gray-60);
 }
 
 .midSection {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 240px;
-  height: 73px;
-  font-weight: 700;
-  color: var(--gray-60);
-  margin-bottom: 40px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	width: 240px;
+	height: 73px;
+	font-weight: 700;
+	color: var(--gray-60);
+	margin-bottom: 40px;
 }
 
 .midTitle {
-  font-size: 15px;
-  line-height: 22.5px;
+	font-size: 15px;
+	line-height: 22.5px;
 }
 
 .inputSection {
-  font-size: 25px;
-  line-height: 37.5px;
-  outline: none;
-  border: none;
-  border-bottom: 1px solid var(--black);
+	font-size: 25px;
+	line-height: 37.5px;
+	outline: none;
+	border: none;
+	border-bottom: 1px solid var(--black);
 }
 
 .empty {
-  color: var(--main-50);
+	color: var(--main-50);
 }
 
 .bottomSection {
-  width: 240px;
-  height: 111px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+	width: 240px;
+	height: 111px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
 }
 
 .bottomTitle {
-  font-size: 15px;
-  line-height: 22.5px;
-  font-weight: 700;
-  color: var(--gray-60);
+	font-size: 15px;
+	line-height: 22.5px;
+	font-weight: 700;
+	color: var(--gray-60);
+}
+
+.bottomNotice {
+	font-weight: 400;
+	font-size: 11px;
+	line-height: 16.5px;
+	color: var(--gray-60);
 }
 
 .teamNumberSelect {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  white-space: nowrap;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	white-space: nowrap;
 }
 
 .teamNumberItem {
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 19.5px;
-  color: var(--gray-40);
-  border: 1px solid var(--gray-30);
-  width: 52px;
-  height: 36px;
-  border-radius: 30px;
-  padding: 8px 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
+	font-weight: 400;
+	font-size: 13px;
+	line-height: 19.5px;
+	color: var(--gray-40);
+	border: 1px solid var(--gray-30);
+	width: 52px;
+	height: 36px;
+	border-radius: 30px;
+	padding: 8px 16px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
 }
 
 .selected {
-  border: 2px solid var(--main-50);
-  color: var(--main-50);
-  font-weight: 800;
+	border: 2px solid var(--main-50);
+	color: var(--main-50);
+	font-weight: 800;
 }
 
 .buttonSection {
-  display: flex;
-  gap: 8px;
-  position: absolute;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
+	display: flex;
+	gap: 8px;
+	position: absolute;
+	bottom: 24px;
+	left: 50%;
+	transform: translateX(-50%);
 }

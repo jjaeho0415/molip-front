@@ -25,6 +25,7 @@ export const metadata: MetaDataType = {
 		siteName: '모두의 입맛 - molip',
 		type: 'website',
 	},
+	metadataBase: new URL('https://molip.swygbro.com'),
 };
 
 const API: string = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${constant.kakaoKey}&libraries=services,clusterer&autoload=false`;

@@ -27,6 +27,7 @@ export default function Home() {
 	const route = useRouter();
 	const [defaultMyMenuName, setDefaultMyMenuName] = useState<string>('');
 	const [user, setUser] = useState<string>('');
+	const { accessToken } = useAuthStore.getState();
 
 	const { mutate: getAccess } = useMutation<IRefreshType>({
 		mutationFn: getAccessToken,
@@ -52,11 +53,11 @@ export default function Home() {
 
 	useEffect(() => {
 		const current = window.location.href;
-		const { accessToken } = useAuthStore.getState();
-		if (current.includes('molip.site') && accessToken === null) {
+
+		if (current.includes('molip') && accessToken === null) {
 			getAccess();
 		}
-	}, []);
+	}, [accessToken]);
 
 	const { data: myMenuList, isLoading } = useQuery<IGetMyMenuType[]>({
 		queryKey: ['MY_MENU_LIST'],

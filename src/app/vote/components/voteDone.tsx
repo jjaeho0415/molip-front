@@ -7,17 +7,45 @@ import Image from 'next/image';
 import Icon from '../../../../public/icons/checkOrange.svg';
 import OptionButton from '@/components/buttons/OptionButton';
 import useVoteStore from '../store/useVoteStore';
+import { useQuery } from '@tanstack/react-query';
+import { getVoteMembers } from '@/api/getVoteMembers';
+import { useAuthStore } from '@/app/login/store/useAuthStore';
+import { useEffect, useState } from 'react';
 
 interface IVoteDoneProps {
 	onNext: () => void;
 	onBefore: () => void;
+	menuId: number;
+	menuName: string;
 }
 
-export default function VoteDone({ onNext, onBefore }: IVoteDoneProps) {
+export default function VoteDone({
+	onNext,
+	menuId,
+	menuName,
+	onBefore,
+}: IVoteDoneProps) {
 	const { voteArr } = useVoteStore();
+	const { isLogin } = useAuthStore();
+	const [isAllVoted, setIsAllVoted] = useState<boolean>(false);
+
+	const { data: votedMembers } = useQuery<IGetVoteMembers>({
+		queryKey: ['VOTED_USER_COUNT'],
+		queryFn: () => getVoteMembers(menuId),
+		enabled: isLogin,
+	});
+
+	useEffect(() => {
+		if (votedMembers?.teamMembersNum === votedMembers?.votedUserCount) {
+			setIsAllVoted(true);
+		} else {
+			setIsAllVoted(false);
+		}
+	}, [votedMembers]);
+
 	return (
 		<>
-			<TopNavBar />
+			<TopNavBar backRoute={`/menu?menuId=${menuId}&menuName=${menuName}`} />
 			<div className={styles.DoneContentsContainer}>
 				<div className={styles.DoneContent}>
 					<Image src={Icon} width={48} height={48} alt='check' />
@@ -32,15 +60,24 @@ export default function VoteDone({ onNext, onBefore }: IVoteDoneProps) {
 						))}
 					</div>
 				</div>
-				<p className={styles.DoneVotingComment}>
-					다른 팀원이 투표 중입니다. (3/4)
-				</p>
+				{!isAllVoted && (
+					<p className={styles.DoneVotingComment}>
+						다른 팀원이 투표 중입니다.{' '}
+						{`(${votedMembers?.votedUserCount}/
+						${votedMembers?.teamMembersNum})`}
+					</p>
+				)}
 			</div>
 			<div className={styles.DoubleButtonBox}>
-				<Button size='small' onClick={onBefore}>
+				<Button size='big' onClick={onBefore}>
 					다시 선택하기
 				</Button>
-				<Button size='small' onClick={onNext}>
+
+				<Button
+					size='big'
+					state={isAllVoted ? 'default' : 'disabled'}
+					onClick={onNext}
+				>
 					결과 보기
 				</Button>
 			</div>

@@ -67,7 +67,7 @@ function MyPage() {
 							</div>
 						</div>
 						<div className={styles.voteListBox}>
-							{voteResults?.map((item, idx) => (
+							{voteResults?.slice(0, 3).map((item, idx) => (
 								<div key={idx}>
 									<VoteResultCard size='small' voteResult={item} />
 								</div>

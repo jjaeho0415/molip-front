@@ -21,6 +21,7 @@ import { getMyMenuList } from '@/api/getMyMenuList';
 import { getTeamMenuItem } from '@/api/getTeamMenuItem';
 import { getHasMenuAddedMembers } from '@/api/getHasMenuAddedMembers';
 import { useKakaoInvite } from '@/hooks/useKakaoInvite';
+import Loading from '@/components/Loading';
 
 export default function TeamMenuPage() {
 	const { setIsOpen } = useBottomSheet();
@@ -50,7 +51,7 @@ export default function TeamMenuPage() {
 		queryFn: async () => getTeamMenuItem(teamBoardId),
 	});
 
-	const { data: addedMembers } = useQuery<IGetAddedUserInfo>({
+	const { data: addedMembers, isLoading } = useQuery<IGetAddedUserInfo>({
 		queryKey: ['MENU_ADDED_MEMBERS_INFO'],
 		queryFn: () => getHasMenuAddedMembers(teamBoardId),
 	});
@@ -101,23 +102,18 @@ export default function TeamMenuPage() {
 					<Image src={Icon_pencile} width={36} height={36} alt='edit' />
 				</div>
 				<div className={styles.middleBox}>
-					{!isAllPeopleAdded && isUserAddedMenu ? (
+					{isLoading ? (
+						<Loading backgroundColor='white' />
+					) : !isAllPeopleAdded && isUserAddedMenu ? (
 						<>
 							<p className={styles.comment}>
 								아직 팀원이 메뉴를 선택 중입니다.
 							</p>
 							<div className={styles.buttonBox}>
-								<RoundButton
-									property='메뉴추가완료'
-									onClick={() => {
-										return;
-									}}
-								/>
+								<RoundButton property='메뉴추가완료' />
 								<RoundButton
 									property='새로고침'
-									onClick={() => {
-										return;
-									}}
+									onClick={() => window.location.reload()}
 								/>
 							</div>
 						</>

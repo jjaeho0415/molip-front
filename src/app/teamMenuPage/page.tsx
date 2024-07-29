@@ -128,7 +128,7 @@ export default function TeamMenuPage() {
 								<RoundButton
 									property='메뉴'
 									onClick={() => {
-										return;
+										setIsOpen(true);
 									}}
 								/>
 							</>

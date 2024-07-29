@@ -19,6 +19,7 @@ import { getTeamMenus } from '@/api/getTeamMenus';
 import useHomeStore from '../home/store/useHomeStore';
 import useKakaoShare from '@/hooks/useKakaoShare';
 import { useAuthStore } from '../login/store/useAuthStore';
+import useBottomSheet from '@/hooks/useBottomSheet';
 
 export default function Menu() {
 	const [active, setActive] = useState<'메뉴판' | '메뉴이미지'>('메뉴판');
@@ -30,6 +31,7 @@ export default function Menu() {
 	const menuId = Number(searchParams.get('menuId'));
 	const [menuList, setMenuList] = useState<IGetMyCategoryMenuType[]>([]);
 	const { handleShare } = useKakaoShare({ canvasRef });
+	const { setIsOpen } = useBottomSheet();
 
 	useEffect(() => {
 		if (!menuId) {
@@ -58,11 +60,15 @@ export default function Menu() {
 	}, [menu]);
 
 	const handleModifyOption = () => {
-		return;
+		setIsOpen(true);
 	};
 
 	const handleDownImage = async () => {
 		if (!canvasRef.current) {
+			return;
+		}
+		if (menu?.length === 0) {
+			alert('메뉴판에 저장된 메뉴가 없습니다.');
 			return;
 		}
 		try {

@@ -77,6 +77,7 @@ export default function AddMenu_BS({
 		},
 		onSettled: () => {
 			setIsLoading(false);
+
 			onClick();
 		},
 	});

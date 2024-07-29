@@ -30,7 +30,7 @@ function TeamMenuItem({
 }: TeamMenuItemProps) {
 	const router = useRouter();
 
-	const { data: addedMembers } = useQuery<IGetAddedUserInfo>({
+	const { data: addedMembers, isLoading } = useQuery<IGetAddedUserInfo>({
 		queryKey: ['MENU_ADDED_MEMBERS_INFO', id],
 		queryFn: () => getHasMenuAddedMembers(id),
 	});
@@ -56,38 +56,45 @@ function TeamMenuItem({
 
 	return (
 		<>
-			<div
-				className={`${styles.itemContainer} ${!hasUserAddedMenu && styles.hasAddedMenu} ${!isAllPeopleAdded && hasUserAddedMenu && styles.isWaitingMenuAdd}`}
-				onClick={handleMenuItemClick}
-			>
-				<div className={styles.titleSection}>
-					<p className={styles.teamTitle}>{teamTitle}</p>
-					<p className={styles.menuTitle}>{menuName}</p>
-				</div>
-				<Image
-					alt='moreIcon'
-					src='/svg/moreIcon.svg'
-					width={24}
-					height={24}
-					onClick={(e) => {
-						e.stopPropagation();
-						isMoreModalOpen !== index
-							? setIsMoreModalOpen(index)
-							: setIsMoreModalOpen(-1);
-					}}
-					style={{ position: 'relative', cursor: 'pointer', zIndex: '1' }}
-				/>
-			</div>
-			{!isAllPeopleAdded &&
-				(!hasUserAddedMenu ? (
-					<p className={styles.menuAddP}>메뉴를 추가하세요.</p>
-				) : (
-					<p className={styles.menuAddP}>
-						아직 팀원이 메뉴를 선택 중입니다. {'('}
-						{addedMembers?.addedMenuUserCount}/{addedMembers?.teamMembersNum}명
-						완료{')'}
-					</p>
-				))}
+			{!isLoading && (
+				<>
+					<div
+						className={`${styles.itemContainer} ${!hasUserAddedMenu && styles.hasAddedMenu} ${addedMembers?.addedMenuUserCount !== addedMembers?.teamMembersNum && hasUserAddedMenu && styles.isWaitingMenuAdd}`}
+						onClick={handleMenuItemClick}
+					>
+						<div className={styles.titleSection}>
+							<p className={styles.teamTitle}>{teamTitle}</p>
+							<p className={styles.menuTitle}>{menuName}</p>
+						</div>
+						<Image
+							alt='moreIcon'
+							src='/svg/moreIcon.svg'
+							width={24}
+							height={24}
+							onClick={(e) => {
+								e.stopPropagation();
+								isMoreModalOpen !== index
+									? setIsMoreModalOpen(index)
+									: setIsMoreModalOpen(-1);
+							}}
+							style={{ position: 'relative', cursor: 'pointer', zIndex: '1' }}
+						/>
+					</div>
+					{!isAllPeopleAdded &&
+						(!hasUserAddedMenu ? (
+							<p className={styles.menuAddP}>메뉴를 추가하세요.</p>
+						) : (
+							addedMembers?.addedMenuUserCount !==
+								addedMembers?.teamMembersNum && (
+								<p className={styles.menuAddP}>
+									아직 팀원이 메뉴를 선택 중입니다. {'('}
+									{addedMembers?.addedMenuUserCount}/
+									{addedMembers?.teamMembersNum}명 완료{')'}
+								</p>
+							)
+						))}
+				</>
+			)}
 		</>
 	);
 }

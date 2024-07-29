@@ -21,6 +21,7 @@ import { getMyMenuList } from '@/api/getMyMenuList';
 import { getTeamMenuItem } from '@/api/getTeamMenuItem';
 import { getHasMenuAddedMembers } from '@/api/getHasMenuAddedMembers';
 import { useKakaoInvite } from '@/hooks/useKakaoInvite';
+import { useAuthStore } from '../login/store/useAuthStore';
 
 export default function TeamMenuPage() {
 	const { setIsOpen } = useBottomSheet();
@@ -34,11 +35,19 @@ export default function TeamMenuPage() {
 	const [isAllPeopleAdded, setIsAllPeopleAdded] = useState<boolean>(false);
 	const [isUserAddedMenu, setIsUserAddedMenu] = useState<boolean>(false);
 	const { handleKakaoInvite } = useKakaoInvite(currentUrl);
+	const { isLogin } = useAuthStore.getState();
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
 			setCurrentUrl(window.location.href);
 			setMyMenu(Number(localStorage.getItem('myMenuNum')));
 		}
+	}, []);
+
+	useEffect(() => {
+		// 사용자가 팀 만든 사람인지 아닌지(또는 팀원인지 아닌지)를 판별하는 api 연결 추가해야하고 조건 추가 해야함 
+		// 팀에 속해있으면 메뉴판 페이지 그대로 보여주고 속해있지 않으면 페이지 이동시킴
+		!isLogin ? router.push('/guest_invitation') : setIsLoading(false);
 	}, []);
 
 	const handleClickButton = () => {
@@ -88,90 +97,99 @@ export default function TeamMenuPage() {
 
 	return (
 		<>
-			<Header />
-			<TabNavigation />
-			<TopNavBar backRoute='/home' />
-			<div className={styles.contentsContainer}>
-				<div className={styles.inputBox}>
-					<SmallInput
-						value={menuBoardName}
-						setValue={setMenuBoardName}
-						menuId={teamBoardId}
-					></SmallInput>
-					<Image src={Icon_pencile} width={36} height={36} alt='edit' />
-				</div>
-				<div className={styles.middleBox}>
-					{!isAllPeopleAdded && isUserAddedMenu ? (
-						<>
-							<p className={styles.comment}>
-								아직 팀원이 메뉴를 선택 중입니다.
-							</p>
-							<div className={styles.buttonBox}>
-								<RoundButton
-									property='메뉴추가완료'
-									onClick={() => {
-										return;
-									}}
-								/>
-								<RoundButton
-									property='새로고침'
-									onClick={() => {
-										return;
-									}}
-								/>
+			{!isLoading && (
+				<>
+					<Header />
+					<TabNavigation />
+					<TopNavBar backRoute='/home' />
+					<div className={styles.contentsContainer}>
+						<div className={styles.inputBox}>
+							<SmallInput
+								value={menuBoardName}
+								setValue={setMenuBoardName}
+								menuId={teamBoardId}
+							></SmallInput>
+							<Image src={Icon_pencile} width={36} height={36} alt='edit' />
+						</div>
+						<div className={styles.middleBox}>
+							{!isAllPeopleAdded && isUserAddedMenu ? (
+								<>
+									<p className={styles.comment}>
+										아직 팀원이 메뉴를 선택 중입니다.
+									</p>
+									<div className={styles.buttonBox}>
+										<RoundButton
+											property='메뉴추가완료'
+											onClick={() => {
+												return;
+											}}
+										/>
+										<RoundButton
+											property='새로고침'
+											onClick={() => {
+												return;
+											}}
+										/>
+									</div>
+								</>
+							) : (
+								!isAllPeopleAdded && (
+									<>
+										<p className={styles.comment}>
+											아직 메뉴를 추가하지 않았어요.
+										</p>
+										<RoundButton
+											property='메뉴'
+											onClick={() => {
+												setIsOpen(true);
+											}}
+										/>
+									</>
+								)
+							)}
+						</div>
+
+						<div className={styles.BottomBox}>
+							<p className={styles.comment}>팀원 초대하기</p>
+
+							<div className={styles.iconsBox}>
+								<div
+									className={styles.icon}
+									onClick={() => handleKakaoInvite()}
+								>
+									<Image src={Icon_kakao} width={50} height={50} alt='kakao' />
+									<p className={styles.iconName}>카카오톡</p>
+								</div>
+								<div
+									className={styles.icon}
+									onClick={() => handleCopyClipBoard(currentUrl)}
+								>
+									<Image src={Icon_copy} width={50} height={50} alt='kakao' />
+									<p className={styles.iconName}>링크복사</p>
+								</div>
 							</div>
-						</>
-					) : (
-						!isAllPeopleAdded && (
-							<>
-								<p className={styles.comment}>아직 메뉴를 추가하지 않았어요.</p>
-								<RoundButton
-									property='메뉴'
-									onClick={() => {
-										setIsOpen(true);
-									}}
+						</div>
+						<p className={styles.bottomComment}>위로 올려 옵션을 선택하세요.</p>
+
+						{myMenuNum === 0 ? (
+							<BottomSheet size='small'>
+								<NoMenu_BS teamBoardId={teamBoardId} />
+							</BottomSheet>
+						) : (
+							<BottomSheet>
+								<AddMenu_BS
+									onClick={handleClickButton}
+									myMenuList={myMenuList}
+									teamBoardId={teamBoardId}
+									boardName={boardName}
+									isAllPeopleAdded={isAllPeopleAdded}
+									setIsUserAddedMenu={setIsUserAddedMenu}
 								/>
-							</>
-						)
-					)}
-				</div>
-
-				<div className={styles.BottomBox}>
-					<p className={styles.comment}>팀원 초대하기</p>
-
-					<div className={styles.iconsBox}>
-						<div className={styles.icon} onClick={() => handleKakaoInvite()}>
-							<Image src={Icon_kakao} width={50} height={50} alt='kakao' />
-							<p className={styles.iconName}>카카오톡</p>
-						</div>
-						<div
-							className={styles.icon}
-							onClick={() => handleCopyClipBoard(currentUrl)}
-						>
-							<Image src={Icon_copy} width={50} height={50} alt='kakao' />
-							<p className={styles.iconName}>링크복사</p>
-						</div>
+							</BottomSheet>
+						)}
 					</div>
-				</div>
-				<p className={styles.bottomComment}>위로 올려 옵션을 선택하세요.</p>
-
-				{myMenuNum === 0 ? (
-					<BottomSheet size='small'>
-						<NoMenu_BS teamBoardId={teamBoardId} />
-					</BottomSheet>
-				) : (
-					<BottomSheet>
-						<AddMenu_BS
-							onClick={handleClickButton}
-							myMenuList={myMenuList}
-							teamBoardId={teamBoardId}
-							boardName={boardName}
-							isAllPeopleAdded={isAllPeopleAdded}
-							setIsUserAddedMenu={setIsUserAddedMenu}
-						/>
-					</BottomSheet>
-				)}
-			</div>
+				</>
+			)}
 		</>
 	);
 }

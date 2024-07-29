@@ -7,11 +7,38 @@ import LoginImage from '../../../public/svg/kakao_login_large_wide.svg';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '../login/store/useAuthStore';
+import { useMutation } from '@tanstack/react-query';
+import { postInvite } from '@/api/postInvite';
+import { useEffect, useState } from 'react';
 
-// 초대링크로 들어온 사람들한테만 이 페이지 보여줘야함
 export default function Guest_Invitation() {
 	const router = useRouter();
 	const { isLogin } = useAuthStore.getState();
+	const [teamMenuId, setTeamMenuId] = useState<string | null>('');
+
+	useEffect(() => {
+		const menuId = localStorage.getItem('teamMenu_Id');
+		setTeamMenuId(menuId);
+	}, []);
+
+	const { mutate: postInviteAccept } = useMutation<IPostInviteType>({
+		mutationFn: () => {
+			if (teamMenuId) {
+				return postInvite(teamMenuId);
+			} else {
+				return Promise.reject(new Error('teamMenuId is null'));
+			}
+		},
+		onSuccess: (data) => {
+			router.push(
+				`${window.location.origin}/teamMenuPage?menuName=${data.teamBoardName}&menuId=${data.teamBoradId}`,
+			);
+		},
+	});
+
+	const handleYesClick = () => {
+		teamMenuId && postInviteAccept();
+	};
 
 	return (
 		<>
@@ -28,16 +55,14 @@ export default function Guest_Invitation() {
 						<ModalButton
 							buttonText='아니요'
 							handleClick={() => {
-								return;
+								router.push('/');
 							}}
 							color={isLogin ? 'gray' : 'disabled'}
 							cursor={isLogin ? true : false}
 						/>
 						<ModalButton
 							buttonText='예'
-							handleClick={() => {
-								return;
-							}}
+							handleClick={handleYesClick}
 							color={isLogin ? 'orange' : 'disabled'}
 							cursor={isLogin ? true : false}
 						/>

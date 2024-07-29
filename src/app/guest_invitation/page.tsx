@@ -12,6 +12,9 @@ import { useAuthStore } from '../login/store/useAuthStore';
 export default function Guest_Invitation() {
 	const router = useRouter();
 	const { isLogin } = useAuthStore.getState();
+	const handleYesClick = () => {
+
+	}
 
 	return (
 		<>
@@ -28,16 +31,14 @@ export default function Guest_Invitation() {
 						<ModalButton
 							buttonText='아니요'
 							handleClick={() => {
-								return;
+								router.push('/');
 							}}
 							color={isLogin ? 'gray' : 'disabled'}
 							cursor={isLogin ? true : false}
 						/>
 						<ModalButton
 							buttonText='예'
-							handleClick={() => {
-								return;
-							}}
+							handleClick={handleYesClick}
 							color={isLogin ? 'orange' : 'disabled'}
 							cursor={isLogin ? true : false}
 						/>

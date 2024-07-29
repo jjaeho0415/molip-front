@@ -202,23 +202,23 @@ function AddTaste_BS({ menuId, onClick, inputValue }: AddTaste_BSProps) {
 						</div>
 					</div>
 				))}
-			</div>
-			<div className={styles.buttonBox}>
-				<p className={styles.reset} onClick={handleReset}>
-					초기화
-				</p>
-				{isLoading ? (
-					<Button>
-						<Loading backgroundColor='orange' />
-					</Button>
-				) : (
-					<Button
-						state={!isAllTasteClicked ? 'disabled' : 'default'}
-						onClick={handleSave}
-					>
-						적용하기
-					</Button>
-				)}
+				<div className={styles.buttonBox}>
+					<p className={styles.reset} onClick={handleReset}>
+						초기화
+					</p>
+					{isLoading ? (
+						<Button>
+							<Loading backgroundColor='orange' />
+						</Button>
+					) : (
+						<Button
+							state={!isAllTasteClicked ? 'disabled' : 'default'}
+							onClick={handleSave}
+						>
+							적용하기
+						</Button>
+					)}
+				</div>
 			</div>
 		</>
 	);

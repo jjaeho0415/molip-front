@@ -9,4 +9,5 @@ export const apiRoutes = {
 	guest: '/guest/recommend',
 	myPage: '/mypage',
 	uploadImg: '/upload',
+	invite: '/invite',
 };

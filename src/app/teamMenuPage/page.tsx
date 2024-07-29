@@ -44,11 +44,29 @@ export default function TeamMenuPage() {
 		}
 	}, []);
 
+	// 팀원 여부를 알려주는 api 호출하는걸로 바꿔야함
+	// const { mutate: postIsTeam } = useMutation({
+	// 	mutationFn: () => postInvite(String(teamBoardId)),
+	// 	onError: (error: any) => {
+	// 		if (
+	// 			error.message === '사용자는 이미 해당 팀 메뉴판에 포함되어 있습니다.'
+	// 		) {
+	// 			setIsLoading(true);
+	// 		} else {
+	// 			console.error(error);
+	// 		}
+	// 	},
+	// });
+
 	useEffect(() => {
 		// 사용자가 팀 만든 사람인지 아닌지(또는 팀원인지 아닌지)를 판별하는 api 연결 추가해야하고 조건 추가 해야함
 		// 팀에 속해있으면 메뉴판 페이지 그대로 보여주고 속해있지 않으면 페이지 이동시킴
 		localStorage.setItem('teamMenu_Id', String(teamBoardId));
-		!isLogin ? router.push('/guest_invitation') : setIsLoading(false);
+		if (isLogin) {
+			setIsLoading(true);
+		} else {
+			router.push('/guest_invitation');
+		}
 	}, []);
 
 	const handleClickButton = () => {

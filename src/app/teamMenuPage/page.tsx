@@ -63,7 +63,7 @@ export default function TeamMenuPage() {
 		// 팀에 속해있으면 메뉴판 페이지 그대로 보여주고 속해있지 않으면 페이지 이동시킴
 		localStorage.setItem('teamMenu_Id', String(teamBoardId));
 		if (isLogin) {
-			setIsLoading(true);
+			setIsLoading(false);
 		} else {
 			router.push('/guest_invitation');
 		}

@@ -65,8 +65,8 @@ const useKakaoShare = ({ canvasRef }: useKakaoShareProps) => {
 			Kakao.Share.sendDefault({
 				objectType: 'feed',
 				content: {
-					title: '모입 : 모두의 입맛을 충족해 줄 메뉴판',
-					description: '메뉴판 이미지 공유',
+					title: '오늘, 당신의 입맛은 어떤가요?',
+					description: '모입 : 모두의 입맛을 충족해줄 메뉴판',
 					imageUrl: `${imageUrl}?timestamp=` + new Date().getTime(),
 					link: {
 						mobileWebUrl: shareUrl,

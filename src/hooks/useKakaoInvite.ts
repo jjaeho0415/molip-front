@@ -32,8 +32,8 @@ export const useKakaoInvite = (url: string) => {
 		Kakao.Share.sendDefault({
 			objectType: 'feed',
 			content: {
-				title: '모입 : 모두의 입맛을 충족해 줄 메뉴판',
-				description: '팀 메뉴판 초대',
+				title: '우리만의 메뉴판 만들어볼래?',
+				description: '모입 : 모두의 입맛을 충족해줄 메뉴판',
 				imageUrl:
 					'https://raw.githubusercontent.com/Swyp-team10/molip-front/dev/public/image/openGraphImg.png?timestamp=' +
 					new Date().getTime(),

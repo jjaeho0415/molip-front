@@ -45,8 +45,9 @@ export default function TeamMenuPage() {
 	}, []);
 
 	useEffect(() => {
-		// 사용자가 팀 만든 사람인지 아닌지(또는 팀원인지 아닌지)를 판별하는 api 연결 추가해야하고 조건 추가 해야함 
+		// 사용자가 팀 만든 사람인지 아닌지(또는 팀원인지 아닌지)를 판별하는 api 연결 추가해야하고 조건 추가 해야함
 		// 팀에 속해있으면 메뉴판 페이지 그대로 보여주고 속해있지 않으면 페이지 이동시킴
+		localStorage.setItem('teamMenu_Id', String(teamBoardId));
 		!isLogin ? router.push('/guest_invitation') : setIsLoading(false);
 	}, []);
 

@@ -7,14 +7,33 @@ import LoginImage from '../../../public/svg/kakao_login_large_wide.svg';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '../login/store/useAuthStore';
+import { useMutation } from '@tanstack/react-query';
+import { postInvite } from '@/api/postInvite';
 
 // 초대링크로 들어온 사람들한테만 이 페이지 보여줘야함
 export default function Guest_Invitation() {
 	const router = useRouter();
 	const { isLogin } = useAuthStore.getState();
-	const handleYesClick = () => {
+	const teamMenuId = localStorage.getItem('teamMenu_Id');
 
-	}
+	const { mutate: postInviteAccept } = useMutation<IPostInviteType>({
+		mutationFn: () => {
+			if (teamMenuId) {
+				return postInvite(teamMenuId);
+			} else {
+				return Promise.reject(new Error('teamMenuId is null'));
+			}
+		},
+		onSuccess: (data) => {
+			router.push(
+				`${window.location.origin}/teamMenuPage?menuName=${data.teamBoardName}&menuId=${data.teamBoradId}`,
+			);
+		},
+	});
+
+	const handleYesClick = () => {
+		postInviteAccept();
+	};
 
 	return (
 		<>

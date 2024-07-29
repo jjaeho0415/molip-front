@@ -9,12 +9,18 @@ import { useRouter } from 'next/navigation';
 import { useAuthStore } from '../login/store/useAuthStore';
 import { useMutation } from '@tanstack/react-query';
 import { postInvite } from '@/api/postInvite';
+import { useEffect, useState } from 'react';
 
 // 초대링크로 들어온 사람들한테만 이 페이지 보여줘야함
 export default function Guest_Invitation() {
 	const router = useRouter();
 	const { isLogin } = useAuthStore.getState();
-	const teamMenuId = localStorage.getItem('teamMenu_Id');
+	const [teamMenuId, setTeamMenuId] = useState<string>('');
+
+	useEffect(() => {
+		const menuId = localStorage.getItem('teamMenu_Id');
+		menuId && setTeamMenuId(menuId);
+	}, [teamMenuId]);
 
 	const { mutate: postInviteAccept } = useMutation<IPostInviteType>({
 		mutationFn: () => {

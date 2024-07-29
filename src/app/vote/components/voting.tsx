@@ -75,7 +75,10 @@ export default function Voting({ onNext }: IVotingProps) {
 				</div>
 			) : (
 				<>
-					<TopNavBar title={teamMenuItem?.teamBoardName} />
+					<TopNavBar
+						title={teamMenuItem?.teamBoardName}
+						backRoute={`${window.location.origin}/menu?menuId=${teamMenuItem?.teamBoardId}&menuName=${teamMenuItem?.teamBoardName}`}
+					/>
 					<div className={styles.VotingContentSection}>
 						<div className={styles.VotingPBox}>
 							<p className={styles.VotingP}>메뉴를 선택해주세요.</p>

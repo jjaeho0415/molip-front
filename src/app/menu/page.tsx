@@ -12,7 +12,7 @@ import AddTaste_BS from '@/components/BottomSheet/AddTaste_BS';
 import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { getMyMenu } from '@/api/getMyMenu';
 import Loading from '@/components/Loading';
 import { getTeamMenus } from '@/api/getTeamMenus';
@@ -32,6 +32,7 @@ export default function Menu() {
 	const [menuList, setMenuList] = useState<IGetMyCategoryMenuType[]>([]);
 	const { handleShare } = useKakaoShare({ canvasRef });
 	const { setIsOpen } = useBottomSheet();
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
 		if (!menuId) {
@@ -39,25 +40,28 @@ export default function Menu() {
 				const data = sessionStorage.getItem('guest_menu');
 				if (data) {
 					setMenuList(JSON.parse(data));
+					setIsLoading(false);
 				}
 			}
+		} else {
+			getMenuList();
 		}
 	}, []);
 
-	const { data: menu, isLoading } = useQuery<IGetMyCategoryMenuType[]>({
-		queryKey: ['MENU_LIST'],
-		queryFn: () => {
+	const { mutate: getMenuList } = useMutation<IGetMyCategoryMenuType[]>({
+		mutationKey: ['MENU_LIST'],
+		mutationFn: () => {
 			if (tab === 'my') {
 				return getMyMenu(menuId);
 			} else {
 				return getTeamMenus(menuId);
 			}
 		},
+		onSuccess: (data) => {
+			setMenuList(data);
+			setIsLoading(false);
+		},
 	});
-
-	useEffect(() => {
-		menu && setMenuList(menu);
-	}, [menu]);
 
 	const handleModifyOption = () => {
 		setIsOpen(true);
@@ -67,10 +71,11 @@ export default function Menu() {
 		if (!canvasRef.current) {
 			return;
 		}
-		if (menu?.length === 0) {
+		if (menuList?.length === 0) {
 			alert('메뉴판에 저장된 메뉴가 없습니다.');
 			return;
 		}
+
 		try {
 			const div = canvasRef.current;
 			const canvas = await html2canvas(div, { scale: 2 });
@@ -134,7 +139,7 @@ export default function Menu() {
 										)
 									) : (
 										<ShareButton
-											handleLeftClick={() => handleShare}
+											handleLeftClick={() => handleShare()}
 											handleRightClick={handleDownImage}
 										>
 											공유하기

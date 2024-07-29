@@ -79,6 +79,7 @@ function AddTaste_BS({ menuId, onClick, inputValue }: AddTaste_BSProps) {
 			}
 			setIsLoading(false);
 			alert('필터 적용이 완료되었습니다.');
+			setIsOpen(false);
 			if (!menuId) {
 				route.push(`/menu?menuName=${guestMenuName}`);
 			}

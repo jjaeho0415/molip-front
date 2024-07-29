@@ -12,7 +12,7 @@ import AddTaste_BS from '@/components/BottomSheet/AddTaste_BS';
 import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getMyMenu } from '@/api/getMyMenu';
 import Loading from '@/components/Loading';
 import { getTeamMenus } from '@/api/getTeamMenus';
@@ -32,7 +32,7 @@ export default function Menu() {
 	const [menuList, setMenuList] = useState<IGetMyCategoryMenuType[]>([]);
 	const { handleShare } = useKakaoShare({ canvasRef });
 	const { setIsOpen } = useBottomSheet();
-	const [isLoading, setIsLoading] = useState<boolean>(true);
+	const [pageLoading, setPageLoading] = useState<boolean>(true);
 
 	useEffect(() => {
 		if (!menuId) {
@@ -40,28 +40,32 @@ export default function Menu() {
 				const data = sessionStorage.getItem('guest_menu');
 				if (data) {
 					setMenuList(JSON.parse(data));
-					setIsLoading(false);
+					setPageLoading(false);
 				}
 			}
-		} else {
-			getMenuList();
 		}
 	}, []);
 
-	const { mutate: getMenuList } = useMutation<IGetMyCategoryMenuType[]>({
-		mutationKey: ['MENU_LIST'],
-		mutationFn: () => {
+	const { data: menu } = useQuery<IGetMyCategoryMenuType[]>({
+		queryKey: ['MENU_LIST'],
+		enabled: isLogin,
+		queryFn: () => {
+			setPageLoading(true);
 			if (tab === 'my') {
+				setPageLoading(false);
 				return getMyMenu(menuId);
 			} else {
+				setPageLoading(false);
 				return getTeamMenus(menuId);
 			}
 		},
-		onSuccess: (data) => {
-			setMenuList(data);
-			setIsLoading(false);
-		},
 	});
+
+	useEffect(() => {
+		if (menu) {
+			setMenuList(menu);
+		}
+	}, [menu]);
 
 	const handleModifyOption = () => {
 		setIsOpen(true);
@@ -92,7 +96,7 @@ export default function Menu() {
 
 	return (
 		<>
-			{isLoading ? (
+			{pageLoading ? (
 				<div className={styles.loading}>
 					<Loading backgroundColor='white' />
 				</div>

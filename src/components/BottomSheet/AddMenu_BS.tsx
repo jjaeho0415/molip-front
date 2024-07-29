@@ -13,7 +13,6 @@ import { getMyMenu } from '@/api/getMyMenu';
 import { useRouter } from 'next/navigation';
 import { AddMenuToTeamMenu } from '@/api/addMenuToTeamMenu';
 import AlertModal from '../modals/AlertModal';
-import useBottomSheet from '@/hooks/useBottomSheet';
 
 interface IAddMenu {
 	onClick: () => void;
@@ -41,7 +40,6 @@ export default function AddMenu_BS({
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [selectedBoardId, setSelectedBoardId] = useState<number>(-1);
 	const [isAlertModalOpen, setIsAlertModalOpen] = useState<boolean>(false);
-	const { setIsOpen } = useBottomSheet();
 
 	const { data: menus, isLoading: isGetMyMenuLoading } = useQuery<
 		IGetMyCategoryMenuType[] | undefined
@@ -79,7 +77,7 @@ export default function AddMenu_BS({
 		},
 		onSettled: () => {
 			setIsLoading(false);
-			
+
 			onClick();
 		},
 	});

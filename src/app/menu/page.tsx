@@ -67,6 +67,10 @@ export default function Menu() {
 		if (!canvasRef.current) {
 			return;
 		}
+		if (menu?.length === 0) {
+			alert('메뉴판에 저장된 메뉴가 없습니다.');
+			return;
+		}
 		try {
 			const div = canvasRef.current;
 			const canvas = await html2canvas(div, { scale: 2 });

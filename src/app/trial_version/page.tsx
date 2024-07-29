@@ -70,10 +70,7 @@ function Trial_Version() {
 				</div>
 				<p className={styles.bottomComment}>위로 올려 옵션을 선택하세요.</p>
 				<BottomSheet>
-					<AddTaste_BS
-						onClick={handleClickButton}
-						isEmptyModalOpen={isEmptyModalOpen}
-					/>
+					<AddTaste_BS onClick={handleClickButton} inputValue={value} />
 				</BottomSheet>
 			</div>
 		</div>

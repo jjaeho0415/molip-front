@@ -94,7 +94,10 @@ export default function MenuBoard({ menuList, type }: IMenuBoard) {
 		<div className={styles.Container}>
 			<p className={styles.MenuTitle}>{menuName}</p>
 			<div className={styles.MenuListBox}>
-				{type === '메뉴판' &&
+				{menuList.length === 0 ? (
+					<p className={styles.noMenuText}>해당 옵션에 맞는 메뉴가 없습니다</p>
+				) : (
+					type === '메뉴판' &&
 					menuList.map(
 						(menu, idx) =>
 							menu.menu.length !== 0 && (
@@ -117,7 +120,8 @@ export default function MenuBoard({ menuList, type }: IMenuBoard) {
 									</div>
 								</div>
 							),
-					)}
+					)
+				)}
 			</div>
 			{type === '메뉴이미지' && (
 				<div className={styles.MenuImageContainer}>

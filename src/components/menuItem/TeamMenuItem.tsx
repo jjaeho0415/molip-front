@@ -42,7 +42,7 @@ function TeamMenuItem({
 					? true
 					: false,
 			);
-	}, [addedMembers]);
+	}, [addedMembers, setIsAllPeopleAdded]);
 
 	const handleMenuItemClick = () => {
 		if (addedMembers) {
@@ -78,16 +78,16 @@ function TeamMenuItem({
 					style={{ position: 'relative', cursor: 'pointer', zIndex: '1' }}
 				/>
 			</div>
-			{!hasUserAddedMenu && !isAllPeopleAdded && (
-				<p className={styles.menuAddP}>메뉴를 추가하세요.</p>
-			)}
-			{hasUserAddedMenu && !isAllPeopleAdded && (
-				<p className={styles.menuAddP}>
-					아직 팀원이 메뉴를 선택 중입니다. {'('}
-					{addedMembers?.addedMenuUserCount}/{addedMembers?.teamMembersNum}명
-					완료{')'}
-				</p>
-			)}
+			{!isAllPeopleAdded &&
+				(!hasUserAddedMenu ? (
+					<p className={styles.menuAddP}>메뉴를 추가하세요.</p>
+				) : (
+					<p className={styles.menuAddP}>
+						아직 팀원이 메뉴를 선택 중입니다. {'('}
+						{addedMembers?.addedMenuUserCount}/{addedMembers?.teamMembersNum}명
+						완료{')'}
+					</p>
+				))}
 		</>
 	);
 }

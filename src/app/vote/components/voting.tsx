@@ -8,7 +8,7 @@ import Image from 'next/image';
 import Icon_unchecked from '../../../../public/icons/checkBox/checkBox_unchecked.svg';
 import Icon_checked from '../../../../public/icons/checkBox/checkBox_checked.svg';
 import { getTeamMenus } from '@/api/getTeamMenus';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { postVote } from '@/api/postVote';
 import useVoteStore from '../store/useVoteStore';
 import Loading from '@/components/Loading';
@@ -29,6 +29,7 @@ export default function Voting({
 	isVoted,
 }: IVotingProps) {
 	const { voteArr, setVoteArr } = useVoteStore();
+	const queryClient = useQueryClient();
 	const [isVoteLoading, setIsVoteLoading] = useState<boolean>(false);
 	const [isAlertModalOpen, setIsAlertModalOpen] = useState<boolean>(false);
 
@@ -47,6 +48,9 @@ export default function Voting({
 		},
 		onSuccess: () => {
 			alert('투표 완료');
+			queryClient.invalidateQueries({
+				queryKey: ['VOTE_LIST'],
+			});
 			onNext();
 		},
 		onSettled: () => setIsVoteLoading(false),

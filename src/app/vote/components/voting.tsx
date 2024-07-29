@@ -8,36 +8,43 @@ import Image from 'next/image';
 import Icon_unchecked from '../../../../public/icons/checkBox/checkBox_unchecked.svg';
 import Icon_checked from '../../../../public/icons/checkBox/checkBox_checked.svg';
 import { getTeamMenus } from '@/api/getTeamMenus';
-import { useSearchParams } from 'next/navigation';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { getTeamMenuItem } from '@/api/getTeamMenuItem';
 import { postVote } from '@/api/postVote';
 import useVoteStore from '../store/useVoteStore';
 import Loading from '@/components/Loading';
 import AlertModal from '@/components/modals/AlertModal';
+import { patchEditVote } from '@/api/patchEditVote';
 
 interface IVotingProps {
 	onNext: () => void;
+	menuId: number;
+	menuName: string;
+	isVoted: boolean | undefined;
 }
 
-export default function Voting({ onNext }: IVotingProps) {
-	const searchParams = useSearchParams();
-	const boardId = Number(searchParams.get('menuId'));
+export default function Voting({
+	onNext,
+	menuId,
+	menuName,
+	isVoted,
+}: IVotingProps) {
 	const { voteArr, setVoteArr } = useVoteStore();
-	const { data: teamMenuItem } = useQuery<IGetTeamMenuType | null>({
-		queryKey: ['TEAM_MENU_ITEM', boardId],
-		queryFn: async () => getTeamMenuItem(boardId),
-	});
 	const [isVoteLoading, setIsVoteLoading] = useState<boolean>(false);
 	const [isAlertModalOpen, setIsAlertModalOpen] = useState<boolean>(false);
 
 	const { data: menuList, isLoading } = useQuery<IGetMyCategoryMenuType[]>({
 		queryKey: ['MENU_LIST'],
-		queryFn: () => getTeamMenus(boardId),
+		queryFn: () => getTeamMenus(menuId),
 	});
 
 	const { mutate: vote } = useMutation({
-		mutationFn: (postVoteArr: number[]) => postVote(boardId, postVoteArr),
+		mutationFn: (postVoteArr: number[]) => {
+			if (!isVoted) {
+				return postVote(menuId, postVoteArr);
+			} else {
+				return patchEditVote(menuId, postVoteArr);
+			}
+		},
 		onSuccess: () => {
 			alert('투표 완료');
 			onNext();
@@ -76,8 +83,8 @@ export default function Voting({ onNext }: IVotingProps) {
 			) : (
 				<>
 					<TopNavBar
-						title={teamMenuItem?.teamBoardName}
-						backRoute={`${window.location.origin}/menu?menuId=${teamMenuItem?.teamBoardId}&menuName=${teamMenuItem?.teamBoardName}`}
+						title={menuName}
+						backRoute={`/menu?menuId=${menuId}&menuName=${menuName}`}
 					/>
 					<div className={styles.VotingContentSection}>
 						<div className={styles.VotingPBox}>

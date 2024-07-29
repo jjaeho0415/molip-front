@@ -55,17 +55,16 @@ export default function TopNavBar({
 	return (
 		<>
 			<div className={styles.NavBarContainer}>
-				{(isLogin ||
-					title === '체험중') && (
-						<Image
-							className={styles.Icon_Back}
-							src={Icon_Back}
-							width={24}
-							height={24}
-							alt='backIcon'
-							onClick={handleGoBack}
-						/>
-					)}
+				{(isLogin || title === '체험중') && (
+					<Image
+						className={styles.Icon_Back}
+						src={Icon_Back}
+						width={24}
+						height={24}
+						alt='backIcon'
+						onClick={handleGoBack}
+					/>
+				)}
 
 				{menu && active && setActive && (
 					<TopMenuButton size='small' active={active} setActive={setActive} />

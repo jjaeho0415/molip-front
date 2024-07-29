@@ -29,6 +29,7 @@ export default function Menu() {
 	const canvasRef = useRef<HTMLDivElement>(null);
 	const searchParams = useSearchParams();
 	const menuId = Number(searchParams.get('menuId'));
+	const menuName = searchParams.get('menuName');
 	const [menuList, setMenuList] = useState<IGetMyCategoryMenuType[]>([]);
 	const { handleShare } = useKakaoShare({ canvasRef });
 	const { setIsOpen } = useBottomSheet();
@@ -135,7 +136,9 @@ export default function Menu() {
 											<ShareButton
 												handleRightClick={handleDownImage}
 												handleLeftClick={() =>
-													router.push(`/vote?menuId=${menuId}`)
+													router.push(
+														`/vote?menuId=${menuId}&menuName=${menuName}`,
+													)
 												}
 											>
 												투표하기

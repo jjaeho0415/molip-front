@@ -8,37 +8,38 @@ import Icon_check from '../../../../public/icons/checkOrange_small.svg';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-const menus = [
-	{ name: '물냉면', value: 5 },
-	{ name: '비빔밥', value: 4 },
-	{ name: '짬뽕', value: 2 },
-	{ name: '쫄면', value: 1 },
-	{ name: '김치찜', value: 1 },
-	{ name: '김치찜', value: 1 },
-	{ name: '김치찜', value: 1 },
-	{ name: '김치찜', value: 1 },
-	{ name: '짬뽕', value: 2 },
-];
+interface IVoteResultProps {
+	voteResult: IGetVoteList | undefined;
+	menuId: number;
+	menuName: string;
+}
 
-export default function VoteResult({ onBefore }: { onBefore: () => void }) {
+export default function VoteResult({
+	voteResult,
+	menuId,
+	menuName,
+}: IVoteResultProps) {
 	const router = useRouter();
 	return (
 		<>
-			<TopNavBar title='스위프의 메뉴판' />
+			<TopNavBar
+				title={menuName}
+				backRoute={`/menu?menuId=${menuId}&menuName=${menuName}`}
+			/>
 			<div className={styles.ResultContentsContainer}>
 				<div className={styles.ResultTextBox}>
 					<p className={styles.VotingP}>투표 결과</p>
 					<div className={styles.ResultDateBox}>
-						<p className={styles.ResultDate}>2024.07.07</p>
+						<p className={styles.ResultDate}>{voteResult?.voteDate}</p>
 						<p className={styles.ResultSubRight}>익명 투표</p>
 					</div>
 				</div>
 				<div className={styles.ResultVoteListBox}>
-					{menus.map((item, idx) => (
+					{voteResult?.votes.map((item, idx) => (
 						<div className={styles.ResultMenuItemBox}>
 							<div className={styles.ResultMenuItemTextBox}>
 								<p key={idx} className={styles.ResultMenuItem}>
-									{item.name}
+									{item.menuName}
 									{idx === 0 && (
 										<Image
 											src={Icon_check}
@@ -48,12 +49,12 @@ export default function VoteResult({ onBefore }: { onBefore: () => void }) {
 										/>
 									)}
 								</p>
-								<p className={styles.ResultMenuVoteValue}>{item.value}표</p>
+								<p className={styles.ResultMenuVoteValue}>{item.voteValue}표</p>
 							</div>
 							<div className={styles.ResultProgressBox}>
 								<ProgressBar
 									members={5}
-									voteValue={item.value}
+									voteValue={item.voteValue}
 									color={idx === 0 ? 'orange' : 'gray'}
 								/>
 							</div>
@@ -62,9 +63,6 @@ export default function VoteResult({ onBefore }: { onBefore: () => void }) {
 				</div>
 			</div>
 			<div className={styles.DoubleButtonBox}>
-				<Button size='small' onClick={onBefore}>
-					다시 선택하기
-				</Button>
 				<Button size='small' onClick={() => router.push('/vote/voteResult')}>
 					지난 결과 보기
 				</Button>

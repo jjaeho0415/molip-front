@@ -30,7 +30,6 @@ function Trial_Version() {
 	const handleClickButton = () => {
 		if (value === '') {
 			alert('메뉴판 이름을 지어주세요!');
-			return;
 		}
 
 		setIsOpen(false);

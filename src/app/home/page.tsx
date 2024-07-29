@@ -163,12 +163,11 @@ export default function Home() {
 										</>
 									)}
 						</p>
-						{tab === 'my' ||
-							(tab === 'team' && (
-								<Button state='new' onClick={handleCreateMenuBoard}>
-									+ 새로만들기
-								</Button>
-							))}
+						{(tab === 'my' || tab === 'team') && (
+							<Button state='new' onClick={handleCreateMenuBoard}>
+								+ 새로만들기
+							</Button>
+						)}
 					</div>
 					<div className={styles.Container}>
 						{myMenuList && teamMenuList && (

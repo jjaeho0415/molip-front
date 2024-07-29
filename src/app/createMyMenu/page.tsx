@@ -36,9 +36,8 @@ function CreateMyMenu() {
 	}, [value]);
 
 	const handleClickButton = () => {
-		if (isEmptyModalOpen) {
+		if (value === '') {
 			alert('메뉴판 이름을 지어주세요!');
-			return;
 		}
 		setIsOpen(false);
 	};
@@ -82,7 +81,7 @@ function CreateMyMenu() {
 					<AddTaste_BS
 						onClick={handleClickButton}
 						menuId={Number(menuId)}
-						isEmptyModalOpen={isEmptyModalOpen}
+						inputValue={value}
 					/>
 				</BottomSheet>
 			</div>

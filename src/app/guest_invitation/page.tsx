@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '../login/store/useAuthStore';
 
+// 초대링크로 들어온 사람들한테만 이 페이지 보여줘야함
 export default function Guest_Invitation() {
 	const router = useRouter();
 	const { isLogin } = useAuthStore.getState();

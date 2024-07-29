@@ -7,11 +7,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postRecommendMyMenu } from '@/api/postRecommendMyMenu';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { postGuestRecommend } from '@/api/postGuestRecommend';
+import useBottomSheet from '@/hooks/useBottomSheet';
 
 interface AddTaste_BSProps {
 	menuId?: number;
 	onClick?: () => void;
-	isEmptyModalOpen?: boolean;
+	inputValue?: string;
 }
 
 type ISelctedOptionsType = {
@@ -26,7 +27,7 @@ export type IPostRecommend = {
 	selectedOptions: ISelctedOptionsType;
 };
 
-function AddTaste_BS({ menuId, onClick, isEmptyModalOpen }: AddTaste_BSProps) {
+function AddTaste_BS({ menuId, onClick, inputValue }: AddTaste_BSProps) {
 	const [isAllTasteClicked, setIsAllTasteClicked] = useState<boolean>(false);
 	const route = useRouter();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -36,6 +37,7 @@ function AddTaste_BS({ menuId, onClick, isEmptyModalOpen }: AddTaste_BSProps) {
 		weatherOptions: [],
 		categoryOptions: [],
 	});
+	const { setIsOpen } = useBottomSheet();
 	const param = useSearchParams();
 	const menuName = param.get('menuName');
 	const queryClient = useQueryClient();
@@ -61,6 +63,7 @@ function AddTaste_BS({ menuId, onClick, isEmptyModalOpen }: AddTaste_BSProps) {
 			setIsLoading(false);
 			const current = window.location.href;
 			alert('필터 적용이 완료되었습니다.');
+			setIsOpen(false);
 			queryClient.invalidateQueries({ queryKey: ['MENU_LIST'] });
 			if (current.includes('createMyMenu')) {
 				route.push(`/menu?menuId=${menuId}&menuName=${menuName}`);
@@ -84,7 +87,7 @@ function AddTaste_BS({ menuId, onClick, isEmptyModalOpen }: AddTaste_BSProps) {
 
 	const handleSave = (): void => {
 		if (isAllTasteClicked) {
-			if (isEmptyModalOpen) {
+			if (inputValue === '') {
 				onClick?.();
 				return;
 			}

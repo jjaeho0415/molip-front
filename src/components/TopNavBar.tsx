@@ -55,8 +55,8 @@ export default function TopNavBar({
 	return (
 		<>
 			<div className={styles.NavBarContainer}>
-				{isLogin ||
-					(title === '체험중' && (
+				{(isLogin ||
+					title === '체험중') && (
 						<Image
 							className={styles.Icon_Back}
 							src={Icon_Back}
@@ -65,7 +65,7 @@ export default function TopNavBar({
 							alt='backIcon'
 							onClick={handleGoBack}
 						/>
-					))}
+					)}
 
 				{menu && active && setActive && (
 					<TopMenuButton size='small' active={active} setActive={setActive} />

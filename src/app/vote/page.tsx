@@ -37,10 +37,6 @@ export default function Vote() {
 		}
 	}, [voteList, isError]);
 
-	useEffect(() => {
-		console.log('isVote: ', isVote);
-	}, [isVote]);
-
 	const [Funnel, Step, setStep] = useFunnel(
 		voteList?.isVote ? steps[1] : steps[0],
 	);

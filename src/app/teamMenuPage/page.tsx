@@ -55,14 +55,7 @@ export default function TeamMenuPage() {
 	});
 
 	useEffect(() => {
-		console.log('teamBoardId:', teamBoardId);
-		console.log('isLogin:', isLogin);
-		console.log('getIsTeam:', getIsTeam?.isTeam);
-		console.log('isTeamFetching: ', isTeamFetching);
-		console.log('isTeamLoading: ', isTeamLoading);
-
 		if (!isTeamLoading && getIsTeam !== undefined && !isTeamFetching) {
-			console.log(getIsTeam.isTeam);
 			localStorage.setItem('teamMenu_Id', String(teamBoardId));
 			if (isLogin) {
 				if (getIsTeam.isTeam === true) {

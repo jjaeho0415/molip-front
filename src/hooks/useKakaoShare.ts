@@ -60,7 +60,6 @@ const useKakaoShare = ({ canvasRef }: useKakaoShareProps) => {
 			}
 			const response = await uploadImageToS3(dataURL);
 			const imageUrl = response.s3ImageUrl;
-			console.log(imageUrl);
 			const shareUrl = `${window.location.origin}/shareImage?image=${imageUrl}`;
 			Kakao.Share.sendDefault({
 				objectType: 'feed',

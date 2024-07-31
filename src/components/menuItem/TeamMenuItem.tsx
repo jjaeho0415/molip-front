@@ -32,7 +32,7 @@ function TeamMenuItem({
 
 	const { data: addedMembers, isLoading } = useQuery<IGetAddedUserInfo>({
 		queryKey: ['MENU_ADDED_MEMBERS_INFO', id],
-		queryFn: () => getHasMenuAddedMembers(id),
+		queryFn: () => getHasMenuAddedMembers(String(id)),
 	});
 
 	useEffect(() => {

@@ -17,8 +17,10 @@ export default function Guest_Invitation() {
 	const [teamMenuId, setTeamMenuId] = useState<string | null>('');
 
 	useEffect(() => {
-		const menuId = localStorage.getItem('teamMenu_Id');
-		setTeamMenuId(menuId);
+		if (typeof window !== 'undefined') {
+			const menuId = localStorage.getItem('teamMenu_Id');
+			setTeamMenuId(menuId);
+		}
 	}, []);
 
 	const { mutate: postInviteAccept } = useMutation<IPostInviteType>({
@@ -30,8 +32,9 @@ export default function Guest_Invitation() {
 			}
 		},
 		onSuccess: (data) => {
+			localStorage.setItem('teamMenu_Id', String(data.teamBoardId));
 			router.push(
-				`${window.location.origin}/teamMenuPage?menuName=${data.teamBoardName}&menuId=${data.teamBoradId}`,
+				`/teamMenuPage?menuId=${data.teamBoardId}&menuName=${data.teamBoardName}`,
 			);
 		},
 	});
@@ -43,7 +46,7 @@ export default function Guest_Invitation() {
 	const handleLogin = () => {
 		sessionStorage.setItem('redirectAfterLogin', window.location.pathname);
 		window.location.href = 'https://api.molip.site/oauth2/authorization/kakao';
-	}
+	};
 
 	return (
 		<>

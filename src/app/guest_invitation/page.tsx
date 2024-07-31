@@ -40,6 +40,11 @@ export default function Guest_Invitation() {
 		teamMenuId && postInviteAccept();
 	};
 
+	const handleLogin = () => {
+		sessionStorage.setItem('redirectAfterLogin', window.location.pathname);
+		window.location.href = 'https://api.molip.site/oauth2/authorization/kakao';
+	}
+
 	return (
 		<>
 			<Header />
@@ -76,7 +81,7 @@ export default function Guest_Invitation() {
 								width={350}
 								height={60}
 								alt='login'
-								onClick={() => router.push('/login')}
+								onClick={handleLogin}
 							/>
 						</>
 					)}

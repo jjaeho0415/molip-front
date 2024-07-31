@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styles from './addMenu.module.css';
 import Image from 'next/image';
 import Icon_down from '../../../public/icons/down.svg';
@@ -13,6 +13,7 @@ import { getMyMenu } from '@/api/getMyMenu';
 import { useRouter } from 'next/navigation';
 import { AddMenuToTeamMenu } from '@/api/addMenuToTeamMenu';
 import AlertModal from '../modals/AlertModal';
+import { patchTeamMenus } from '@/api/patchTeamMenus';
 
 interface IAddMenu {
 	onClick: () => void;
@@ -21,6 +22,7 @@ interface IAddMenu {
 	boardName: string;
 	isAllPeopleAdded: boolean;
 	setIsUserAddedMenu: Dispatch<SetStateAction<boolean>>;
+	isUserAddedMenu: boolean;
 }
 export default function AddMenu_BS({
 	onClick,
@@ -29,6 +31,7 @@ export default function AddMenu_BS({
 	boardName,
 	isAllPeopleAdded,
 	setIsUserAddedMenu,
+	isUserAddedMenu,
 }: IAddMenu) {
 	const router = useRouter();
 	const queryClient = useQueryClient();
@@ -40,11 +43,19 @@ export default function AddMenu_BS({
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [selectedBoardId, setSelectedBoardId] = useState<number>(-1);
 	const [isAlertModalOpen, setIsAlertModalOpen] = useState<boolean>(false);
+	const [addMenuFirst, setAddMenuFirst] = useState<boolean>(false);
+
+	useEffect(() => {
+		if (isUserAddedMenu) {
+			setAddMenuFirst(true);
+		}
+	}, [isUserAddedMenu]);
 
 	const { data: menus, isLoading: isGetMyMenuLoading } = useQuery<
 		IGetMyCategoryMenuType[] | undefined
 	>({
 		queryKey: ['MY_MENU_LIST', selectedBoardId],
+		enabled: selectedBoardId > 0,
 		queryFn: () => {
 			if (selectedMyMenu !== '') {
 				return getMyMenu(selectedBoardId);
@@ -60,6 +71,7 @@ export default function AddMenu_BS({
 		},
 		mutationKey: ['ADD_MENU_TO_TEAM_MENU'],
 		onSuccess: () => {
+			setAddMenuFirst(true);
 			setIsUserAddedMenu(true);
 			queryClient.invalidateQueries({
 				queryKey: ['TEAM_MENU_ITEM', teamBoardId],
@@ -72,12 +84,35 @@ export default function AddMenu_BS({
 				router.push(`/menu?menuId=${teamBoardId}&menuName=${boardName}`);
 			else
 				router.push(
-					`/teamMenuPage?menuId=${selectedBoardId}&menuName=${boardName}`,
+					`/teamMenuPage?menuId=${teamBoardId}&menuName=${boardName}`,
 				);
 		},
 		onSettled: () => {
 			setIsLoading(false);
+			onClick();
+		},
+	});
 
+	const { mutate: changeMenu } = useMutation({
+		mutationFn: (menuIdList: number[]) =>
+			patchTeamMenus(teamBoardId, { menuIds: menuIdList }),
+		mutationKey: ['CHANGE_MENU_TO_TEAM_MENU'],
+		onSuccess: () => {
+			setAddMenuFirst(true);
+			setIsUserAddedMenu(true);
+			queryClient.invalidateQueries({
+				queryKey: ['TEAM_MENU_ITEM', teamBoardId],
+			});
+			alert('메뉴가 수정되었습니다.');
+			if (isAllPeopleAdded)
+				router.push(`/menu?menuId=${teamBoardId}&menuName=${boardName}`);
+			else
+				router.push(
+					`/teamMenuPage?menuId=${teamBoardId}&menuName=${boardName}`,
+				);
+		},
+		onSettled: () => {
+			setIsLoading(false);
 			onClick();
 		},
 	});
@@ -128,7 +163,11 @@ export default function AddMenu_BS({
 		setIsLoading(true);
 
 		const menuIdList = selectedAddMenu.map((item) => item.menuId);
-		addMenu(menuIdList);
+		if (addMenuFirst) {
+			changeMenu(menuIdList);
+		} else {
+			addMenu(menuIdList);
+		}
 	};
 
 	return (

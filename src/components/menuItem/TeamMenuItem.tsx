@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import styles from './teamMenuItem.module.css';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -12,8 +12,8 @@ interface TeamMenuItemProps {
 	hasUserAddedMenu: boolean;
 	index: number;
 	isMoreModalOpen: number;
-	setIsMoreModalOpen: React.Dispatch<React.SetStateAction<number>>;
-	setIsAllPeopleAdded: React.Dispatch<React.SetStateAction<boolean>>;
+	setIsMoreModalOpen: Dispatch<SetStateAction<number>>;
+	setIsAllPeopleAdded: Dispatch<SetStateAction<boolean>>;
 	isAllPeopleAdded: boolean;
 }
 
@@ -36,20 +36,19 @@ function TeamMenuItem({
 	});
 
 	useEffect(() => {
-		if (addedMembers)
-			setIsAllPeopleAdded(
-				addedMembers.addedMenuUserCount === addedMembers.teamMembersNum
-					? true
-					: false,
-			);
+		if (addedMembers) {
+			const allPeopleAdded =
+				addedMembers.addedMenuUserCount === addedMembers.teamMembersNum;
+			setIsAllPeopleAdded(allPeopleAdded);
+		}
 	}, [addedMembers, setIsAllPeopleAdded]);
 
 	const handleMenuItemClick = () => {
 		if (addedMembers) {
-			if (isAllPeopleAdded)
+			if (addedMembers.addedMenuUserCount === addedMembers.teamMembersNum) {
 				router.push(`/menu?menuId=${id}&menuName=${menuName}`);
-			else {
-				router.push(`/teamMenuPage?menuId=${id}&menuName=${menuName}`);
+			} else {
+				router.push(`/teamMenuPage?menuName=${menuName}&menuId=${id}`);
 			}
 		}
 	};

@@ -34,6 +34,7 @@ export default function Menu() {
 	const { handleShare } = useKakaoShare({ canvasRef });
 	const { setIsOpen } = useBottomSheet();
 	const [pageLoading, setPageLoading] = useState<boolean>(true);
+	const [sessionLoading, setSessionLoading] = useState<boolean>(true);
 
 	useEffect(() => {
 		if (!menuId) {
@@ -45,11 +46,12 @@ export default function Menu() {
 				}
 			}
 		}
+		setSessionLoading(false);
 	}, []);
 
 	const { data: menu } = useQuery<IGetMyCategoryMenuType[]>({
 		queryKey: ['MENU_LIST'],
-		enabled: isLogin,
+		enabled: isLogin && !sessionLoading,
 		queryFn: () => {
 			setPageLoading(true);
 			if (tab === 'my') {

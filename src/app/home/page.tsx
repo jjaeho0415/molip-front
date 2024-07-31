@@ -30,6 +30,14 @@ export default function Home() {
 	const { accessToken } = useAuthStore.getState();
 	const { isLogin } = useAuthStore.getState();
 
+	useEffect(() => {
+		const redirectUrl = sessionStorage.getItem('redirectAfterLogin');
+
+		if (redirectUrl && redirectUrl !== '/login') {
+			route.push(redirectUrl);
+		} 
+	},[route])
+
 	const { mutate: getAccess } = useMutation<IRefreshType>({
 		mutationFn: getAccessToken,
 		mutationKey: ['refresh'],

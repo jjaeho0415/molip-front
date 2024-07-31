@@ -203,6 +203,7 @@ export default function TeamMenuPage() {
 									boardName={boardName}
 									isAllPeopleAdded={isAllPeopleAdded}
 									setIsUserAddedMenu={setIsUserAddedMenu}
+									isUserAddedMenu={isUserAddedMenu}
 								/>
 							</BottomSheet>
 						)}

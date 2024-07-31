@@ -47,10 +47,6 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
 		}
 	}, [isOpen, controls, isControlsReady]);
 
-	useEffect(() => {
-		console.log('BottomSheet isOpen:', isOpen);
-	}, [isOpen]);
-
 	return (
 		<>
 			{!isControlsReady ? (

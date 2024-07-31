@@ -57,7 +57,8 @@
 	border-top: none;
 	overflow: auto;
 	color: var(--gray-60);
-	position: sticky;
+	position: absolute;
+	transform: translateY(294px);
 }
 
 .disabled {

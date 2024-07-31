@@ -29,7 +29,7 @@ export default function TeamMenuPage() {
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const boardName = searchParams.get('menuName') as string;
-	const teamBoardId = Number(searchParams.get('menuId'));
+	const teamBoardId = searchParams.get('menuId') as string;
 	const [menuBoardName, setMenuBoardName] = useState<string>(boardName);
 	const [myMenuNum, setMyMenu] = useState<number>();
 	const [currentUrl, setCurrentUrl] = useState<string>('');
@@ -45,47 +45,59 @@ export default function TeamMenuPage() {
 		}
 	}, []);
 
-	const { data: getIsTeam } = useQuery<IGetInvite>({
+	const {
+		data: getIsTeam,
+		isLoading: isTeamLoading,
+		isFetching: isTeamFetching,
+	} = useQuery<IGetInvite>({
 		queryKey: ['IS_TEAM'],
 		queryFn: () => getInvite(teamBoardId),
-		enabled: isLogin,
 	});
 
 	useEffect(() => {
-		// 사용자가 팀 만든 사람인지 아닌지(또는 팀원인지 아닌지)를 판별하는 api 연결 추가해야하고 조건 추가 해야함
-		// 팀에 속해있으면 메뉴판 페이지 그대로 보여주고 속해있지 않으면 페이지 이동시킴
-		localStorage.setItem('teamMenu_Id', String(teamBoardId));
-		if (isLogin) {
-			if (getIsTeam?.isTeam === true) {
-				setIsLoading(false);
-			} else if (getIsTeam?.isTeam === false) {
+		console.log('teamBoardId:', teamBoardId);
+		console.log('isLogin:', isLogin);
+		console.log('getIsTeam:', getIsTeam?.isTeam);
+		console.log('isTeamFetching: ', isTeamFetching);
+		console.log('isTeamLoading: ', isTeamLoading);
+
+		if (!isTeamLoading && getIsTeam !== undefined && !isTeamFetching) {
+			console.log(getIsTeam.isTeam);
+			localStorage.setItem('teamMenu_Id', String(teamBoardId));
+			if (isLogin) {
+				if (getIsTeam.isTeam === true) {
+					setIsLoading(false);
+				} else if (getIsTeam.isTeam === false) {
+					router.push('/guest_invitation');
+				}
+			} else {
 				router.push('/guest_invitation');
 			}
-		} else {
-			router.push('/guest_invitation');
 		}
-	}, [getIsTeam]);
+	}, [getIsTeam, isTeamLoading, isTeamFetching]);
 
 	const handleClickButton = () => {
 		setIsOpen(false);
 	};
 
-	const { data: teamMenuItem } = useQuery<IGetTeamMenuType | null>({
-		queryKey: ['TEAM_MENU_ITEM', teamBoardId],
-		queryFn: async () => getTeamMenuItem(teamBoardId),
-		enabled: isLogin && !isLoading,
-	});
+	const { data: teamMenuItem, refetch: refetchTeamMenuItem } =
+		useQuery<IGetTeamMenuType | null>({
+			queryKey: ['TEAM_MENU_ITEM', teamBoardId],
+			queryFn: async () => getTeamMenuItem(teamBoardId),
+			enabled: !isLoading,
+		});
 
-	const { data: addedMembers } = useQuery<IGetAddedUserInfo>({
-		queryKey: ['MENU_ADDED_MEMBERS_INFO'],
-		queryFn: () => getHasMenuAddedMembers(teamBoardId),
-		enabled: isLogin && !isLoading,
-	});
+	const { data: addedMembers, refetch: refetchAddedMembers } =
+		useQuery<IGetAddedUserInfo>({
+			queryKey: ['MENU_ADDED_MEMBERS_INFO'],
+			queryFn: () => getHasMenuAddedMembers(teamBoardId),
+			enabled: !isLoading,
+		});
 
 	const { data: myMenuList } = useQuery<IGetMyMenuType[]>({
 		queryKey: ['MY_MENU_LIST'],
 		queryFn: getMyMenuList,
-		enabled: isLogin && !isLoading,
+		enabled: !isLoading,
 	});
 
 	useEffect(() => {
@@ -94,9 +106,7 @@ export default function TeamMenuPage() {
 				router.push(`/menu?menuId=${teamBoardId}&menuName=${boardName}`);
 			} else {
 				setIsAllPeopleAdded(
-					addedMembers?.addedMenuUserCount === addedMembers?.teamMembersNum
-						? true
-						: false,
+					addedMembers.addedMenuUserCount === addedMembers.teamMembersNum,
 				);
 			}
 		}
@@ -114,6 +124,11 @@ export default function TeamMenuPage() {
 		}
 	};
 
+	const handleReload = () => {
+		refetchTeamMenuItem();
+		refetchAddedMembers();
+	};
+
 	return (
 		<>
 			{!isLoading && (
@@ -126,7 +141,7 @@ export default function TeamMenuPage() {
 							<SmallInput
 								value={menuBoardName}
 								setValue={setMenuBoardName}
-								menuId={teamBoardId}
+								menuId={Number(teamBoardId)}
 							></SmallInput>
 							<Image src={Icon_pencile} width={36} height={36} alt='edit' />
 						</div>
@@ -143,12 +158,7 @@ export default function TeamMenuPage() {
 												return;
 											}}
 										/>
-										<RoundButton
-											property='새로고침'
-											onClick={() => {
-												return;
-											}}
-										/>
+										<RoundButton property='새로고침' onClick={handleReload} />
 									</div>
 								</>
 							) : (
@@ -192,14 +202,14 @@ export default function TeamMenuPage() {
 
 						{myMenuNum === 0 ? (
 							<BottomSheet size='small'>
-								<NoMenu_BS teamBoardId={teamBoardId} />
+								<NoMenu_BS teamBoardId={Number(teamBoardId)} />
 							</BottomSheet>
 						) : (
 							<BottomSheet>
 								<AddMenu_BS
 									onClick={handleClickButton}
 									myMenuList={myMenuList}
-									teamBoardId={teamBoardId}
+									teamBoardId={Number(teamBoardId)}
 									boardName={boardName}
 									isAllPeopleAdded={isAllPeopleAdded}
 									setIsUserAddedMenu={setIsUserAddedMenu}

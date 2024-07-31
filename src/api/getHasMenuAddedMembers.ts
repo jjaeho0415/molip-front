@@ -3,7 +3,7 @@ import api from '@/_lib/fetcher';
 import { useAuthStore } from '@/app/login/store/useAuthStore';
 
 export const getHasMenuAddedMembers = async (
-	teamBoardId: number,
+	teamBoardId: string,
 ): Promise<IGetAddedUserInfo> => {
 	const { accessToken } = useAuthStore.getState();
 	return await api.get({

@@ -146,6 +146,6 @@
 	height: 100px;
 	background-color: var(--white);
 	position: fixed;
-	bottom: 0px;
+	bottom: 40px;
 	transform: translateX(-10px);
 }

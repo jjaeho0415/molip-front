@@ -63,7 +63,7 @@ export default function VoteDone({
 				{!isAllVoted && (
 					<p className={styles.DoneVotingComment}>
 						다른 팀원이 투표 중입니다.{' '}
-						{`(${votedMembers?.votedUserCount}/
+						{`(${votedMembers?.votedUserCount} /
 						${votedMembers?.teamMembersNum})`}
 					</p>
 				)}

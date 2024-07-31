@@ -9,6 +9,8 @@ type IGetTeamMenuType = {
 	createdDate: string;
 	modifiedData: string;
 	hasUserAddedMenu: boolean;
+	voted: boolean;
+	allPeopleAdded: boolean;
 };
 
 type IGetAddedUserInfo = {

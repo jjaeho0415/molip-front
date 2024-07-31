@@ -74,18 +74,15 @@ export default function AddMenu_BS({
 			setAddMenuFirst(true);
 			setIsUserAddedMenu(true);
 			queryClient.invalidateQueries({
-				queryKey: ['TEAM_MENU_ITEM', teamBoardId],
+				queryKey: ['TEAM_MENU_ITEM'],
 			});
 			queryClient.invalidateQueries({
 				queryKey: ['MENU_ADDED_MEMBERS_INFO'],
 			});
 			alert('메뉴가 추가되었습니다.');
-			if (isAllPeopleAdded)
+			if (isAllPeopleAdded) {
 				router.push(`/menu?menuId=${teamBoardId}&menuName=${boardName}`);
-			else
-				router.push(
-					`/teamMenuPage?menuId=${teamBoardId}&menuName=${boardName}`,
-				);
+			}
 		},
 		onSettled: () => {
 			setIsLoading(false);
@@ -104,12 +101,13 @@ export default function AddMenu_BS({
 				queryKey: ['TEAM_MENU_ITEM', teamBoardId],
 			});
 			alert('메뉴가 수정되었습니다.');
-			if (isAllPeopleAdded)
+			if (isAllPeopleAdded) {
 				router.push(`/menu?menuId=${teamBoardId}&menuName=${boardName}`);
-			else
-				router.push(
-					`/teamMenuPage?menuId=${teamBoardId}&menuName=${boardName}`,
-				);
+			} else {
+				queryClient.invalidateQueries({
+					queryKey: ['TEAM_MENU_ITEM', teamBoardId],
+				});
+			}
 		},
 		onSettled: () => {
 			setIsLoading(false);

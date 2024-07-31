@@ -155,7 +155,8 @@ export default function TeamMenuPage() {
 									</div>
 								</>
 							) : (
-								!isAllPeopleAdded && (
+								!isAllPeopleAdded &&
+								!isUserAddedMenu && (
 									<>
 										<p className={styles.comment}>
 											아직 메뉴를 추가하지 않았어요.

@@ -48,6 +48,7 @@ export default function TeamMenuPage() {
 	const { data: getIsTeam } = useQuery<IGetInvite>({
 		queryKey: ['IS_TEAM'],
 		queryFn: () => getInvite(teamBoardId),
+		enabled: isLogin,
 	});
 
 	useEffect(() => {
@@ -57,13 +58,13 @@ export default function TeamMenuPage() {
 		if (isLogin) {
 			if (getIsTeam?.isTeam === true) {
 				setIsLoading(false);
-			} else {
+			} else if (getIsTeam?.isTeam === false) {
 				router.push('/guest_invitation');
 			}
 		} else {
 			router.push('/guest_invitation');
 		}
-	}, []);
+	}, [getIsTeam]);
 
 	const handleClickButton = () => {
 		setIsOpen(false);
@@ -72,21 +73,24 @@ export default function TeamMenuPage() {
 	const { data: teamMenuItem } = useQuery<IGetTeamMenuType | null>({
 		queryKey: ['TEAM_MENU_ITEM', teamBoardId],
 		queryFn: async () => getTeamMenuItem(teamBoardId),
+		enabled: isLogin && !isLoading,
 	});
 
 	const { data: addedMembers } = useQuery<IGetAddedUserInfo>({
 		queryKey: ['MENU_ADDED_MEMBERS_INFO'],
 		queryFn: () => getHasMenuAddedMembers(teamBoardId),
+		enabled: isLogin && !isLoading,
 	});
 
 	const { data: myMenuList } = useQuery<IGetMyMenuType[]>({
 		queryKey: ['MY_MENU_LIST'],
 		queryFn: getMyMenuList,
+		enabled: isLogin && !isLoading,
 	});
 
 	useEffect(() => {
 		if (addedMembers) {
-			if (addedMembers?.addedMenuUserCount === addedMembers?.teamMembersNum) {
+			if (addedMembers.addedMenuUserCount === addedMembers.teamMembersNum) {
 				router.push(`/menu?menuId=${teamBoardId}&menuName=${boardName}`);
 			} else {
 				setIsAllPeopleAdded(

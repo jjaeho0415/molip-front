@@ -31,7 +31,7 @@ function TeamMenuList({ menuList }: TeamMenuListProps) {
 						<div
 							style={{
 								position: 'absolute',
-								transform: `${!isAllPeopleAdded ? 'translate(191.5px, -60px)' : 'translate(191.5px, -25px)'}`,
+								transform: `${!teamMenuItem.allPeopleAdded ? 'translate(191.5px, -60px)' : 'translate(191.5px, -25px)'}`,
 								zIndex: '6',
 							}}
 						>

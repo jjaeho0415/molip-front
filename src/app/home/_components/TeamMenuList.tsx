@@ -1,5 +1,5 @@
 import TeamMenuItem from '@/components/menuItem/TeamMenuItem';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './styles/menuList.module.css';
 import MoreModal from '@/components/modals/MoreModal';
 

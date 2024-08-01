@@ -3,7 +3,7 @@
 import Button from '@/components/buttons/Button';
 import styles from './voteComponents.module.css';
 import TopNavBar from '@/components/TopNavBar';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Icon_unchecked from '../../../../public/icons/checkBox/checkBox_unchecked.svg';
 import Icon_checked from '../../../../public/icons/checkBox/checkBox_checked.svg';

@@ -30,6 +30,10 @@ function CreateMyMenu() {
 		}
 	}, [value]);
 
+	useEffect(() => {
+		setIsOpen(false);
+	}, []);
+
 	const handleBeforeUnload = () => {
 		if (value === '') {
 			setValue(defaultName || '');

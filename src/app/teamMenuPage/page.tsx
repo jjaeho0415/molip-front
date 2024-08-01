@@ -38,6 +38,10 @@ export default function TeamMenuPage() {
 	const { handleKakaoInvite } = useKakaoInvite(currentUrl);
 	const { isLogin } = useAuthStore.getState();
 	const [isLoading, setIsLoading] = useState<boolean>(true);
+
+	useEffect(() => {
+		setIsOpen(false);
+	}, []);
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
 			setCurrentUrl(window.location.href);

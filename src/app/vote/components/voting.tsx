@@ -3,7 +3,7 @@
 import Button from '@/components/buttons/Button';
 import styles from './voteComponents.module.css';
 import TopNavBar from '@/components/TopNavBar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Icon_unchecked from '../../../../public/icons/checkBox/checkBox_unchecked.svg';
 import Icon_checked from '../../../../public/icons/checkBox/checkBox_checked.svg';
@@ -93,7 +93,10 @@ export default function Voting({
 					<div className={styles.VotingContentSection}>
 						<div className={styles.VotingPBox}>
 							<p className={styles.VotingP}>메뉴를 선택해주세요.</p>
-								<p className={styles.VotingSub}>{'( '}{voteArr.length} / 3{' )'}</p>
+							<p className={styles.VotingSub}>
+								{'( '}
+								{voteArr.length} / 3{' )'}
+							</p>
 							<p className={styles.VotingSubRight}>익명 투표</p>
 						</div>
 						<div className={styles.VotingListBox}>

@@ -8,7 +8,7 @@
 
 <div>
   <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=Next.js&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Module CSS-1572B6?style=for-the-badge&logo=Module CSS&logoColor=white"/>
+  <img src="https://img.shields.io/badge/CSS Module-1572B6?style=for-the-badge&logo=CSS Module&logoColor=white"/>
   <img src="https://img.shields.io/badge/Reactquery-FF4154?style=for-the-badge&logo=reactquery&logoColor=white"/>
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
   <img src="https://img.shields.io/badge/zustand-553830?style=for-the-badge&logo=zustand&logoColor=white">

@@ -117,6 +117,11 @@
 	gap: 5px;
 }
 
+.buttonBox{
+	position: absolute;
+	bottom: 140px;
+}
+
 .DoneVotingComment {
 	font-size: 15px;
 	color: var(--gray-60);

@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getVoteMembers } from '@/api/getVoteMembers';
 import { useAuthStore } from '@/app/login/store/useAuthStore';
 import { useEffect, useState } from 'react';
+import RoundButton from '@/components/buttons/RoundButton';
 
 interface IVoteDoneProps {
 	onNext: () => void;
@@ -29,13 +30,21 @@ export default function VoteDone({
 	const { isLogin } = useAuthStore();
 	const [isAllVoted, setIsAllVoted] = useState<boolean>(false);
 
-	const { data: votedMembers } = useQuery<IGetVoteMembers>({
+	const { data: votedMembers, refetch } = useQuery<IGetVoteMembers>({
 		queryKey: ['VOTED_USER_COUNT'],
 		queryFn: () => getVoteMembers(menuId),
 		enabled: isLogin,
 	});
 
+	const handleReload = () => {
+		refetch();
+	};
+
 	useEffect(() => {
+		localStorage.setItem(
+			'VOTED_USER_COUNT',
+			String(votedMembers?.teamMembersNum),
+		);
 		if (votedMembers?.teamMembersNum === votedMembers?.votedUserCount) {
 			setIsAllVoted(true);
 		} else {
@@ -61,10 +70,16 @@ export default function VoteDone({
 					</div>
 				</div>
 				{!isAllVoted && (
+					<div className={styles.buttonBox}>
+						<RoundButton property='새로고침' onClick={handleReload} />
+					</div>
+				)}
+
+				{!isAllVoted && (
 					<p className={styles.DoneVotingComment}>
 						다른 팀원이 투표 중입니다.{' '}
-						{`(${votedMembers?.votedUserCount} /
-						${votedMembers?.teamMembersNum})`}
+						{`( ${votedMembers?.votedUserCount} /
+						${votedMembers?.teamMembersNum} )`}
 					</p>
 				)}
 			</div>

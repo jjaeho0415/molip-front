@@ -221,7 +221,10 @@ export default function AddMenu_BS({
 				{selectedMyMenu !== '' && (
 					<p className={styles.menuSub}>
 						메뉴를 선택해주세요.
-						<span className={styles.subSpan}>최대 10개</span>
+						<span className={styles.subSpan}>
+							{`( `}
+							{selectedAddMenu.length} / 10{' )'}
+						</span>
 					</p>
 				)}
 				{selectedMyMenu !== '' && isGetMyMenuLoading ? (

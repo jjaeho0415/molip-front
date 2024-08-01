@@ -35,8 +35,8 @@ export default function Home() {
 
 		if (redirectUrl && redirectUrl !== '/login') {
 			route.push(redirectUrl);
-		} 
-	},[route])
+		}
+	}, [route]);
 
 	const { mutate: getAccess } = useMutation<IRefreshType>({
 		mutationFn: getAccessToken,
@@ -190,7 +190,9 @@ export default function Home() {
 										<MyMenuList menuList={myMenuList} />
 									)
 								) : tab === 'team' && teamMenuList.length === 0 ? (
-									<MenuEmpty myMenuIsEmpty={true} />
+									<MenuEmpty
+										myMenuIsEmpty={myMenuList.length === 0 ? true : false}
+									/>
 								) : (
 									tab === 'team' && <TeamMenuList menuList={teamMenuList} />
 								)}

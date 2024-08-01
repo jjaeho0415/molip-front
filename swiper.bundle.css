@@ -1,7 +1,7 @@
 :root {
-  --swiper-pagination-bullet-inactive-color: var(--main-50);
-  --swiper-pagination-color: var(--main-50);
-  /*
+	--swiper-pagination-bullet-inactive-color: var(--main-50);
+	--swiper-pagination-color: var(--main-50);
+	/*
   --swiper-pagination-bullet-size: 8px;
   --swiper-pagination-bullet-width: 8px;
   --swiper-pagination-bullet-height: 8px;
@@ -10,4 +10,19 @@
   --swiper-pagination-bullet-horizontal-gap: 4px;
   --swiper-pagination-bullet-vertical-gap: 6px;
   */
+}
+.swiper-pagination {
+	position: relative;
+}
+
+.swiper-slide {
+	height: 500px;
+}
+
+.swiper-wrapper {
+	height: 515px;
+}
+
+.swiper-horizontal{
+  height: 540px;
 }

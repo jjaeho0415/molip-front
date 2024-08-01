@@ -24,10 +24,6 @@ function CreateMyMenu() {
 	const [value, setValue] = useState<string>('');
 
 	useEffect(() => {
-		defaultName && setValue(defaultName);
-	}, [defaultName]);
-
-	useEffect(() => {
 		if (value) {
 			setIsEmptyModalOpen(false);
 			return;

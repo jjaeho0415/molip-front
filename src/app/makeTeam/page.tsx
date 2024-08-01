@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import Button from '@/components/buttons/Button';
 import BigInput from '@/components/InputBox/BigInput';
 import { useRouter } from 'next/navigation';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { postCreateTeamMenu } from '@/api/postCreatTeamMenu';
 import { getTeamMenuList } from '@/api/getTeamMenuList';
 
@@ -20,11 +20,14 @@ export default function MakeTeam() {
 	const [menuBoardName, setMenuBoardName] = useState<string>(
 		`${teamName}의 메뉴판`,
 	);
+	const queryClient = useQueryClient();
 
 	const { mutate: createTeamMenu } = useMutation<IGetTeamMenuType>({
 		mutationFn: () => postCreateTeamMenu(teamName, selectedNum, menuBoardName),
 		mutationKey: ['CREATE_TEAM_MENU'],
 		onSuccess: (data: IGetTeamMenuType) => {
+			queryClient.invalidateQueries({ queryKey: ['MY_MENU_LIST'] });
+			queryClient.invalidateQueries({ queryKey: ['TEAM_MENU_LIST'] });
 			router.push(
 				`/teamMenuPage?menuName=${data.teamBoardName}&menuId=${data.teamBoardId}`,
 			);

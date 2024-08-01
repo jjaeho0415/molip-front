@@ -1,0 +1,57 @@
+.overlay {
+	position: fixed;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 50;
+}
+
+.modal {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	background-color: var(--white);
+	border-radius: 20px;
+	padding: 60px 50px 24px 50px;
+	width: 300px;
+	gap: 35px;
+	height: 250px;
+}
+
+.textSection {
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	color: var(--gray-60);
+	font-weight: 700;
+}
+
+.topTextSection {
+	font-size: 19px;
+	line-height: 29.5px;
+	white-space: nowrap;
+}
+
+.emphasisText {
+	font-weight: 800;
+	color: var(--main-50);
+}
+
+.bottomTextSection {
+	font-size: 17px;
+	line-height: 25.5px;
+}
+
+.bottomSection {
+	display: flex;
+	gap: 10px;
+	position: absolute;
+	bottom: 24px;
+	left: 50%;
+	transform: translateX(-50%);
+}

@@ -93,7 +93,10 @@ export default function Voting({
 					<div className={styles.VotingContentSection}>
 						<div className={styles.VotingPBox}>
 							<p className={styles.VotingP}>메뉴를 선택해주세요.</p>
-							<p className={styles.VotingSub}>(최대 3개)</p>
+							<p className={styles.VotingSub}>
+								{'( '}
+								{voteArr.length} / 3{' )'}
+							</p>
 							<p className={styles.VotingSubRight}>익명 투표</p>
 						</div>
 						<div className={styles.VotingListBox}>

@@ -24,6 +24,8 @@ export default function VoteResult({
 	refetch,
 }: IVoteResultProps) {
 	const router = useRouter();
+	const maxVoteValue = voteResult?.votes[0]?.voteValue;
+	const teamMembers = Number(localStorage.getItem('VOTED_USER_COUNT'));
 
 	useEffect(() => {
 		refetch();
@@ -49,7 +51,7 @@ export default function VoteResult({
 							<div className={styles.ResultMenuItemTextBox}>
 								<p key={idx} className={styles.ResultMenuItem}>
 									{item.menuName}
-									{idx === 0 && (
+									{item.voteValue === maxVoteValue && (
 										<Image
 											src={Icon_check}
 											width={24}
@@ -62,9 +64,9 @@ export default function VoteResult({
 							</div>
 							<div className={styles.ResultProgressBox}>
 								<ProgressBar
-									members={5}
+									members={teamMembers}
 									voteValue={item.voteValue}
-									color={idx === 0 ? 'orange' : 'gray'}
+									color={item.voteValue === maxVoteValue ? 'orange' : 'gray'}
 								/>
 							</div>
 						</div>

@@ -21,21 +21,28 @@ import useKakaoShare from '@/hooks/useKakaoShare';
 import { useAuthStore } from '../login/store/useAuthStore';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import { getVoteResult } from '@/api/getVoteResult';
+import VoteAlertModal from '@/components/modals/VoteAlertModal';
 
 export default function Menu() {
 	const [active, setActive] = useState<'메뉴판' | '메뉴이미지'>('메뉴판');
 	const { tab } = useHomeStore();
-	const router = useRouter();
 	const { isLogin } = useAuthStore.getState();
 	const canvasRef = useRef<HTMLDivElement>(null);
 	const searchParams = useSearchParams();
 	const menuId = Number(searchParams.get('menuId'));
-	const menuName = searchParams.get('menuName');
+	const menuName = String(searchParams.get('menuName'));
 	const [menuList, setMenuList] = useState<IGetMyCategoryMenuType[]>([]);
 	const { handleShare } = useKakaoShare({ canvasRef });
 	const { setIsOpen } = useBottomSheet();
+	const router = useRouter();
 	const [pageLoading, setPageLoading] = useState<boolean>(true);
 	const [sessionLoading, setSessionLoading] = useState<boolean>(true);
+	const [isVoteAlertModalOpen, setIsVoteAlertModalOpen] =
+		useState<boolean>(false);
+
+	useEffect(() => {
+		setIsOpen(false);
+	}, []);
 
 	useEffect(() => {
 		if (!menuId) {
@@ -103,6 +110,13 @@ export default function Menu() {
 		}
 	};
 
+	const handleGoVote = () => {
+		vote?.isVote === false
+			? setIsVoteAlertModalOpen(true)
+			: router.push(`/vote?menuId=${menuId}&menuName=${menuName}`);
+		
+	}
+
 	return (
 		<>
 			{pageLoading ? (
@@ -142,14 +156,10 @@ export default function Menu() {
 											</ShareButton>
 										) : (
 											<ShareButton
-												handleRightClick={handleDownImage}
-												handleLeftClick={() =>
-													router.push(
-														`/vote?menuId=${menuId}&menuName=${menuName}`,
-													)
-												}
+														handleRightClick={handleDownImage}
+														handleLeftClick={ handleGoVote}
 											>
-												투표하기
+												투표하러 가기
 											</ShareButton>
 										)
 									) : (
@@ -162,12 +172,27 @@ export default function Menu() {
 									)}
 								</div>
 							)}
-							{vote?.isVote === false && (
+							{tab === 'team' && vote?.isVote === false ? (
 								<>
 									<BottomSheet>
 										<AddTaste_BS menuId={menuId} />
 									</BottomSheet>
 								</>
+							) : (
+								tab === 'my' && (
+									<>
+										<BottomSheet>
+											<AddTaste_BS menuId={menuId} />
+										</BottomSheet>
+									</>
+								)
+							)}
+							{isVoteAlertModalOpen && (
+								<VoteAlertModal
+									setIsVoteAlertModalOpen={setIsVoteAlertModalOpen}
+									menuId={menuId}
+									menuName={menuName}
+								/>
 							)}
 						</div>
 					</>

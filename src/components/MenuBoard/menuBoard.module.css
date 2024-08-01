@@ -3,8 +3,8 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	flex-grow: 100%;
-	padding-bottom: 130px;
+	min-height: 100vh;
+	padding-bottom: 120px;
 }
 
 .MenuTitle {
@@ -67,9 +67,6 @@
 	width: 40px;
 	gap: 10px;
 	position: fixed;
-}
-
-.SideCategory {
 }
 
 .ImageP {

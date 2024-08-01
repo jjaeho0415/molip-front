@@ -20,6 +20,7 @@ import useHomeStore from '../home/store/useHomeStore';
 import useKakaoShare from '@/hooks/useKakaoShare';
 import { useAuthStore } from '../login/store/useAuthStore';
 import useBottomSheet from '@/hooks/useBottomSheet';
+import { getVoteResult } from '@/api/getVoteResult';
 
 export default function Menu() {
 	const [active, setActive] = useState<'메뉴판' | '메뉴이미지'>('메뉴판');
@@ -48,6 +49,11 @@ export default function Menu() {
 		}
 		setSessionLoading(false);
 	}, []);
+
+	const { data: vote } = useQuery<IGetVoteList>({
+		queryKey: ['TEAM_BOARD_VOTES'],
+		queryFn: () => getVoteResult(menuId),
+	});
 
 	const { data: menu } = useQuery<IGetMyCategoryMenuType[]>({
 		queryKey: ['MENU_LIST'],
@@ -156,9 +162,13 @@ export default function Menu() {
 									)}
 								</div>
 							)}
-							<BottomSheet>
-								<AddTaste_BS menuId={menuId} />
-							</BottomSheet>
+							{vote?.isVote === false && (
+								<>
+									<BottomSheet>
+										<AddTaste_BS menuId={menuId} />
+									</BottomSheet>
+								</>
+							)}
 						</div>
 					</>
 				)

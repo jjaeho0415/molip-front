@@ -69,7 +69,7 @@ export default function MakeTeam() {
 				<div className={styles.InputContainer}>
 					<p className={styles.Sub}>팀 이름을 입력하세요.</p>
 					<BigInput
-						placeholder='맛집 동아리 PIG'
+						placeholder='전략기획 1팀'
 						value={teamName}
 						setValue={setTeamName}
 					/>

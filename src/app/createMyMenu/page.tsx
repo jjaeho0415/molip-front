@@ -20,16 +20,29 @@ function CreateMyMenu() {
 	const createMyMenu = useSearchParams();
 	const defaultName = createMyMenu.get('menuName');
 	const menuId = createMyMenu.get('menuId');
-
 	const [value, setValue] = useState<string>('');
 
 	useEffect(() => {
 		if (value) {
 			setIsEmptyModalOpen(false);
-			return;
+		} else {
+			setIsEmptyModalOpen(true);
 		}
-		setIsEmptyModalOpen(true);
 	}, [value]);
+
+	const handleBeforeUnload = () => {
+		if (value === '') {
+			setValue(defaultName || '');
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('beforeunload', handleBeforeUnload);
+
+		return () => {
+			window.removeEventListener('beforeunload', handleBeforeUnload);
+		};
+	}, [value, defaultName]);
 
 	const handleClickButton = () => {
 		if (value === '') {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './myPage.module.css';
 import Header from '@/components/Header';
 import TopNavBar from '@/components/TopNavBar';
@@ -18,7 +18,12 @@ function MyPage() {
 	const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
 	const router = useRouter();
 	const pathName = usePathname();
-	localStorage.setItem('Prev_Page', pathName)
+
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			localStorage.setItem('Prev_Page', pathName);
+		}
+	}, []);
 
 	const { data: userInfo, isLoading } = useQuery<IUserInfo>({
 		queryKey: ['USER_INFO'],

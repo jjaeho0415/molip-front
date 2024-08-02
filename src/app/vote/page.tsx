@@ -15,7 +15,11 @@ const steps: string[] = ['투표중', '투표완료', '투표결과'];
 
 export default function Vote() {
 	const [isVote, setIsVote] = useState<boolean>(false);
-	localStorage.removeItem('Prev_Page');
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			localStorage.removeItem('Prev_Page');
+		}
+	}, []);
 	const {
 		data: voteList,
 		isLoading,

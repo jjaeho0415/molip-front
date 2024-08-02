@@ -7,6 +7,6 @@ type IUserInfo = {
 
 type IUserVotes = {
 	teamName: string;
-	voteItems: string[];
+	votes: IGetVote[];
 	voteDate: string;
 };

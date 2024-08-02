@@ -8,7 +8,7 @@ import NoticeModal from '@/components/modals/NoticeModal';
 import Arrow_Icon from '../../../public/icons/buttons/rignt.svg';
 import Image from 'next/image';
 import VoteResultCard from '../vote/voteResult/components/voteResultCard';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getMyPageInfo } from '@/api/getMyPageInfo';
 import Loading from '@/components/Loading';
@@ -17,6 +17,8 @@ import { getMyPageVotes } from '@/api/getMyPageVotes';
 function MyPage() {
 	const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
 	const router = useRouter();
+	const pathName = usePathname();
+	localStorage.setItem('Prev_Page', pathName)
 
 	const { data: userInfo, isLoading } = useQuery<IUserInfo>({
 		queryKey: ['USER_INFO'],

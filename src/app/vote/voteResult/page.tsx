@@ -5,17 +5,24 @@ import styles from './voteResult.module.css';
 import TabNavigation from '@/components/TabNavigation';
 import TopNavBar from '@/components/TopNavBar';
 import VoteResultCard from './components/voteResultCard';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getMyPageVotes } from '@/api/getMyPageVotes';
 import Loading from '@/components/Loading';
+import useHomeStore from '@/app/home/store/useHomeStore';
 
 export default function VoteResult() {
 	const [active, setActive] = useState<'메뉴판' | '메뉴이미지'>('메뉴판');
+	const prevPathName = localStorage.getItem('Prev_Page');
+	const { setTab } = useHomeStore();
 	const { data: voteResults, isLoading } = useQuery<IUserVotes[]>({
 		queryKey: ['USER_VOTE'],
 		queryFn: getMyPageVotes,
 	});
+
+	useEffect(() => {
+		setTab('team');
+	}, []);
 
 	return (
 		<div className={styles.Container}>
@@ -25,7 +32,7 @@ export default function VoteResult() {
 				title='지난 결과 보기'
 				active={active}
 				setActive={setActive}
-				backRoute='/home'
+				backRoute={prevPathName?.includes('/myPage') ? '/myPage' : '/home'}
 			/>
 			{isLoading ? (
 				<div className={styles.loading}>

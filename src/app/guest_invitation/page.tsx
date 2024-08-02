@@ -15,11 +15,14 @@ export default function Guest_Invitation() {
 	const router = useRouter();
 	const { isLogin } = useAuthStore.getState();
 	const [teamMenuId, setTeamMenuId] = useState<string | null>('');
+	const [teamMenuName, setTeamMenuName] = useState<string | null>('');
 
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
 			const menuId = localStorage.getItem('teamMenu_Id');
 			setTeamMenuId(menuId);
+			const menuName = localStorage.getItem('teamMenu_Name');
+			setTeamMenuName(menuName);
 		}
 	}, []);
 
@@ -56,7 +59,7 @@ export default function Guest_Invitation() {
 					<div
 						className={`${styles.contentSection} ${!isLogin && styles.textDisabled}`}
 					>
-						<p className={styles.mainTitle}>'스위프 10팀'</p>
+						<p className={styles.mainTitle}>{"'"}{teamMenuName}{"'"}</p>
 						<p className={styles.subTitle}>초대를 수락하시겠습니까?</p>
 					</div>
 					<div className={styles.buttonSection}>

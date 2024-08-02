@@ -61,6 +61,7 @@ export default function TeamMenuPage() {
 	useEffect(() => {
 		if (!isTeamLoading && getIsTeam !== undefined && !isTeamFetching) {
 			localStorage.setItem('teamMenu_Id', String(teamBoardId));
+			localStorage.setItem('teamMenu_Name', boardName);
 			if (isLogin) {
 				if (getIsTeam.isTeam === true) {
 					setIsLoading(false);

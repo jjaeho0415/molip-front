@@ -11,7 +11,7 @@ const useAuthRedirect = () => {
 
 	useEffect(() => {
 		if (!isLogin && constant.protectedRoute.includes(pathname)) {
-			route.push('/login');
+			route.replace('/login');
 		}
 	}, [isLogin, pathname, route]);
 

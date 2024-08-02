@@ -31,6 +31,9 @@ export default function Home() {
 	const { isLogin } = useAuthStore.getState();
 
 	useEffect(() => {
+		tab === 'map' && route.replace('/kakaoMap');
+	}, []);
+	useEffect(() => {
 		const redirectUrl = sessionStorage.getItem('redirectAfterLogin');
 
 		if (redirectUrl && redirectUrl !== '/login') {

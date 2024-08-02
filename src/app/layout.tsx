@@ -4,6 +4,7 @@ import RQProvider from '@/components/RQProvider';
 import { constant } from '@/utils/constant';
 import Script from 'next/script';
 import { Metadata } from 'next';
+import AuthRedirectWrapper from '@/components/AuthRedirectWrapper';
 
 export const metadata: Metadata = {
 	title: '모두의 입맛 - molip',
@@ -13,7 +14,6 @@ export const metadata: Metadata = {
 	},
 	openGraph: {
 		title: '모입: 모두의 입맛을 충족해줄 메뉴판',
-		// description: '직장인 메뉴 선정 서비스',
 		images: [
 			{
 				url: '/image/openGraphImg.png',
@@ -40,7 +40,9 @@ export default function RootLayout({
 			<body>
 				<RQProvider>
 					<Suspense>
-						<div className='root_container'>{children}</div>
+						<AuthRedirectWrapper>
+							<div className='root_container'>{children}</div>
+						</AuthRedirectWrapper>
 						<Script src={API} strategy='afterInteractive' />
 						<Script
 							src='https://developers.kakao.com/sdk/js/kakao.js'

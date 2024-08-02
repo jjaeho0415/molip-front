@@ -4,11 +4,11 @@ export const constant = {
 	protectedRoute: [
 		'/teamMenuPage',
 		'/myPage',
-		'/menu',
 		'/makeTeam',
 		'/kakaoMap',
 		'/home',
 		'/vote',
 		'/createMyMenu',
+		'/vote/voteResult',
 	],
 };

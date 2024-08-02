@@ -1,12 +1,14 @@
 .Container {
-	height: 100vh;
+	min-height: 100vh;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+	justify-content: space-between;
+	background-color: var(--white);
 }
 
 .TutorialBox {
-	height: calc(100vh - 158px);
+	flex: 1;
 }
 
 .BtnBox {
@@ -15,6 +17,7 @@
 	align-items: center;
 	height: 158px;
 	gap: 8px;
+	padding-bottom: 10px;
 }
 
 .Sub {

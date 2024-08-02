@@ -111,11 +111,10 @@ export default function Menu() {
 	};
 
 	const handleGoVote = () => {
-		vote?.isVote === false
+		vote?.isVote === false || vote === undefined
 			? setIsVoteAlertModalOpen(true)
 			: router.push(`/vote?menuId=${menuId}&menuName=${menuName}`);
-		
-	}
+	};
 
 	return (
 		<>
@@ -156,8 +155,8 @@ export default function Menu() {
 											</ShareButton>
 										) : (
 											<ShareButton
-														handleRightClick={handleDownImage}
-														handleLeftClick={ handleGoVote}
+												handleRightClick={handleDownImage}
+												handleLeftClick={handleGoVote}
 											>
 												투표하러 가기
 											</ShareButton>
@@ -172,7 +171,8 @@ export default function Menu() {
 									)}
 								</div>
 							)}
-							{tab === 'team' && vote?.isVote === false ? (
+							{tab === 'team' &&
+							(vote?.isVote === false || vote === undefined) ? (
 								<>
 									<BottomSheet>
 										<AddTaste_BS menuId={menuId} />

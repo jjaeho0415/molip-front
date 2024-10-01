@@ -9,7 +9,7 @@ import Loading from '@/components/Loading';
 
 export default function App() {
 	const route = useRouter();
-	const { isLogin } = useAuthStore.getState();
+	const { isLogin } = useAuthStore();
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {

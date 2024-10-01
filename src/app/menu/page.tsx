@@ -54,6 +54,10 @@ export default function Menu() {
 				}
 			}
 		}
+		// 이 부분 오류 나면 삭제
+		else {
+			!isLogin && router.push('/login');
+		}
 		setSessionLoading(false);
 	}, []);
 

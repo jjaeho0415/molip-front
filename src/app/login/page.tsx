@@ -11,9 +11,18 @@ import LoginImage from '../../../public/svg/kakao_login_large_wide.svg';
 import Button from '@/components/buttons/Button';
 import TutorialStep from './_components/TutorialStep';
 import { useRouter } from 'next/navigation';
+import { useAuthStore } from './store/useAuthStore';
+import { useEffect } from 'react';
 
 export default function Login() {
 	const route = useRouter();
+	const { isLogin } = useAuthStore();
+
+	useEffect(() => {
+		if (isLogin) {
+			route.back();
+		}
+	}, [isLogin]);
 
 	const loginHandler = () => {
 		window.location.href = 'https://api.molip.site/oauth2/authorization/kakao';

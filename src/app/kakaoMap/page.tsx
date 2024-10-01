@@ -7,13 +7,21 @@ import styles from './kakaoMap.module.css';
 import Image from 'next/image';
 import Icon_option from '../../../public/icons/buttons/option.svg';
 import Icon_search from '../../../public/icons/Icon_search.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Loading from '@/components/Loading';
+import { useAuthStore } from '../login/store/useAuthStore';
+import { useRouter } from 'next/navigation';
 
 export default function KakaoMap() {
 	const [keyword, setKeyword] = useState<string>('');
 	const [searchKeyword, setSearchKeyword] = useState<string>('');
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const route = useRouter();
+	const { isLogin } = useAuthStore.getState();
+
+	useEffect(() => {
+		!isLogin && route.push('/login');
+	}, [isLogin]);
 
 	const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (

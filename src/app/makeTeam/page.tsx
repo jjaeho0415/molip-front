@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { postCreateTeamMenu } from '@/api/postCreatTeamMenu';
 import { getTeamMenuList } from '@/api/getTeamMenuList';
+import { useAuthStore } from '../login/store/useAuthStore';
 
 const numArr = [2, 3, 4, 5, 6, 7, 8];
 
@@ -21,6 +22,11 @@ export default function MakeTeam() {
 		`${teamName}의 메뉴판`,
 	);
 	const queryClient = useQueryClient();
+	const { isLogin } = useAuthStore.getState();
+
+	useEffect(() => {
+		!isLogin && router.push('/login');
+	}, [isLogin]);
 
 	const { mutate: createTeamMenu } = useMutation<IGetTeamMenuType>({
 		mutationFn: () => postCreateTeamMenu(teamName, selectedNum, menuBoardName),

@@ -27,8 +27,11 @@ export default function Home() {
 	const route = useRouter();
 	const [defaultMyMenuName, setDefaultMyMenuName] = useState<string>('');
 	const [user, setUser] = useState<string>('');
-	const { accessToken } = useAuthStore.getState();
-	const { isLogin } = useAuthStore.getState();
+	const { isLogin, accessToken } = useAuthStore.getState();
+
+	useEffect(() => {
+		!isLogin && route.push('/login');
+	}, [isLogin]);
 
 	useEffect(() => {
 		tab === 'map' && route.replace('/kakaoMap');

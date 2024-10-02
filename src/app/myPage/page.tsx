@@ -13,11 +13,17 @@ import { useQuery } from '@tanstack/react-query';
 import { getMyPageInfo } from '@/api/getMyPageInfo';
 import Loading from '@/components/Loading';
 import { getMyPageVotes } from '@/api/getMyPageVotes';
+import { useAuthStore } from '../login/store/useAuthStore';
 
 function MyPage() {
 	const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
 	const router = useRouter();
 	const pathName = usePathname();
+	const { isLogin } = useAuthStore.getState();
+
+	useEffect(() => {
+		!isLogin && router.push('/login');
+	}, [isLogin]);
 
 	useEffect(() => {
 		if (typeof window !== 'undefined') {

@@ -4,7 +4,6 @@ import RQProvider from '@/components/RQProvider';
 import { constant } from '@/utils/constant';
 import Script from 'next/script';
 import { Metadata } from 'next';
-import AuthRedirectWrapper from '@/components/AuthRedirectWrapper';
 
 export const metadata: Metadata = {
 	title: '모두의 입맛 - molip',
@@ -40,9 +39,8 @@ export default function RootLayout({
 			<body>
 				<RQProvider>
 					<Suspense>
-						<AuthRedirectWrapper>
-							<div className='root_container'>{children}</div>
-						</AuthRedirectWrapper>
+						<div className='root_container'>{children}</div>
+
 						<Script src={API} strategy='afterInteractive' />
 						<Script
 							src='https://developers.kakao.com/sdk/js/kakao.js'

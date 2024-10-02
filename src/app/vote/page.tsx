@@ -6,20 +6,29 @@ import Voting from './components/voting';
 import VoteDone from './components/voteDone';
 import VoteResult from './components/voteResult';
 import TabNavigation from '@/components/TabNavigation';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getVoteResult } from '@/api/getVoteResult';
 import { useEffect, useState } from 'react';
+import { useAuthStore } from '../login/store/useAuthStore';
 
 const steps: string[] = ['투표중', '투표완료', '투표결과'];
 
 export default function Vote() {
 	const [isVote, setIsVote] = useState<boolean>(false);
+	const router = useRouter();
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
 			localStorage.removeItem('Prev_Page');
 		}
 	}, []);
+
+	const { isLogin } = useAuthStore.getState();
+
+	useEffect(() => {
+		!isLogin && router.push('/login');
+	}, [isLogin]);
+
 	const {
 		data: voteList,
 		isLoading,

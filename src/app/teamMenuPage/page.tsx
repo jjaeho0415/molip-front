@@ -40,6 +40,10 @@ export default function TeamMenuPage() {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
+		!isLogin && router.push('/login');
+	}, [isLogin]);
+
+	useEffect(() => {
 		setIsOpen(false);
 	}, []);
 	useEffect(() => {

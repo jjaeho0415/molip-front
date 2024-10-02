@@ -12,7 +12,8 @@ import RoundButton from '@/components/buttons/RoundButton';
 import BottomSheet from '@/components/BottomSheet/BottomSheet';
 import useBottomSheet from '@/hooks/useBottomSheet';
 import AddTaste_BS from '@/components/BottomSheet/AddTaste_BS';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useAuthStore } from '../login/store/useAuthStore';
 
 function CreateMyMenu() {
 	const [isEmptyModalOpen, setIsEmptyModalOpen] = useState<boolean>(false);
@@ -21,6 +22,13 @@ function CreateMyMenu() {
 	const defaultName = createMyMenu.get('menuName');
 	const menuId = createMyMenu.get('menuId');
 	const [value, setValue] = useState<string>('');
+
+	const route = useRouter();
+	const { isLogin } = useAuthStore.getState();
+
+	useEffect(() => {
+		!isLogin && route.push('/login');
+	}, [isLogin]);
 
 	useEffect(() => {
 		if (value) {

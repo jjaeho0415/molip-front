@@ -1,5 +1,4 @@
 import { useAuthStore } from '@/app/login/store/useAuthStore';
-import RefreshTokenExpired from './refreshTokenExpired';
 import { getAccessToken } from '@/api/postRefresh';
 
 interface IFetchOptions<T = unknown> {
@@ -83,7 +82,7 @@ const _fetch = async <T = unknown, R = unknown>({
 						return await retryRes.json();
 					}
 				} catch (error) {
-					RefreshTokenExpired();
+					useAuthStore.setState({ isLogin: false, accessToken: null });
 					throw new Error('Session expired. Please log in again.');
 				}
 			}

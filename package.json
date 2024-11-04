@@ -7,7 +7,9 @@
     "prebuild": "rimraf .next",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "secure": "node server.js",
+    "init-https": "sh init-https.sh"
   },
   "dependencies": {
     "@eslint/config-array": "^0.17.0",

@@ -19,7 +19,8 @@ import { postCreateMyMenu } from '@/api/postCreateMyMenu';
 import { getUserName } from '@/api/getUserName';
 import Loading from '@/components/Loading';
 import { useAuthStore } from '../login/store/useAuthStore';
-import { IRefreshType, getAccessToken } from '@/api/postRefresh';
+import { IRefreshType, postReissueToken } from '@/api/postReissueToken';
+
 
 export default function Home() {
 	const { tab } = useHomeStore();
@@ -45,7 +46,7 @@ export default function Home() {
 	}, [route]);
 
 	const { mutate: getAccess } = useMutation<IRefreshType>({
-		mutationFn: getAccessToken,
+		mutationFn: postReissueToken,
 		mutationKey: ['refresh'],
 		onSuccess: (data: IRefreshType) => {
 			useAuthStore.setState({ isLogin: true, accessToken: data.access });

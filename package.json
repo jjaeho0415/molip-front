@@ -7,8 +7,10 @@
     "prebuild": "rimraf .next",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
-  },
+    "lint": "next lint",
+    "secure": "node server.js",
+    "init-https": "cross-env-shell \"sh init-https.sh || init-https.sh\"" 
+   },
   "dependencies": {
     "@eslint/config-array": "^0.17.0",
     "@eslint/object-schema": "^2.1.4",
@@ -34,6 +36,7 @@
     "@types/react-dom": "^18",
     "@typescript-eslint/eslint-plugin": "^7.14.1",
     "@typescript-eslint/parser": "^7.14.1",
+    "cross-env-shell": "^7.0.3",
     "eslint": "^8",
     "eslint-config-airbnb-typescript": "^18.0.0",
     "eslint-config-next": "14.2.4",

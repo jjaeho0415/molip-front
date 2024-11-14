@@ -6,8 +6,7 @@ export type IRefreshType = {
 	message: string;
 };
 
-export const getAccessToken = async (): Promise<IRefreshType> => {
-	
+export const postReissueToken = async (): Promise<IRefreshType> => {
 	const response: IRefreshType = await api.post({
 		endpoint: apiRoutes.refresh,
 	});

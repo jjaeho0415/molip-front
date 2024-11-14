@@ -1,6 +1,4 @@
 import { useAuthStore } from '@/app/login/store/useAuthStore';
-import RefreshTokenExpired from './refreshTokenExpired';
-import { getAccessToken } from '@/api/postRefresh';
 
 interface IFetchOptions<T = unknown> {
 	endpoint: string;
@@ -24,6 +22,30 @@ interface IPostOptions<T = unknown> {
 interface IDeleteOptions {
 	endpoint: string;
 	authorization: string;
+}
+
+const postRefresh = async() => {
+	const response = await fetch(
+		`${process.env.NEXT_PUBLIC_API}/reissue-token`,
+		{
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+		},
+	);
+	if (!response.ok) {
+		useAuthStore.setState({
+			isLogin: false,
+			accessToken: null
+		})
+		window.location.reload();
+		localStorage.clear();
+		throw new Error('Failed to refresh token');
+	}
+	const data = await response.json();
+	return data;
 }
 
 const _fetch = async <T = unknown, R = unknown>({
@@ -60,7 +82,7 @@ const _fetch = async <T = unknown, R = unknown>({
 		if (!res.ok) {
 			if (res.status === 401 || res.status === 400) {
 				try {
-					const newToken = await getAccessToken();
+					const newToken = await postRefresh();
 					if (newToken) {
 						useAuthStore.setState({
 							isLogin: true,
@@ -83,7 +105,7 @@ const _fetch = async <T = unknown, R = unknown>({
 						return await retryRes.json();
 					}
 				} catch (error) {
-					RefreshTokenExpired();
+					useAuthStore.setState({ isLogin: false, accessToken: null });
 					throw new Error('Session expired. Please log in again.');
 				}
 			}
